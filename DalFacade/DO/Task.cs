@@ -24,7 +24,7 @@ public record Task
     DateTime? DeadlineDate,
     TimeSpan? RequiredEffortTime,
     DO.EngineerExperience? Copmlexity,
-    string ? Dellverables = null,
+    string? Dellverables = null,
     string? Remarks = null,
     string? Alias=null,
     string? Description = null,
