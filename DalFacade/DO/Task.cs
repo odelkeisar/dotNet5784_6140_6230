@@ -19,16 +19,16 @@ public record Task
 (
     int id,
     int engineerId,
+    DateTime? StartDate,
+    DateTime? ScheduledDate,
+    DateTime? DeadlineDate,
+    TimeSpan? RequiredEffortTime,
+    DO.EngineerExperience? Copmlexity,
+    string ? Dellverables = null,
+    string? Remarks = null,
     string? Alias=null,
     string? Description = null,
     DateTime? CreatedAtDate=null,
-    TimeSpan? RequiredEffortTime=null,
-    bool isMileStone=false,
-    DO.EngineerExperience? Copmlexity=null,
-    DateTime? StartDate=null,
-    DateTime? ScheduledDate=null,
-    DateTime? DeadlineDate = null,
-    string? Dellverables=null,
-    string? Remarks=null
+    bool isMileStone=false
 );
 
