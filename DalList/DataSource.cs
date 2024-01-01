@@ -9,7 +9,7 @@
     {
         internal const int StartTaskId = 1;
         private static int nextTaskId = StartTaskId;
-        internal static int NextCourseId { get => nextTaskId++; }
+        internal static int NextTaskId { get => nextTaskId++; }
     }
 
 }
