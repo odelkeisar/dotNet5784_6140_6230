@@ -17,13 +17,13 @@
 /// <param name="Remarks">Notes for the assignment</param>
 public record Task
 (
-    int id,
+    int Id,
     int engineerId,
-    DateTime? StartDate,
-    DateTime? ScheduledDate,
-    DateTime? DeadlineDate,
-    TimeSpan? RequiredEffortTime,
-    DO.EngineerExperience? Copmlexity,
+    DateTime StartDate,
+    DateTime ScheduledDate,
+    DateTime DeadlineDate,
+    TimeSpan? RequiredEffortTime=null,
+    DO.EngineerExperience? Copmlexity=null,
     string? Dellverables = null,
     string? Remarks = null,
     string? Alias=null,
@@ -31,4 +31,8 @@ public record Task
     DateTime? CreatedAtDate=null,
     bool isMileStone=false
 );
+
+
+
+
 
