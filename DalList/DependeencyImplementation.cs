@@ -3,6 +3,9 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Implementation of methods for the data structure of Dependeency
+/// </summary>
 public class DependeencyImplementation : IDependeency
 {
     public int Create(Dependeency item)

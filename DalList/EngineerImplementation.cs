@@ -4,6 +4,9 @@ using DO;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 
+/// <summary>
+/// Implementation of methods for the data structure of engineers.
+/// </summary>
 public class EngineerImplementation : IEngineer
 {
     public int Create(Engineer item)

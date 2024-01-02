@@ -3,6 +3,9 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
+/// <summary>
+/// Implementing methods for the tasks data structure.
+/// </summary>
 public class TaskImplementation : ITask
 {
     public int Create(Task item)
