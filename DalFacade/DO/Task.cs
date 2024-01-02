@@ -18,18 +18,19 @@
 public record Task
 (
     int Id,
+    string? Alias = null, //כינוי
+    string? Description = null,//תיאור
+    DateTime? CreatedAtDate = null,//תאריך יצירת המשימה
+    DateTime? ScheduledDate = null,//תאריך מתוכנן להתחלה
+    TimeSpan? RequiredEffortTime = null,//משך זמן המשימה
+    DateTime? DeadlineDate = null,//תאריך סיום
     int EngineerId = 0,
-    DateTime? StartDate=null,
-    DateTime? ScheduledDate = null,
-    DateTime? DeadlineDate=null,
-    TimeSpan? RequiredEffortTime=null,
-    DO.EngineerExperience? Copmlexity=null,
-    string? Dellverables=null,
-    string? Remarks=null,
-    string? Alias = null,
-    string? Description = null,
-    DateTime? CreatedAtDate = null,
-    bool isMileStone = false
+    DateTime? StartDate=null,//התחלה בפועל
+    DateTime? CompleteDate = null,//סיום בפועל
+    DO.EngineerExperience? Copmlexity=null, //רמת קושי
+    string? Dellverables=null, //תוצר
+    string? Remarks=null,//הערות
+    bool isMileStone = false//אבני דרך
 )
 {
     public Task():this(0) { }
