@@ -5,31 +5,47 @@ using System.Collections.Generic;
 
 public class TaskImplementation : ITask
 {
-    public int Create(System.Threading.Tasks.Task item)
+    public int Create(Task item)
     {
         int newId = DataSource.Config.NextTaskId;
-        Task helpTask = 
-
-        throw new NotImplementedException();
+        Task item1=item with { Id = newId};
+        DataSource.Tasks.Add(item1);    
+        return newId;   
     }
 
     public void Delete(int id)
     {
+        Task? item1 = Read(id);
+   
+        if (item1 == null)
+            throw new Exception("An object of type Task with such an ID does not exist");
+        DataSource.Tasks.Remove(item1);
+    }
+
+    public Task? Read(int id)
+    {
+        Task? item = DataSource.Tasks.Find(x => x.Id == id);
+
+        if (item == null) return null;
+        return item;
+
         throw new NotImplementedException();
     }
 
-    public System.Threading.Tasks.Task? Read(int id)
+    public List<Task> ReadAll()
     {
-        throw new NotImplementedException();
+        return new List<Task>(DataSource.Tasks);
     }
 
-    public List<System.Threading.Tasks.Task> ReadAll()
+    public void Update(Task item)
     {
-        throw new NotImplementedException();
-    }
+        Task? item1 = Read(item.Id);
 
-    public void Update(System.Threading.Tasks.Task item)
-    {
-        throw new NotImplementedException();
+        if (item1 == null)
+            throw new Exception("An object of type Task with such an ID does not exist");
+
+        DataSource.Tasks.Remove(item1); 
+
+        DataSource.Tasks.Add(item);
     }
 }

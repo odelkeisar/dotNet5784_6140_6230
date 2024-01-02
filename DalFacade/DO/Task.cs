@@ -18,19 +18,22 @@
 public record Task
 (
     int Id,
-    int engineerId,
-    DateTime StartDate,
-    DateTime ScheduledDate,
-    DateTime DeadlineDate,
+    int EngineerId = 0,
+    DateTime? StartDate=null,
+    DateTime? ScheduledDate = null,
+    DateTime? DeadlineDate=null,
     TimeSpan? RequiredEffortTime=null,
     DO.EngineerExperience? Copmlexity=null,
-    string? Dellverables = null,
-    string? Remarks = null,
-    string? Alias=null,
+    string? Dellverables=null,
+    string? Remarks=null,
+    string? Alias = null,
     string? Description = null,
-    DateTime? CreatedAtDate=null,
-    bool isMileStone=false
-);
+    DateTime? CreatedAtDate = null,
+    bool isMileStone = false
+)
+{
+    public Task():this(0) { }
+}
 
 
 

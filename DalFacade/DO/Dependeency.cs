@@ -9,5 +9,10 @@ public record Dependeency
 (
     int Id,
     int DependentTask,
-    int DependsOnTask
- );
+    int DependsOnTask  
+ )
+{
+    public Dependeency() : this(0,0,0) { }
+}
+
+

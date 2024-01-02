@@ -13,5 +13,8 @@ public record Engineer
     string? Email = null,
     double? Cost = null,
     string? Name = null,
-    DO.EngineerExperience? Level=null
- );
+    DO.EngineerExperience? Level = null
+ )
+{
+    public Engineer() : this(0){ }
+}
