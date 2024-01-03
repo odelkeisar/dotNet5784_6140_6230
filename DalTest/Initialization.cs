@@ -74,7 +74,22 @@ public static class Initialization
         }
 
     }
-    private static void createDependeency();
+    private static void createDependeency()
+    {
+        foreach (var _task in s_dalTask.ReadAll())
+        {
+            foreach (var _task1 in s_dalTask.ReadAll())
+            {
+                if (_task.Id == _task1.Id)
+                    break;
+                if (_task.StartDate > _task1.StartDate)
+                {
+                    Dependeency _dependeency = new(0, _task.Id, _task1.Id);
+                    s_dalDependeency.Create(_dependeency);
+                }
+            }
+        }
+    }
 
 
 
