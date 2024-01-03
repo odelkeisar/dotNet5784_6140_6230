@@ -42,11 +42,11 @@ public static class Initialization
             DateTime deadLine = new DateTime(2024, 1, 6);
             deadLine.AddDays(x * 5);
 
-            Task newTask = new(0, alias, _name, createDate, startDate, taskTime, deadLine);
+            Task newTask = new(0,alias,_name,createDate, startDate, taskTime, deadLine);
             s_dalTask!.Create(newTask);
 
-            if (_name != "Knowledge of work environment" && _name != "Saving data in object lists" &&
-              _name != "Create a data contract") //Tasks at the same level are worked on at the same time
+            if (_name!= "Knowledge of work environment"&&_name!= "Saving data in object lists"&&
+              _name!= "Create a data contract") //Tasks at the same level are worked on at the same time
                 x++;
 
         }
