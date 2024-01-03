@@ -30,30 +30,28 @@ public static class Initialization
 
         foreach (var _name in TaskNames)
         {
-            string help = (TaskNum)y;
+            string alias = TaskNum[y++];
 
-            DateTime createDate = new DateTime(2023, 11, 28);
+            DateTime createDate = new DateTime(2023, 12, 30);
 
             DateTime startDate = new DateTime(2024, 1, 1);
             startDate.AddDays(x * 5);
 
-            TimeSpan taskTime = new TimeSpan(4, 0, 0, 0);
+            TimeSpan taskTime = new TimeSpan(5, 0, 0, 0);
 
-            DateTime deadLine = new DateTime(2024, 1, 5);
+            DateTime deadLine = new DateTime(2024, 1, 6);
             deadLine.AddDays(x * 5);
 
-            Task newTask = new(_name,(TaskNum)y,createDate, startDate, taskTime, deadLine);
+            Task newTask = new(0,alias,_name,createDate, startDate, taskTime, deadLine);
+            s_dalTask!.Create(newTask);
 
             if (_name!= "Knowledge of work environment"&&_name!= "Saving data in object lists"&&
               _name!= "Create a data contract") //Tasks at the same level are worked on at the same time
                 x++;
 
-            y++;
         }
 
     }
-    private static void creatEngineer();
-    private static void createTask();
     private static void creatEngineer()
     {
         string[] EngineertNames = {"Dani Levi", "Eli Amar", "Meir Cohen","Ariel Levin", "David Klein"};
