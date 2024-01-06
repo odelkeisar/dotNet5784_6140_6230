@@ -10,8 +10,8 @@ public class DependeencyImplementation : IDependeency
 {
     public int Create(Dependeency item)
     {
-        int newId = DataSource.Config.NextTaskId;
-        Dependeency item1 = item with { Id=item.Id }; 
+        int newId = DataSource.Config.NextDependeencyId;
+        Dependeency item1 = item with { Id = newId };
         DataSource.Dependeencies.Add(item1);
         return newId;
     }

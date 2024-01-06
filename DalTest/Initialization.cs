@@ -5,7 +5,7 @@ using System.Data;
 
 public static class Initialization
 {
-    private static ITask? s_dalTask;
+    private static ITask1? s_dalTask;
     private static IEngineer? s_dalEngineer;
     private static IDependeency? s_dalDependeency;
 
@@ -34,19 +34,19 @@ public static class Initialization
 
             DateTime createDate = new DateTime(2023, 12, 30);
 
-            DateTime startDate = new DateTime(2024, 1, 1);
-            startDate.AddDays(x * 5);
+            DateTime scheduledDate = new DateTime(2024, 1, 1);
+            scheduledDate = scheduledDate.AddDays(x * 5);
 
             TimeSpan taskTime = new TimeSpan(5, 0, 0, 0);
 
             DateTime deadLine = new DateTime(2024, 1, 6);
-            deadLine.AddDays(x * 5);
+            deadLine = deadLine.AddDays(x * 5);
 
-            Task newTask = new(0,alias,_name,createDate, startDate, taskTime, deadLine);
+            Task1 newTask = new(0,alias,_name,createDate, scheduledDate, taskTime, deadLine);
             s_dalTask!.Create(newTask);
 
-            if (_name!= "Knowledge of work environment"&&_name!= "Saving data in object lists"&&
-              _name!= "Create a data contract") //Tasks at the same level are worked on at the same time
+            if (_name != "Knowledge of work environment" && _name != "Saving data in object lists" &&
+              _name != "Create a data contract") //Tasks at the same level are worked on at the same time
                 x++;
 
         }
@@ -83,7 +83,7 @@ public static class Initialization
                 if (_task.Id == _task1.Id) //Finish scanning previous tasks  
                     break;
 
-                if (_task.StartDate > _task1.StartDate)
+                if (_task.ScheduledDate > _task1.ScheduledDate)
                 {
                     Dependeency _dependeency = new(0, _task.Id, _task1.Id);
                     s_dalDependeency!.Create(_dependeency);
@@ -92,7 +92,7 @@ public static class Initialization
         }
     }
 
-    public static void Do(ITask? dalTask, IEngineer?dalEngineer, IDependeency?dalDependeency)
+    public static void Do(ITask1? dalTask, IEngineer?dalEngineer, IDependeency?dalDependeency)
     {
         s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
         s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");

@@ -15,7 +15,7 @@
 /// <param name="DeadlineDate">Deadline for the assignment</param>
 /// <param name="Dellverables"></param>
 /// <param name="Remarks">Notes for the assignment</param>
-public record Task
+public record Task1
 (
     int Id,
     string? Alias = null, //כינוי
@@ -25,18 +25,14 @@ public record Task
     TimeSpan? RequiredEffortTime = null,//משך זמן המשימה
     DateTime? DeadlineDate = null,//תאריך סיום
     int EngineerId = 0,
-    DateTime? StartDate=null,//התחלה בפועל
+    DateTime? StartDate = null,//התחלה בפועל
     DateTime? CompleteDate = null,//סיום בפועל
-    DO.EngineerExperience? Copmlexity=null, //רמת קושי
-    string? Dellverables=null, //תוצר
-    string? Remarks=null,//הערות
+    DO.EngineerExperience? Copmlexity = null, //רמת קושי
+    string? Dellverables = null, //תוצר
+    string? Remarks = null,//הערות
     bool isMileStone = false//אבני דרך
 )
 {
-    public Task():this(0) { }
+    public Task1() : this(0) { }
 }
-
-
-
-
 
