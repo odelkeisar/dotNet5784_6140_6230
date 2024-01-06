@@ -76,22 +76,29 @@ public static class Initialization
     }
     private static void createDependeency()
     {
-        foreach (var _task in s_dalTask.ReadAll())
+        foreach (var _task in s_dalTask!.ReadAll())
         {
             foreach (var _task1 in s_dalTask.ReadAll())
             {
-                if (_task.Id == _task1.Id)
+                if (_task.Id == _task1.Id) //Finish scanning previous tasks  
                     break;
+
                 if (_task.StartDate > _task1.StartDate)
                 {
                     Dependeency _dependeency = new(0, _task.Id, _task1.Id);
-                    s_dalDependeency.Create(_dependeency);
+                    s_dalDependeency!.Create(_dependeency);
                 }
             }
         }
     }
 
-
-
-
+    public static void Do(ITask? dalTask, IEngineer?dalEngineer, IDependeency?dalDependeency)
+    {
+        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependeency = dalDependeency ?? throw new NullReferenceException("DAL can not be null!");
+        createTask();
+        creatEngineer();
+        createDependeency();
+    }
 }

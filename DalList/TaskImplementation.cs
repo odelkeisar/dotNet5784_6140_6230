@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// Implementing methods for the tasks data structure.
 /// </summary>
 public class TaskImplementation : ITask
-{
+{ 
     public int Create(Task item)
     {
         int newId = DataSource.Config.NextTaskId;
