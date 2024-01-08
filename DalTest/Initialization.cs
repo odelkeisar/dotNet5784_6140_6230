@@ -5,9 +5,8 @@ using System.Data;
 
 public static class Initialization
 {
-    private static ITask1? s_dalTask;
-    private static IEngineer? s_dalEngineer;
-    private static IDependeency? s_dalDependeency;
+   
+    private static IDal? s_dal;
 
     private static readonly Random s_rand = new();
 
@@ -43,7 +42,8 @@ public static class Initialization
             deadLine = deadLine.AddDays(x * 5);
 
             Task1 newTask = new(0,alias,_name,createDate, scheduledDate, taskTime, deadLine);
-            s_dalTask!.Create(newTask);
+            s_dal!.Task1!.Create(newTask);
+            
 
             if (_name != "Knowledge of work environment" && _name != "Saving data in object lists" &&
               _name != "Create a data contract") //Tasks at the same level are worked on at the same time
@@ -59,10 +59,10 @@ public static class Initialization
         int x = 0;
         foreach (var _name in EngineertNames)
         {
-            int _id;
-            do
-                _id = s_rand.Next(100000000, 900000000);
-            while (s_dalEngineer!.Read(_id) != null);
+           // int _id;
+            //do
+             int _id = s_rand.Next(100000000, 900000000);
+            //while (s_dalEngineer!.Read(_id) != null);
 
             string _email = EngineertMail[x++];
             double _cost = s_rand.Next(50, 300);
@@ -70,15 +70,15 @@ public static class Initialization
 
             Engineer newEngineer = new(_id, _email, _cost, _name, _Level);
 
-            s_dalEngineer!.Create(newEngineer);
+            s_dal!.Engineer!.Create(newEngineer);
         }
 
     }
     private static void createDependeency()
     {
-        foreach (var _task in s_dalTask!.ReadAll())
+        foreach (var _task in s_dal!.Task1!.ReadAll())
         {
-            foreach (var _task1 in s_dalTask.ReadAll())
+            foreach (var _task1 in s_dal!.Task1.ReadAll())
             {
                 if (_task.Id == _task1.Id) //Finish scanning previous tasks  
                     break;
@@ -86,19 +86,19 @@ public static class Initialization
                 if (_task.ScheduledDate > _task1.ScheduledDate)
                 {
                     Dependeency _dependeency = new(0, _task.Id, _task1.Id);
-                    s_dalDependeency!.Create(_dependeency);
+                    s_dal!.Dependeency.Create(_dependeency);
+                   
                 }
             }
         }
     }
 
-    public static void Do(ITask1? dalTask, IEngineer?dalEngineer, IDependeency?dalDependeency)
+    public static void Do(IDal dal)
     {
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalDependeency = dalDependeency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
         createTask();
         creatEngineer();
         createDependeency();
     }
 }
+

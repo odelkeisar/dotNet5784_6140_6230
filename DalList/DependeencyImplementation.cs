@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Implementation of methods for the data structure of Dependeency
 /// </summary>
-public class DependeencyImplementation : IDependeency
+internal class DependeencyImplementation : IDependeency
 {
     public int Create(Dependeency item)
     {
@@ -18,34 +18,39 @@ public class DependeencyImplementation : IDependeency
 
     public void Delete(int id)
     {
-        Dependeency? item1 = Read(id);
-        if (item1 == null)
-            throw new Exception("An object of type Dependeency with such an ID does not exist");
-        DataSource.Dependeencies.Remove(item1);
+        Dependeency? item = Read(id);
+        if (item == null)
+            throw new DalDoesNotExistException($"Dependeency with ID={id} does not exist");
+        DataSource.Dependeencies.Remove(item);
     }
 
     public Dependeency? Read(int id)
     {
-       Dependeency? item= DataSource.Dependeencies.Find(x=> x.Id == id);
 
-        if (item == null) return null;
-        return item;
+        return DataSource.Dependeencies.FirstOrDefault(x => (x.Id == id));
     }
 
-    public List<Dependeency> ReadAll()
+    public Dependeency? Read(Func<Dependeency, bool> filter) 
     {
-        return new List<Dependeency>(DataSource.Dependeencies);
+        return DataSource.Dependeencies.FirstOrDefault(filter);
+    }
+
+    public IEnumerable<Dependeency> ReadAll(Func<Dependeency, bool>? filter = null)
+    {
+        if (filter == null)
+            return DataSource.Dependeencies.Select(item => item).ToList();
+        else
+            return DataSource.Dependeencies.Where(filter).ToList();
     }
 
     public void Update(Dependeency item)
     {
         Dependeency? item1 = Read(item.Id);
 
-        if(item1 == null) 
-        throw new Exception("An object of type Dependeency with such an ID does not exist");
+        if (item1 == null)
+            throw new DalDoesNotExistException($"Dependeency with ID={item.Id} does not exist");
 
         DataSource.Dependeencies.Remove(item1);
         DataSource.Dependeencies.Add(item);
-
     }
 }

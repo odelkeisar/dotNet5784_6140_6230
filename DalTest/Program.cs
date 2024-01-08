@@ -7,14 +7,14 @@ using System.Xml.Linq;
 using System.Diagnostics.Metrics;
 using System.Diagnostics;
 using System;
+using System.Collections.Generic;
 
 namespace DalTest
 {
     internal class Program
     {
-        private static ITask1? s_dalTask = new TaskImplementation(); //stage 1
-        private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
-        private static IDependeency? s_dalDependeency = new DependeencyImplementation(); //stage 1
+ 
+        static readonly IDal s_dal = new DalList(); 
 
         private static int mainMenue() //Main Menu
         {
@@ -51,34 +51,23 @@ namespace DalTest
             Console.WriteLine("Enter Description");
             string? descripation = Console.ReadLine();
 
-            Console.WriteLine("Enter CreatedAtDate");
-            Console.WriteLine("Enter day");
-            string? day = Console.ReadLine();
-            Console.WriteLine("Enter monthe");
-            string? month = Console.ReadLine();
-            Console.WriteLine("Enter year");
-            string? year = Console.ReadLine();
-            DateTime createdAtDate = new DateTime(int.Parse(year!), int.Parse(month!), int.Parse(day!));
+            Console.WriteLine("Enter CreatedAtDate Enter CreatedAtDate in the format 00.00.0000");
+             DateTime? createdAtDate = DateTime.Parse(Console.ReadLine()!);
 
-            Console.WriteLine("Enter ScheduledDate");
-            Console.WriteLine("Enter day");
-            day = Console.ReadLine();
-            Console.WriteLine("Enter monthe");
-            month = Console.ReadLine();
-            Console.WriteLine("Enter year");
-            year = Console.ReadLine();
-            DateTime ScheduledDate = new DateTime(int.Parse(year!), int.Parse(month!), int.Parse(day!));
+            Console.WriteLine("Enter ScheduledDate in the format 00.00.0000");
+            DateTime ScheduledDate = DateTime.Parse(Console.ReadLine()!);
 
-            Console.WriteLine("Enter RequiredEffortTime");
+            Console.WriteLine("RequiredEffortTime");
             Console.WriteLine("Enter num of days");
-            day = Console.ReadLine();
+            string day = Console.ReadLine()!;
             Console.WriteLine("Enter num of hours");
             string? hours = Console.ReadLine();
             Console.WriteLine("Enter num of minutes");
             string? minutes = Console.ReadLine();
             TimeSpan RequiredEffortTime = new TimeSpan(int.Parse(day!), int.Parse(hours!), int.Parse(minutes!), 0);
+            
 
-            DateTime DeadLine = ScheduledDate + RequiredEffortTime;
+           DateTime DeadLine = ScheduledDate + RequiredEffortTime;
 
             Console.WriteLine("Enter Engineer id");
             int engineerId = int.Parse(Console.ReadLine()!);
@@ -101,12 +90,8 @@ namespace DalTest
             Console.WriteLine("Enter remarks");
             string? Remarks = Console.ReadLine();
 
-            Console.WriteLine("Is the task a milestone? enter yes or no");
-            string? help = Console.ReadLine();
-            bool isMilestone = false;
-
-            if (help == "yes")
-                isMilestone = true;
+            Console.WriteLine("Is the task a milestone? enter true or false");
+            bool isMilestone = bool.Parse(Console.ReadLine()!);
 
             Task1 newTask = new(0, alias, descripation, createdAtDate, ScheduledDate, RequiredEffortTime,
                 DeadLine, engineerId, startDate, CompleteDate, Copmlexity, Dellverables, Remarks,
@@ -158,7 +143,7 @@ namespace DalTest
                     {
                         Task1 newTask = createNewTask();
                         
-                        s_dalTask!.Create(newTask);
+                        s_dal!.Task1!.Create(newTask);
 
                         break;
                     }
@@ -167,7 +152,9 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of task");
                         int Id = int.Parse(Console.ReadLine()!);
-                        Task1 ?task = s_dalTask!.Read(Id);
+                        Task1 ?task = s_dal!.Task1!.Read(Id);
+                        if (task == null)
+                            throw new DalDoesNotExistException($"task with ID={Id} does not exist");
                         Console.WriteLine($@"
                         Id: {task!.Id}
                         Alias: {task.Alias}
@@ -188,7 +175,7 @@ namespace DalTest
 
                 case 3:
                     {
-                        List<Task1> tasks = s_dalTask!.ReadAll();
+                        List<Task1> tasks = (List<Task1>)s_dal!.Task1!.ReadAll();
                         int x = 1;
 
                         foreach (var task in tasks) 
@@ -226,55 +213,32 @@ namespace DalTest
                         Console.WriteLine("Enter Description");
                         string? descripation = Console.ReadLine();
 
-                        Console.WriteLine("Enter CreatedAtDate");
-                        Console.WriteLine("Enter day");
-                        string? day = Console.ReadLine();
-                        Console.WriteLine("Enter monthe");
-                        string? month = Console.ReadLine();
-                        Console.WriteLine("Enter year");
-                        string? year = Console.ReadLine();
-                        DateTime createdAtDate = new DateTime(int.Parse(year!), int.Parse(month!), int.Parse(day!));
+                        Console.WriteLine("Enter CreatedAtDate in the format 00.00.00");
+                        DateTime createdAtDate = DateTime.Parse(Console.ReadLine()!);   
 
-                        Console.WriteLine("Enter ScheduledDate");
-                        Console.WriteLine("Enter day");
-                        day = Console.ReadLine();
-                        Console.WriteLine("Enter monthe");
-                        month = Console.ReadLine();
-                        Console.WriteLine("Enter year");
-                        year = Console.ReadLine();
-                        DateTime ScheduledDate = new DateTime(int.Parse(year!), int.Parse(month!), int.Parse(day!));
+                        Console.WriteLine("Enter ScheduledDate in the format 00.00.00");
+                        DateTime ScheduledDate = DateTime.Parse(Console.ReadLine()!);   
 
-                        Console.WriteLine("Enter RequiredEffortTime");
+                        Console.WriteLine("RequiredEffortTime ");
                         Console.WriteLine("Enter num of days");
-                        day = Console.ReadLine();
+                        string day = Console.ReadLine()!;
                         Console.WriteLine("Enter num of hours");
                         string? hours = Console.ReadLine();
                         Console.WriteLine("Enter num of minutes");
                         string? minutes = Console.ReadLine();
-                        TimeSpan RequiredEffortTime = new TimeSpan(int.Parse(day!), int.Parse(hours!), int.Parse(minutes!),0);
+                        TimeSpan RequiredEffortTime = new TimeSpan(int.Parse(day!), int.Parse(hours!), int.Parse(minutes!), 0);
+                
 
                         DateTime DeadLine = ScheduledDate + RequiredEffortTime;
 
                         Console.WriteLine("Enter Engineer id");
                         int engineerId = int.Parse(Console.ReadLine()!);
 
-                        Console.WriteLine("Enter startDate");
-                        Console.WriteLine("Enter day");
-                        day = Console.ReadLine();
-                        Console.WriteLine("Enter monthe");
-                        month = Console.ReadLine();
-                        Console.WriteLine("Enter year");
-                        year = Console.ReadLine();
-                        DateTime startDate = new DateTime(int.Parse(year!), int.Parse(month!), int.Parse(day!));
-                        
-                        Console.WriteLine("Enter CompleteDate");
-                        Console.WriteLine("Enter day");
-                        day = Console.ReadLine();
-                        Console.WriteLine("Enter monthe");
-                        month = Console.ReadLine();
-                        Console.WriteLine("Enter year");
-                        year = Console.ReadLine();
-                        DateTime CompleteDate = new DateTime(int.Parse(year!), int.Parse(month!), int.Parse(day!));
+                        Console.WriteLine("Enter startDate in the format 00.00.00");
+                        DateTime startDate = DateTime.Parse(Console.ReadLine()!);  
+
+                        Console.WriteLine("Enter CompleteDate in the format 00.00.00");
+                        DateTime CompleteDate = DateTime.Parse(Console.ReadLine()!);
 
                         Console.WriteLine(@"
             Enter Copmlexity:
@@ -303,7 +267,7 @@ namespace DalTest
                             DeadLine, engineerId, startDate, CompleteDate, Copmlexity, Dellverables, Remarks,
                             isMilestone);
 
-                        s_dalTask!.Update(newTask);
+                        s_dal!.Task1!.Update(newTask);
                         break;
                     }
 
@@ -311,7 +275,7 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of task");
                         int Id = int.Parse(Console.ReadLine()!);
-                        s_dalTask!.Delete(Id);
+                        s_dal!.Task1!.Delete(Id);
                         break;
                     }
 
@@ -342,7 +306,7 @@ namespace DalTest
                 case 1:
                     {
                         Engineer newEngineer = createNewEngineer();
-                        s_dalEngineer!.Create(newEngineer);
+                        s_dal!.Engineer!.Create(newEngineer);
                         break;
                     }
 
@@ -350,19 +314,22 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of Engineer");
                         int Id = int.Parse(Console.ReadLine()!);
-                        Engineer? engineer = s_dalEngineer!.Read(Id);
+                        Engineer? engineer = s_dal!.Engineer!.Read(Id);
+                        if (engineer == null)
+                            throw new DalDoesNotExistException($"Engineer with ID={Id} does not exist");
                         Console.WriteLine($@"
                         Id: {engineer!.Id}
                         Name:  {engineer.Name}                       
                         Email: {engineer.Email}
                         Cost: {engineer.Cost}
                         Level: {engineer.Level}");
+                        
                         break;
                     }
 
                 case 3:
                     {
-                        List<Engineer> engineers = s_dalEngineer!.ReadAll();
+                        List<Engineer> engineers = (List<Engineer>)s_dal!.Engineer!.ReadAll();
                         int x = 1;
 
                         foreach (var engineer in engineers)
@@ -383,7 +350,7 @@ namespace DalTest
                 case 4:
                     {
                         Engineer newEngineer = createNewEngineer();
-                        s_dalEngineer!.Update(newEngineer);
+                        s_dal!.Engineer!.Update(newEngineer);
                         break;
                     }
 
@@ -391,7 +358,7 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of Engineer");
                         int Id = int.Parse(Console.ReadLine()!);
-                        s_dalEngineer!.Delete(Id);
+                        s_dal!.Engineer!.Delete(Id);
                         break;
                     }
 
@@ -429,7 +396,7 @@ namespace DalTest
                         int DependsOnTask=int.Parse(Console.ReadLine()!);
 
                         Dependeency neWDependeency = new Dependeency(0, DependentTask, DependsOnTask);
-                        s_dalDependeency!.Create(neWDependeency);
+                        s_dal!.Dependeency!.Create(neWDependeency);
 
                         break;
                     }
@@ -438,7 +405,9 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of Dependeency");
                         int Id = int.Parse(Console.ReadLine()!);
-                        Dependeency? dependeency = s_dalDependeency!.Read(Id);
+                        Dependeency? dependeency = s_dal!.Dependeency!.Read(Id);
+                        if (dependeency == null)
+                            throw new DalDoesNotExistException($"dependeency with ID={Id} does not exist");
                         Console.WriteLine($@"
                         Id: {dependeency!.Id}
                         DependentTask  {dependeency.DependentTask}                       
@@ -449,7 +418,7 @@ namespace DalTest
 
                 case 3:
                     {
-                        List<Dependeency> dependeencies = s_dalDependeency!.ReadAll();
+                        List<Dependeency> dependeencies = (List < Dependeency >)s_dal!.Dependeency!.ReadAll();
                         int x = 1;
 
                         foreach (var dependeency in dependeencies)
@@ -474,7 +443,7 @@ namespace DalTest
                         int DependsOnTask = int.Parse(Console.ReadLine()!);
 
                         Dependeency neWDependeency = new Dependeency(0, DependentTask, DependsOnTask);
-                        s_dalDependeency!.Update(neWDependeency);
+                        s_dal!.Dependeency!.Update(neWDependeency);
 
                         break;
                     }
@@ -483,7 +452,7 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of Dependeency");
                         int Id = int.Parse(Console.ReadLine()!);
-                        s_dalDependeency!.Delete(Id);
+                        s_dal!.Dependeency!.Delete(Id);
                         break;
                     }
 
@@ -503,55 +472,61 @@ namespace DalTest
         {
             try
             {
-                Initialization.Do(s_dalTask, s_dalEngineer, s_dalDependeency);
+                Initialization.Do(s_dal);
                 int _object = mainMenue();
                 bool flag = true; 
 
                 while (_object!=0)
                 {
+                    try
+                    {
 
-                     
                         switch (_object)
                         {
-                         
+
                             case 1:
-                            {
-                                flag = actTask();
-                                break;
-                            }
+                                {
+                                    flag = actTask();
+                                    break;
+                                }
 
                             case 2:
-                            {
-                                flag = actEngineer();
-                                break;
-                            }
+                                {
+                                    flag = actEngineer();
+                                    break;
+                                }
 
                             case 3:
-                            {
-                                flag = actDependeency();
-                                break;
-                            }
+                                {
+                                    flag = actDependeency();
+                                    break;
+                                }
 
 
                             default:
-                            {
+                                {
                                     Console.WriteLine("Eror");
                                     break;
-                            }
+                                }
                         }
-
+       
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
                     if (flag == false)
                     {
                         return;
                     }
-
                     _object = mainMenue();
 
-
                 }
-
             }
-
+            catch (DalDoesNotExistException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             catch (Exception ex) 
             { 
                 Console.WriteLine(ex.ToString());

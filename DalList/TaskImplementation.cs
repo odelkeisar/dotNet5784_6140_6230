@@ -2,11 +2,13 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Implementing methods for the tasks data structure.
 /// </summary>
-public class TaskImplementation : ITask1
+internal class TaskImplementation : ITask1
 { 
     public int Create(Task1 item)
     {
@@ -21,23 +23,35 @@ public class TaskImplementation : ITask1
         Task1? item1 = Read(id);
    
         if (item1 == null)
-            throw new Exception("An object of type Task with such an ID does not exist");
+            throw new DalDoesNotExistException($"Task with ID={id} does not exist");
         DataSource.Tasks.Remove(item1);
     }
 
     public Task1? Read(int id)
     {
-        Task1? item = DataSource.Tasks.Find(x => x.Id == id);
+        //Task1? item = DataSource.Tasks.Find(x => x.Id == id);
 
-        if (item == null) return null;
-        return item;
+        //if (item == null) return null;
+        //return item;
 
-        throw new NotImplementedException();
+        return DataSource.Tasks.FirstOrDefault(x => (x.Id == id));
     }
 
-    public List<Task1> ReadAll()
+    public Task1? Read(Func<Task1, bool> filter) // stage 2
     {
-        return new List<Task1>(DataSource.Tasks);
+        return DataSource.Tasks.FirstOrDefault(filter);
+    }
+
+    //public List<Task1> ReadAll()
+    //{
+    //    return new List<Task1>(DataSource.Tasks);
+    //}
+    public IEnumerable<Task1> ReadAll(Func<Task1, bool>? filter = null)
+    {
+        if (filter == null)
+            return DataSource.Tasks.Select(item => item).ToList();
+        else
+            return DataSource.Tasks.Where(filter).ToList();
     }
 
     public void Update(Task1 item)
@@ -45,7 +59,7 @@ public class TaskImplementation : ITask1
         Task1? item1 = Read(item.Id);
 
         if (item1 == null)
-            throw new Exception("An object of type Task with such an ID does not exist");
+            throw new DalDoesNotExistException($"Task with ID={item.Id} does not exist");
 
         DataSource.Tasks.Remove(item1); 
 
