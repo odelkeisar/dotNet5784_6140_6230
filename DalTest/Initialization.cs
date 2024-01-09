@@ -59,11 +59,7 @@ public static class Initialization
         int x = 0;
         foreach (var _name in EngineertNames)
         {
-           // int _id;
-            //do
-             int _id = s_rand.Next(100000000, 900000000);
-            //while (s_dalEngineer!.Read(_id) != null);
-
+            int _id = s_rand.Next(100000000, 900000000);
             string _email = EngineertMail[x++];
             double _cost = s_rand.Next(50, 300);
             DO.EngineerExperience? _Level = (DO.EngineerExperience)s_rand.Next(0, 4);
@@ -80,10 +76,10 @@ public static class Initialization
         {
             foreach (var _task1 in s_dal!.Task1.ReadAll())
             {
-                if (_task.Id == _task1.Id) //Finish scanning previous tasks  
+                if (_task?.Id == _task1!.Id) //Finish scanning previous tasks  
                     break;
 
-                if (_task.ScheduledDate > _task1.ScheduledDate)
+                if (_task?.ScheduledDate > _task1!.ScheduledDate)
                 {
                     Dependeency _dependeency = new(0, _task.Id, _task1.Id);
                     s_dal!.Dependeency.Create(_dependeency);

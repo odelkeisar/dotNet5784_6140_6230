@@ -32,12 +32,7 @@ internal class EngineerImplementation : IEngineer
 
     public Engineer? Read(int id)
     {
-        Engineer? item = DataSource.Engineers.Find(x => x.Id == id);
-
-        if (item == null) return null;
-        return item;
-
-        //return DataSource.Engineers.FirstOrDefault(x => (x.Id == id));
+        return DataSource.Engineers.FirstOrDefault(x => (x.Id == id));
     }
 
     public Engineer? Read(Func<Engineer, bool> filter) 
@@ -58,7 +53,9 @@ internal class EngineerImplementation : IEngineer
         Engineer? item1 = Read(item.Id);
 
         if (item1 == null)
-            throw new DalDoesNotExistException($"Engineer with ID={item.Id} does not exist");
+            throw new DalDoesNotExistException(
+                
+                $"Engineer with ID={item.Id} does not exist");
 
         DataSource.Engineers.Remove(item1);
         DataSource.Engineers.Add(item);
