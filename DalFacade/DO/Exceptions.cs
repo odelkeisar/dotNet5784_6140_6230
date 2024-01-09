@@ -1,13 +1,13 @@
-﻿
-namespace DO;
+﻿namespace DO;
 [Serializable]
 
-public class DalDoesNotExistException : Exception
+public class DalDoesNotExistException : Exception //Exception for an entity that does not exist in the list
 {
     public DalDoesNotExistException(string? message) : base(message) { }
 }
 [Serializable]
-public class DalAlreadyExistsException : Exception
+
+public class DalAlreadyExistsException : Exception //Exception for an ID number that already exists in the list
 {
     public DalAlreadyExistsException(string? message) : base(message) { }
 }

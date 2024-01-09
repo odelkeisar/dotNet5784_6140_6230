@@ -24,10 +24,10 @@ public record Task1
     DateTime? ScheduledDate = null,//תאריך מתוכנן להתחלה
     TimeSpan? RequiredEffortTime = null,//משך זמן המשימה
     DateTime? DeadlineDate = null,//תאריך סיום
-    int EngineerId = 0,
+    int ChefId = 0,
     DateTime? StartDate = null,//התחלה בפועל
     DateTime? CompleteDate = null,//סיום בפועל
-    DO.EngineerExperience? Copmlexity = null, //רמת קושי
+    DO.ChefExperience? Copmlexity = null, //רמת קושי
     string? Dellverables = null, //תוצר
     string? Remarks = null,//הערות
     bool isMileStone = false//אבני דרך

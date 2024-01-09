@@ -22,7 +22,7 @@ namespace DalTest
             please enter a number
             0 to exit
             1 to task
-            2 to engineer
+            2 to chef
             3 to dependencies
             ");
 
@@ -69,8 +69,8 @@ namespace DalTest
 
            DateTime DeadLine = ScheduledDate + RequiredEffortTime;
 
-            Console.WriteLine("Enter Engineer id");
-            int engineerId = int.Parse(Console.ReadLine()!);
+            Console.WriteLine("Enter Chef id");
+            int chefId = int.Parse(Console.ReadLine()!);
 
             DateTime? startDate = null;
             DateTime? CompleteDate = null;
@@ -83,7 +83,7 @@ namespace DalTest
             Advanced=3
             Experet=4
             ");
-            EngineerExperience Copmlexity = (EngineerExperience)int.Parse(Console.ReadLine()!);
+            ChefExperience Copmlexity = (ChefExperience)int.Parse(Console.ReadLine()!);
 
             string? Dellverables = null;
 
@@ -94,13 +94,13 @@ namespace DalTest
             bool isMilestone = bool.Parse(Console.ReadLine()!);
 
             Task1 newTask = new(0, alias, descripation, createdAtDate, ScheduledDate, RequiredEffortTime,
-                DeadLine, engineerId, startDate, CompleteDate, Copmlexity, Dellverables, Remarks,
+                DeadLine, chefId, startDate, CompleteDate, Copmlexity, Dellverables, Remarks,
                 isMilestone);
 
             return newTask;
         }
 
-        private static Engineer createNewEngineer() //Receiving new engineer details
+        private static Chef createNewEngineer() //Receiving new engineer details
         {
             Console.WriteLine("Enter Id");
             int id = int.Parse(Console.ReadLine()!);
@@ -121,9 +121,9 @@ namespace DalTest
             Advanced=3
             Experet=4
             ");
-            EngineerExperience level = (EngineerExperience)int.Parse(Console.ReadLine()!);
+            ChefExperience level = (ChefExperience)int.Parse(Console.ReadLine()!);
 
-            Engineer newEngineer = new Engineer(id, email, cost, name, level);
+            Chef newEngineer = new Chef(id, email, cost, name, level);
             return newEngineer;
         }
 
@@ -163,7 +163,7 @@ namespace DalTest
                         ScheduledDate:{task.ScheduledDate}
                         RequiredEffortTime:{task.RequiredEffortTime}
                         DeadLine:{task.DeadlineDate}
-                        EngineerId:{task.EngineerId}
+                        ChefId:{task.ChefId}
                         StartDate:{task.StartDate}
                         CompleteDate:{task.CompleteDate}
                         Dellverables:{task.Dellverables}
@@ -189,7 +189,7 @@ namespace DalTest
                             ScheduledDate:{task.ScheduledDate}
                             RequiredEffortTime:{task.RequiredEffortTime}
                             DeadLine:{task.DeadlineDate}
-                            EngineerId:{task.EngineerId}
+                            ChefId:{task.ChefId}
                             StartDate:{task.StartDate}
                             CompleteDate:{task.CompleteDate}
                             Dellverables:{task.Dellverables}
@@ -248,7 +248,7 @@ namespace DalTest
             Advanced=3
             Experet=4
             ");
-                        EngineerExperience Copmlexity = (EngineerExperience)int.Parse(Console.ReadLine()!);
+                        ChefExperience Copmlexity = (ChefExperience)int.Parse(Console.ReadLine()!);
 
                         Console.WriteLine("Enter dellverables");
                         string? Dellverables = Console.ReadLine();
@@ -291,7 +291,7 @@ namespace DalTest
             return true;
         }
 
-        private static bool actEngineer() //Actions menu for the engineer
+        private static bool actChef() //Actions menu for the engineer
         { 
             subMenue();
             string? y = Console.ReadLine();
@@ -305,8 +305,8 @@ namespace DalTest
                     }
                 case 1:
                     {
-                        Engineer newEngineer = createNewEngineer();
-                        s_dal!.Engineer!.Create(newEngineer);
+                        Chef newEngineer = createNewEngineer();
+                        s_dal!.Chef!.Create(newEngineer);
                         break;
                     }
 
@@ -314,22 +314,22 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of Engineer");
                         int Id = int.Parse(Console.ReadLine()!);
-                        Engineer? engineer = s_dal!.Engineer!.Read(Id);
-                        if (engineer == null)
+                        Chef? chef = s_dal!.Chef!.Read(Id);
+                        if (chef == null)
                             throw new DalDoesNotExistException($"Engineer with ID={Id} does not exist");
                         Console.WriteLine($@"
-                        Id: {engineer!.Id}
-                        Name:  {engineer.Name}                       
-                        Email: {engineer.Email}
-                        Cost: {engineer.Cost}
-                        Level: {engineer.Level}");
+                        Id: {chef!.Id}
+                        Name:  {chef.Name}                       
+                        Email: {chef.Email}
+                        Cost: {chef.Cost}
+                        Level: {chef.Level}");
                         
                         break;
                     }
 
                 case 3:
                     {
-                        List<Engineer> engineers = (List<Engineer>)s_dal!.Engineer!.ReadAll();
+                        List<Chef> engineers = (List<Chef>)s_dal!.Chef!.ReadAll();
                         int x = 1;
 
                         foreach (var engineer in engineers)
@@ -349,8 +349,8 @@ namespace DalTest
 
                 case 4:
                     {
-                        Engineer newEngineer = createNewEngineer();
-                        s_dal!.Engineer!.Update(newEngineer);
+                        Chef newEngineer = createNewEngineer();
+                        s_dal!.Chef!.Update(newEngineer);
                         break;
                     }
 
@@ -358,7 +358,7 @@ namespace DalTest
                     {
                         Console.WriteLine("Enter Id of Engineer");
                         int Id = int.Parse(Console.ReadLine()!);
-                        s_dal!.Engineer!.Delete(Id);
+                        s_dal!.Chef!.Delete(Id);
                         break;
                     }
 
@@ -492,7 +492,7 @@ namespace DalTest
 
                             case 2:
                                 {
-                                    flag = actEngineer();
+                                    flag = actChef();
                                     break;
                                 }
 
