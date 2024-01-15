@@ -16,7 +16,7 @@ public class ChefImplementation : IChef
         if (item1 != null)
             throw new Exception("An object of type Chef with such an ID already exists ");
 
-       DataSource.Chefs.Add(item); //add item to the list
+       DataSource.Chefs!.Add(item); //add item to the list
         return item.Id;
     }
 
@@ -26,12 +26,12 @@ public class ChefImplementation : IChef
         
         if (item1 == null)
             throw new Exception("An object of type T with such an ID does not exist");
-        DataSource.Chefs.Remove(item1); //remove item1 from the list
+        DataSource.Chefs!.Remove(item1); //remove item1 from the list
     }
 
     public Chef? Read(int id)
     {
-        Chef? item = DataSource.Chefs.Find(x => x.Id == id); //Finds the entry in the list that is his ID 
+        Chef? item = DataSource.Chefs!.Find(x => x.Id == id); //Finds the entry in the list that is his ID 
 
         if (item == null) return null;
         return item;
@@ -39,7 +39,7 @@ public class ChefImplementation : IChef
 
     public List<Chef> ReadAll()
     {
-        return new List<Chef>(DataSource.Chefs);
+        return new List<Chef>(DataSource.Chefs!);
     }
 
     public void Update(Chef item)
@@ -49,7 +49,7 @@ public class ChefImplementation : IChef
         if (item1 == null)
             throw new Exception("An object of type Engineer with such an ID does not exist");
 
-        DataSource.Chefs.Remove(item1); //remove item1 from the list
+        DataSource.Chefs!.Remove(item1); //remove item1 from the list
         DataSource.Chefs.Add(item); //add item to the list
     }
 }

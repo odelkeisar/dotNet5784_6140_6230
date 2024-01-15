@@ -27,7 +27,7 @@ public record Task1
     int ChefId = 0,
     DateTime? StartDate = null,//התחלה בפועל
     DateTime? CompleteDate = null,//סיום בפועל
-    DO.ChefExperience? Copmlexity = null, //רמת קושי
+    ChefExperience? Copmlexity = null, //רמת קושי
     string? Dellverables = null, //תוצר
     string? Remarks = null,//הערות
     bool isMileStone = false//אבני דרך

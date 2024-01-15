@@ -12,7 +12,7 @@ internal class DependeencyImplementation : IDependeency
     {
         int newId = DataSource.Config.NextDependeencyId;
         Dependeency item1 = item with { Id = newId };
-        DataSource.Dependeencies.Add(item1);
+        DataSource.Dependeencies!.Add(item1);
         return newId;
     }
 
@@ -21,26 +21,26 @@ internal class DependeencyImplementation : IDependeency
         Dependeency? item = Read(id);
         if (item == null)
             throw new DalDoesNotExistException($"Dependeency with ID={id} does not exist");
-        DataSource.Dependeencies.Remove(item); //remove item from the list
+        DataSource.Dependeencies!.Remove(item); //remove item from the list
     }
 
     public Dependeency? Read(int id)
     {
 
-        return DataSource.Dependeencies.FirstOrDefault(x => (x.Id == id)); //Returns the first entry in the list with this ID
+        return DataSource.Dependeencies!.FirstOrDefault(x => (x.Id == id)); //Returns the first entry in the list with this ID
     }
 
     public Dependeency? Read(Func<Dependeency, bool> filter) 
     {
-        return DataSource.Dependeencies.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
+        return DataSource.Dependeencies!.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
     }
 
     public IEnumerable<Dependeency> ReadAll(Func<Dependeency, bool>? filter = null)
     {
         if (filter == null)
-            return DataSource.Dependeencies.Select(item => item).ToList(); //retun the list
+            return DataSource.Dependeencies!.Select(item => item).ToList(); //retun the list
         else
-            return DataSource.Dependeencies.Where(filter).ToList();
+            return DataSource.Dependeencies!.Where(filter).ToList();
     }
 
     public void Update(Dependeency item)
@@ -50,7 +50,7 @@ internal class DependeencyImplementation : IDependeency
         if (item1 == null)
             throw new DalDoesNotExistException($"Dependeency with ID={item.Id} does not exist");
 
-        DataSource.Dependeencies.Remove(item1); //remove item1 from the list
+        DataSource.Dependeencies!.Remove(item1); //remove item1 from the list
         DataSource.Dependeencies.Add(item); //add item to the list
     }
 }

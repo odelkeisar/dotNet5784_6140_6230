@@ -14,7 +14,7 @@ internal class TaskImplementation : ITask1
     {
         int newId = DataSource.Config.NextTaskId;
         Task1 item1 = item with { Id = newId };
-        DataSource.Tasks.Add(item1);    //add item to the list
+        DataSource.Tasks!.Add(item1);    //add item to the list
         return newId;   
     }
 
@@ -24,25 +24,25 @@ internal class TaskImplementation : ITask1
    
         if (item1 == null)
             throw new DalDoesNotExistException($"Task with ID={id} does not exist");
-        DataSource.Tasks.Remove(item1);
+        DataSource.Tasks!.Remove(item1);
     }
 
     public Task1? Read(int id)
     {
-        return DataSource.Tasks.FirstOrDefault(x => (x.Id == id)); //Returns the first entry in the list with this ID
+        return DataSource.Tasks!.FirstOrDefault(x => (x.Id == id)); //Returns the first entry in the list with this ID
     }
 
     public Task1? Read(Func<Task1, bool> filter) 
     {
-        return DataSource.Tasks.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
+        return DataSource.Tasks!.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
     }
 
     public IEnumerable<Task1> ReadAll(Func<Task1, bool>? filter = null)
     {
         if (filter == null)
-            return DataSource.Tasks.Select(item => item).ToList(); //retun the list
+            return DataSource.Tasks!.Select(item => item).ToList(); //retun the list
         else
-            return DataSource.Tasks.Where(filter).ToList();
+            return DataSource.Tasks!.Where(filter).ToList();
     }
 
     public void Update(Task1 item)
@@ -52,7 +52,7 @@ internal class TaskImplementation : ITask1
         if (item1 == null)
             throw new DalDoesNotExistException($"Task with ID={item.Id} does not exist");
 
-        DataSource.Tasks.Remove(item1); //remove item1 from the list
+        DataSource.Tasks!.Remove(item1); //remove item1 from the list
 
         DataSource.Tasks.Add(item); //add item to the list
     }

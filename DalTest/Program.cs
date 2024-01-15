@@ -100,7 +100,7 @@ namespace DalTest
             return newTask;
         }
 
-        private static Chef createNewEngineer() //Receiving new engineer details
+        private static Chef createNewChef() //Receiving new engineer details
         {
             Console.WriteLine("Enter Id");
             int id = int.Parse(Console.ReadLine()!);
@@ -123,8 +123,8 @@ namespace DalTest
             ");
             ChefExperience level = (ChefExperience)int.Parse(Console.ReadLine()!);
 
-            Chef newEngineer = new Chef(id, email, cost, name, level);
-            return newEngineer;
+            Chef newChef = new Chef(id, email, cost, name, level);
+            return newChef;
         }
 
         private static bool actTask() //Actions menu for the task
@@ -305,18 +305,18 @@ namespace DalTest
                     }
                 case 1:
                     {
-                        Chef newEngineer = createNewEngineer();
-                        s_dal!.Chef!.Create(newEngineer);
+                        Chef newChef = createNewChef();
+                        s_dal!.Chef!.Create(newChef);
                         break;
                     }
 
                 case 2:
                     {
-                        Console.WriteLine("Enter Id of Engineer");
+                        Console.WriteLine("Enter Id of Chef");
                         int Id = int.Parse(Console.ReadLine()!);
                         Chef? chef = s_dal!.Chef!.Read(Id);
                         if (chef == null)
-                            throw new DalDoesNotExistException($"Engineer with ID={Id} does not exist");
+                            throw new DalDoesNotExistException($"Chef with ID={Id} does not exist");
                         Console.WriteLine($@"
                         Id: {chef!.Id}
                         Name:  {chef.Name}                       
@@ -329,18 +329,18 @@ namespace DalTest
 
                 case 3:
                     {
-                        List<Chef> engineers = (List<Chef>)s_dal!.Chef!.ReadAll();
+                        List<Chef> chefs = (List<Chef>)s_dal!.Chef!.ReadAll();
                         int x = 1;
 
-                        foreach (var engineer in engineers)
+                        foreach (var chef in chefs)
                         {
-                            Console.WriteLine($"Engineer: {x++}");
+                            Console.WriteLine($"Chef: {x++}");
                             Console.WriteLine($@"
-                            Id: {engineer!.Id}
-                            Name:  {engineer.Name}                       
-                            Email: {engineer.Email}
-                            Cost: {engineer.Cost}
-                            Level: {engineer.Level}
+                            Id: {chef!.Id}
+                            Name:  {chef.Name}                       
+                            Email: {chef.Email}
+                            Cost: {chef.Cost}
+                            Level: {chef.Level}
                             ");
 
                         }
@@ -349,14 +349,14 @@ namespace DalTest
 
                 case 4:
                     {
-                        Chef newEngineer = createNewEngineer();
-                        s_dal!.Chef!.Update(newEngineer);
+                        Chef newChef = createNewChef();
+                        s_dal!.Chef!.Update(newChef);
                         break;
                     }
 
                 case 5:
                     {
-                        Console.WriteLine("Enter Id of Engineer");
+                        Console.WriteLine("Enter Id of Chef");
                         int Id = int.Parse(Console.ReadLine()!);
                         s_dal!.Chef!.Delete(Id);
                         break;

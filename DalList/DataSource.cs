@@ -1,9 +1,9 @@
 ﻿namespace Dal;
  internal static class DataSource
 {
-    internal static List<DO.Task1> Tasks { get; } = new();
-    internal static List<DO.Chef> Chefs { get; } = new();
-    internal static List<DO.Dependeency> Dependeencies { get; } = new();
+    internal static List<DO.Task1>? Tasks { get; } = new();
+    internal static List<DO.Chef>? Chefs { get; } = new();
+    internal static List<DO.Dependeency>? Dependeencies { get; } = new();
 
     internal static class Config
     {
