@@ -12,3 +12,7 @@ public class DalAlreadyExistsException : Exception //Exception for an ID number 
     public DalAlreadyExistsException(string? message) : base(message) { }
 }
 
+public class DalXMLFileLoadCreateException: Exception // Exception of XmlTools
+{
+    public  DalXMLFileLoadCreateException(string? message) : base(message)  { }
+}

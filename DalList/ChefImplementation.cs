@@ -14,7 +14,7 @@ public class ChefImplementation : IChef
        Chef? item1 = Read(item.Id);
         
         if (item1 != null)
-            throw new Exception("An object of type Chef with such an ID already exists ");
+            throw new DalAlreadyExistsException($"An object of type Chef with {item.Id} already exists ");
 
        DataSource.Chefs!.Add(item); //add item to the list
         return item.Id;
@@ -25,10 +25,14 @@ public class ChefImplementation : IChef
         Chef? item1 = Read(id);
         
         if (item1 == null)
-            throw new Exception("An object of type T with such an ID does not exist");
+            throw new DalDoesNotExistException($"Dependeency with ID={id} does not exist");
         DataSource.Chefs!.Remove(item1); //remove item1 from the list
     }
 
+    public Chef? Read(Func<Chef, bool> filter)
+    {
+        return DataSource.Chefs!.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
+    }
     public Chef? Read(int id)
     {
         Chef? item = DataSource.Chefs!.Find(x => x.Id == id); //Finds the entry in the list that is his ID 
@@ -37,9 +41,12 @@ public class ChefImplementation : IChef
         return item;
     }
 
-    public List<Chef> ReadAll()
+    public IEnumerable<Chef> ReadAll(Func<Chef, bool>? filter = null)
     {
-        return new List<Chef>(DataSource.Chefs!);
+        if (filter == null)
+            return DataSource.Chefs!.Select(item => item).ToList(); //retun the list
+        else
+            return DataSource.Chefs!.Where(filter).ToList();
     }
 
     public void Update(Chef item)
@@ -47,7 +54,7 @@ public class ChefImplementation : IChef
         Chef? item1 = Read(item.Id);
 
         if (item1 == null)
-            throw new Exception("An object of type Engineer with such an ID does not exist");
+            throw new DalDoesNotExistException($"Dependeency with ID={item.Id} does not exist");
 
         DataSource.Chefs!.Remove(item1); //remove item1 from the list
         DataSource.Chefs.Add(item); //add item to the list

@@ -9,12 +9,15 @@ using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 
+
 namespace DalTest
 {
     internal class Program
     {
- 
-        static readonly IDal s_dal = new DalList(); 
+
+        // static readonly IDal s_dal = new DalList(); //stage2
+         static readonly IDal s_dal = new DalXml(); //stage 3
+
 
         private static int mainMenue() //Main Menu
         {
