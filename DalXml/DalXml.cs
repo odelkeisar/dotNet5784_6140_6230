@@ -1,7 +1,9 @@
 ﻿using DalApi;
 
 namespace Dal;
-
+/// <summary>
+/// A class inherits from IDeal and implements it
+/// </summary>
 
 //stage 3
 

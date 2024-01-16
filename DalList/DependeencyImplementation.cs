@@ -53,4 +53,5 @@ internal class DependeencyImplementation : IDependeency
         DataSource.Dependeencies!.Remove(item1); //remove item1 from the list
         DataSource.Dependeencies.Add(item); //add item to the list
     }
+    public void DeleteAll() { DataSource.Dependeencies!.Clear(); }
 }

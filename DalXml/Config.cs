@@ -1,7 +1,9 @@
 ﻿
 
 namespace Dal;
-
+/// <summary>
+/// The class advances the run variable
+/// </summary>
 internal static class Config
 {
     static string s_data_config_xml = "data-config";

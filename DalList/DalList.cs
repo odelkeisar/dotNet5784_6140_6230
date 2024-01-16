@@ -13,9 +13,9 @@ sealed public class DalList : IDal
 {
 
     public ITask1 Task1 => new TaskImplementation();
-    public IChef Chef=> new ChefImplementation();
+    public IChef Chef => new ChefImplementation();
     public IDependeency Dependeency => new DependeencyImplementation();
-   
+
 }
 
 

@@ -59,4 +59,5 @@ public class ChefImplementation : IChef
         DataSource.Chefs!.Remove(item1); //remove item1 from the list
         DataSource.Chefs.Add(item); //add item to the list
     }
+    public void DeleteAll() { DataSource.Chefs.Clear(); }
 }

@@ -3,6 +3,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -56,4 +57,6 @@ internal class TaskImplementation : ITask1
 
         DataSource.Tasks.Add(item); //add item to the list
     }
+
+    public void DeleteAll() { DataSource.Tasks.Clear(); }
 }
