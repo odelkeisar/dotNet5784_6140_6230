@@ -16,6 +16,11 @@ internal class TaskImplementation : ITask1
             XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);
     }
 
+    /// <summary>
+    /// //add dependeency to a task
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public int Create(Task1 item)
     {
         var listTask = XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);
@@ -26,6 +31,11 @@ internal class TaskImplementation : ITask1
         return newId;
     }
 
+    /// <summary>
+    /// delete member from the list according the id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         var listTask = XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);
@@ -38,6 +48,11 @@ internal class TaskImplementation : ITask1
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
     }
 
+    /// <summary>
+    /// The function checks which value to return by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public Task1? Read(int id)
     {
         var listTask = XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);
@@ -45,12 +60,22 @@ internal class TaskImplementation : ITask1
 
     }
 
+    /// <summary>
+    /// The function checks which value to return according to the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Task1? Read(Func<Task1, bool> filter)
     {
         var listTask = XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);
         return listTask!.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
     }
 
+    /// <summary>
+    /// The function returns all elements in the list or it returns only those that meet the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Task1?>? ReadAll(Func<Task1, bool>? filter = null)
     {
         var listTask = XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);
@@ -60,6 +85,11 @@ internal class TaskImplementation : ITask1
             return listTask!.Where(filter).ToList();
     }
 
+    /// <summary>
+    /// The method edits an element from the list according to the user's request
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Task1 item)
     {
         var listTask = XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);

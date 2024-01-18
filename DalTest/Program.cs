@@ -12,13 +12,19 @@ using System.Collections.Generic;
 
 namespace DalTest
 {
+    /// <summary>
+    /// A main program that, at the request of the user, adds, deletes, restores or edits members in the list
+    /// </summary>
     internal class Program
     {
 
-         //static readonly IDal s_dal = new DalList(); //stage2
+        //static readonly IDal s_dal = new DalList(); //stage2
         static readonly IDal s_dal = new DalXml(); //stage 3
 
-
+        /// <summary>
+        /// Main menu for entity selection
+        /// </summary>
+        /// <returns></returns>
         private static int mainMenue() //Main Menu
         {
             Console.WriteLine(@"
@@ -34,6 +40,9 @@ namespace DalTest
             return int.Parse(change!);
         }
 
+        /// <summary>
+        /// Submenu for selecting an action on the entity
+        /// </summary>
         private static void subMenue() //Sub menu
         {
             Console.WriteLine(@"
@@ -47,7 +56,11 @@ namespace DalTest
             ");
         }
 
-        private static Task1 createNewTask() //Receiving new task details
+        /// <summary>
+        /// Receiving new task details
+        /// </summary>
+        /// <returns></returns>
+        private static Task1 createNewTask() 
         {
             Console.WriteLine("Enter Alias");
             string? alias = Console.ReadLine();
@@ -104,7 +117,11 @@ namespace DalTest
             return newTask;
         }
 
-        private static Chef createNewChef() //Receiving new engineer details
+        /// <summary>
+        /// Receiving new engineer details
+        /// </summary>
+        /// <returns></returns>
+        private static Chef createNewChef() 
         {
             Console.WriteLine("Enter Id");
             int id = int.Parse(Console.ReadLine()!);
@@ -131,7 +148,12 @@ namespace DalTest
             return newChef;
         }
 
-        private static bool actTask() //Actions menu for the task
+        /// <summary>
+        /// Actions menu for the task
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DalDoesNotExistException"></exception>
+        private static bool actTask() 
         {
             subMenue();
             string? y = Console.ReadLine();
@@ -294,7 +316,12 @@ namespace DalTest
             return true;
         }
 
-        private static bool actChef() //Actions menu for the engineer
+        /// <summary>
+        /// Actions menu for the engineer
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DalDoesNotExistException"></exception>
+        private static bool actChef() 
         {
             subMenue();
             string? y = Console.ReadLine();
@@ -378,7 +405,12 @@ namespace DalTest
             return true;
         }
 
-        private static bool actDependeency() //Actions menu for the dependeency
+        /// <summary>
+        /// Actions menu for the dependeency
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DalDoesNotExistException"></exception>
+        private static bool actDependeency() 
         {
             subMenue();
             string? y = Console.ReadLine();

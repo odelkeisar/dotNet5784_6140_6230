@@ -5,6 +5,9 @@
     internal static List<DO.Chef>? Chefs { get; } = new();
     internal static List<DO.Dependeency>? Dependeencies { get; } = new();
 
+    /// <summary>
+    /// Promotion of the running variable
+    /// </summary>
     internal static class Config
     {
         internal const int StartTaskId = 1;

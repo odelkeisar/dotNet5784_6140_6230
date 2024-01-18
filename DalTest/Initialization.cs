@@ -11,6 +11,9 @@ public static class Initialization
 
     private static readonly Random s_rand = new();
 
+    /// <summary>
+    /// Adds to the list all the elements that have already been defined in advance
+    /// </summary>
     private static void createTask()
     {
         string[] TaskNames = {
@@ -52,6 +55,10 @@ public static class Initialization
         }
 
     }
+
+    /// <summary>
+    /// Adds to the list all the elements that have already been defined in advance
+    /// </summary>
     private static void createChef()
     {
         string[] EngineertNames = { "Dani Levi", "Eli Amar", "Meir Cohen", "Ariel Levin", "David Klein" };
@@ -70,6 +77,10 @@ public static class Initialization
         }
 
     }
+
+    /// <summary>
+    /// Adds to the list all the elements that have already been defined in advance
+    /// </summary>
     private static void createDependeency()
     {
         foreach (var _task in s_dal!.Task1!.ReadAll())
@@ -89,6 +100,12 @@ public static class Initialization
         }
     }
 
+
+    /// <summary>
+    /// A method that dispatches to the initialization methods of the three entities
+    /// </summary>
+    /// <param name="dal"></param>
+    /// <exception cref="NullReferenceException"></exception>
     public static void Do(IDal dal)
     {
         s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");

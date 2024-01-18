@@ -9,6 +9,12 @@ using System.ComponentModel.Design;
 /// </summary>
 public class ChefImplementation : IChef
 {
+    /// <summary>
+    /// add a new member of type chef
+    /// </summary>
+    /// <param name="item"> item is the member that add to the list </param>
+    /// <returns></returns>
+    /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Chef item)
     {
        Chef? item1 = Read(item.Id);
@@ -20,6 +26,11 @@ public class ChefImplementation : IChef
         return item.Id;
     }
 
+    /// <summary>
+    /// delete member from the list according the id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         Chef? item1 = Read(id);
@@ -29,10 +40,21 @@ public class ChefImplementation : IChef
         DataSource.Chefs!.Remove(item1); //remove item1 from the list
     }
 
+    /// <summary>
+    /// The function checks which value to return according to the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Chef? Read(Func<Chef, bool> filter)
     {
         return DataSource.Chefs!.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
     }
+
+    /// <summary>
+    /// The function checks which value to return by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public Chef? Read(int id)
     {
         Chef? item = DataSource.Chefs!.Find(x => x.Id == id); //Finds the entry in the list that is his ID 
@@ -41,6 +63,11 @@ public class ChefImplementation : IChef
         return item;
     }
 
+    /// <summary>
+    /// The function returns all elements in the list or it returns only those that meet the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Chef> ReadAll(Func<Chef, bool>? filter = null)
     {
         if (filter == null)
@@ -49,6 +76,11 @@ public class ChefImplementation : IChef
             return DataSource.Chefs!.Where(filter).ToList();
     }
 
+    /// <summary>
+    /// The method edits an element from the list according to the user's request
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Chef item)
     {
         Chef? item1 = Read(item.Id);

@@ -12,6 +12,12 @@ internal class ChefImplementation : IChef
     readonly string s_chefs_xml = "chefs";
     string chefPath = @"chefs.xml";
 
+    /// <summary>
+    /// add a new member of type chef
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Chef item)
     {
 
@@ -23,6 +29,11 @@ internal class ChefImplementation : IChef
         return item.Id;
     }
 
+    /// <summary>
+    /// delete member from the list according the id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
@@ -34,6 +45,11 @@ internal class ChefImplementation : IChef
         XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);
     }
 
+    /// <summary>
+    /// The function checks which value to return by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public Chef? Read(int id)
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
@@ -41,12 +57,23 @@ internal class ChefImplementation : IChef
         return chef;
     }
 
+    /// <summary>
+    /// The function checks which value to return according to the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Chef? Read(Func<Chef, bool> filter)
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
         Chef? chef = listChef.Where(filter).FirstOrDefault();
         return chef;
     }
+
+    /// <summary>
+    /// The function returns all elements in the list or it returns only those that meet the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Chef> ReadAll(Func<Chef, bool>? filter = null)
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
@@ -56,6 +83,11 @@ internal class ChefImplementation : IChef
             return listChef!.Where(filter).ToList();
     }
 
+    /// <summary>
+    /// The method edits an element from the list according to the user's request
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Chef item)
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);

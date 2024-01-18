@@ -15,8 +15,12 @@ internal class DependeencyImplementation : IDependeency
     readonly string s_dependeencies_xml = "dependeencies";
     XElement? dependeencyRoot;
     string dependeencyPath = @"dependeencies.xml";
-
-    public int Create(Dependeency item) //add dependeency to a collection
+    /// <summary>
+    /// add dependeency to a collection
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public int Create(Dependeency item) 
     {
         dependeencyRoot = XMLTools.LoadListFromXMLElement(s_dependeencies_xml);
         int newId = Config.NextDependeencyId;
@@ -29,6 +33,11 @@ internal class DependeencyImplementation : IDependeency
         return newId;
     }
 
+    /// <summary>
+    /// delete member from the list according the id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id) //delete dependeency
     {
         dependeencyRoot = XMLTools.LoadListFromXMLElement(s_dependeencies_xml);
@@ -42,6 +51,11 @@ internal class DependeencyImplementation : IDependeency
         XMLTools.SaveListToXMLElement(dependeencyRoot, s_dependeencies_xml);
     }
 
+    /// <summary>
+    /// The function checks which value to return by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public Dependeency? Read(int id)
     {
         dependeencyRoot = XMLTools.LoadListFromXMLElement(s_dependeencies_xml);
@@ -60,6 +74,12 @@ internal class DependeencyImplementation : IDependeency
         return dependeency1;
     }
 
+
+    /// <summary>
+    /// The function checks which value to return according to the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Dependeency? Read(Func<Dependeency, bool> filter)
     {
         dependeencyRoot = XMLTools.LoadListFromXMLElement(s_dependeencies_xml);
@@ -69,10 +89,15 @@ internal class DependeencyImplementation : IDependeency
             DependentTask = Convert.ToInt32(x.Element("DependentTask")!.Value),
             DependsOnTask = Convert.ToInt32(x.Element("DependsOnTask")!.Value)
         });
-        Dependeency? dependeency = dependeencies.Where(x => filter(x)).FirstOrDefault();
+        Dependeency? dependeency = dependeencies.Where(filter).FirstOrDefault();
         return dependeency;
     }
 
+    /// <summary>
+    /// The function returns all elements in the list or it returns only those that meet the condition in the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Dependeency?>? ReadAll(Func<Dependeency, bool>? filter = null)
     {
         dependeencyRoot = XMLTools.LoadListFromXMLElement(s_dependeencies_xml);
@@ -107,6 +132,11 @@ internal class DependeencyImplementation : IDependeency
         return dependeencies.ToList();
     }
 
+    /// <summary>
+    /// The method edits an element from the list according to the user's request
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Dependeency item)
     {
         dependeencyRoot = XMLTools.LoadListFromXMLElement(s_dependeencies_xml);
