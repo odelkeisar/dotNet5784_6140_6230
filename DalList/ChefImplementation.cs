@@ -7,7 +7,7 @@ using System.ComponentModel.Design;
 /// <summary>
 /// Implementation of methods for the data structure of chef.
 /// </summary>
-public class ChefImplementation : IChef
+internal class ChefImplementation : IChef
 {
     /// <summary>
     /// add a new member of type chef
