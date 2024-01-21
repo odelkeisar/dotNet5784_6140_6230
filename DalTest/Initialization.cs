@@ -71,7 +71,7 @@ public static class Initialization
             double _cost = s_rand.Next(50, 300);
             DO.ChefExperience? _Level = (DO.ChefExperience)s_rand.Next(0, 4);
 
-            Chef newChef = new(_id, _email, _cost, _name, _Level);
+            Chef newChef = new(_id,false, _email, _cost, _name, _Level);
 
             s_dal!.Chef!.Create(newChef);
         }

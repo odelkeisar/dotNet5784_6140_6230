@@ -43,6 +43,9 @@ internal class ChefImplementation : IChef
             throw new DalDoesNotExistException($"Dependeency with ID={id} does not exist");
         listChef.Remove(chef!);
         XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);
+        Chef? item2 = new Chef(chef.Id, true, chef.Email, chef.Cost, chef.Name, chef.Level);
+        listChef.Add(item2);
+        XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);
     }
 
     /// <summary>
@@ -53,7 +56,7 @@ internal class ChefImplementation : IChef
     public Chef? Read(int id)
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
-        Chef? chef = listChef.Where(p => p?.Id == id).FirstOrDefault();
+        Chef? chef = listChef.Where(chef => chef.deleted == false).Where(p => p?.Id == id).FirstOrDefault();
         return chef;
     }
 
@@ -65,7 +68,7 @@ internal class ChefImplementation : IChef
     public Chef? Read(Func<Chef, bool> filter)
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
-        Chef? chef = listChef.Where(filter).FirstOrDefault();
+        Chef? chef = listChef.Where(chef => chef.deleted == false).Where(filter).FirstOrDefault();
         return chef;
     }
 
@@ -78,9 +81,9 @@ internal class ChefImplementation : IChef
     {
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
         if (filter == null)
-            return listChef!.Select(item => item).ToList(); //retun the list
+            return listChef!.Where(chef => chef.deleted == false).ToList(); //retun the list
         else
-            return listChef!.Where(filter).ToList();
+            return listChef!.Where(chef => chef.deleted == false).Where(filter).ToList();
     }
 
     /// <summary>
@@ -106,6 +109,12 @@ internal class ChefImplementation : IChef
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
         listChef.Clear();
         XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);
+    }
+
+    public IEnumerable<Chef> ReadAllDeleted()
+    {
+        var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
+        return listChef!.Where(item => item.deleted == true).ToList(); //retun the list
     }
 
 }

@@ -144,7 +144,7 @@ namespace DalTest
             ");
             ChefExperience level = (ChefExperience)int.Parse(Console.ReadLine()!);
 
-            Chef newChef = new Chef(id, email, cost, name, level);
+            Chef newChef = new Chef(id,false, email, cost, name, level);
             return newChef;
         }
 

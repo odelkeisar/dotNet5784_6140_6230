@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfChef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Chef>
-    <Id>113692224</Id>
+    <Id>647249195</Id>
+    <deleted>false</deleted>
     <Email>Dani@gmail.com</Email>
-    <Cost>137</Cost>
+    <Cost>125</Cost>
     <Name>Dani Levi</Name>
-    <Level>AdvancedBeginner</Level>
-  </Chef>
-  <Chef>
-    <Id>649885590</Id>
-    <Email>Eli@gmail.com</Email>
-    <Cost>203</Cost>
-    <Name>Eli Amar</Name>
-    <Level>Intermediate</Level>
-  </Chef>
-  <Chef>
-    <Id>754490156</Id>
-    <Email>Meir@gmail.com</Email>
-    <Cost>239</Cost>
-    <Name>Meir Cohen</Name>
     <Level>Advanced</Level>
   </Chef>
   <Chef>
-    <Id>252794414</Id>
+    <Id>463321993</Id>
+    <deleted>false</deleted>
+    <Email>Eli@gmail.com</Email>
+    <Cost>277</Cost>
+    <Name>Eli Amar</Name>
+    <Level>Advanced</Level>
+  </Chef>
+  <Chef>
+    <Id>330326004</Id>
+    <deleted>false</deleted>
+    <Email>Meir@gmail.com</Email>
+    <Cost>256</Cost>
+    <Name>Meir Cohen</Name>
+    <Level>Beginner</Level>
+  </Chef>
+  <Chef>
+    <Id>443340193</Id>
+    <deleted>false</deleted>
     <Email>Ariel@gmail.com</Email>
-    <Cost>59</Cost>
+    <Cost>178</Cost>
     <Name>Ariel Levin</Name>
     <Level>Advanced</Level>
   </Chef>
   <Chef>
-    <Id>638937833</Id>
+    <Id>381949574</Id>
+    <deleted>false</deleted>
     <Email>David@gmail.com</Email>
-    <Cost>194</Cost>
+    <Cost>254</Cost>
     <Name>David Klein</Name>
-    <Level>AdvancedBeginner</Level>
+    <Level>Intermediate</Level>
+  </Chef>
+  <Chef>
+    <Id>9857423</Id>
+    <deleted>false</deleted>
+    <Email>moshe@gmail.com</Email>
+    <Cost>300</Cost>
+    <Name>moshe</Name>
+    <Level>Intermediate</Level>
   </Chef>
 </ArrayOfChef>

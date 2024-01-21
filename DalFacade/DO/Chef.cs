@@ -10,11 +10,13 @@
 public record Chef
 (
     int Id,
+    bool deleted,
     string? Email = null,
     double? Cost = null,
     string? Name = null,
     ChefExperience? Level = null
+    
  )
 {
-    public Chef() : this(0){ }
+    public Chef() : this(0,false){ }
 }
