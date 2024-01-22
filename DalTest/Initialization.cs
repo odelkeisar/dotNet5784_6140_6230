@@ -106,9 +106,9 @@ public static class Initialization
     /// </summary>
     /// <param name="dal"></param>
     /// <exception cref="NullReferenceException"></exception>
-    public static void Do(IDal dal)
+    public static void Do()
     {
-        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
+        s_dal = Factory.Get;
         createTask();
         createChef();
         createDependeency();

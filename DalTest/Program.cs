@@ -19,7 +19,8 @@ namespace DalTest
     {
 
         //static readonly IDal s_dal = new DalList(); //stage2
-        static readonly IDal s_dal = new DalXml(); //stage 3
+        /*static readonly IDal s_dal = new DalXml();*/ //stage 3
+        static readonly IDal s_dal = Factory.Get; //stage 4
 
         /// <summary>
         /// Main menu for entity selection
@@ -541,7 +542,7 @@ namespace DalTest
                                     s_dal.Dependeency.DeleteAll();
                                     s_dal.Task1.DeleteAll();
                                     s_dal.Chef.DeleteAll();
-                                    Initialization.Do(s_dal);
+                                    Initialization.Do();
                                 }
 
                                 break;
