@@ -198,7 +198,7 @@ namespace DalTest
 
                     case 3:
                         {
-                            List<Task1> tasks = (List<Task1>)s_dal!.Task1!.ReadAll();
+                            List<Task1> tasks = (List<Task1>)s_dal!.Task1!.ReadAll()!;
                             int x = 1;
 
                             foreach (var task in tasks)
@@ -356,7 +356,7 @@ namespace DalTest
 
                     case 3:
                         {
-                            List<Chef> chefs = (List<Chef>)s_dal!.Chef!.ReadAll();
+                            List<Chef> chefs = (List<Chef>)s_dal!.Chef!.ReadAll()!;
                             int x = 1;
 
                             foreach (var chef in chefs)
@@ -450,7 +450,7 @@ namespace DalTest
 
                     case 3:
                         {
-                            List<Dependeency> dependeencies = (List<Dependeency>)s_dal!.Dependeency!.ReadAll();
+                            List<Dependeency> dependeencies = (List<Dependeency>)s_dal!.Dependeency!.ReadAll()!;
                             int x = 1;
 
                             foreach (var dependeency in dependeencies)
@@ -536,7 +536,7 @@ namespace DalTest
                         case 4:
                             {
                                 Console.WriteLine("Are you sure you want to initialize data?");
-                                if (bool.Parse(Console.ReadLine()) == true)
+                                if (bool.Parse(Console.ReadLine()!) == true)
                                 {
                                     s_dal.Dependeency.DeleteAll();
                                     s_dal.Task1.DeleteAll();

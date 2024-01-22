@@ -83,9 +83,9 @@ public static class Initialization
     /// </summary>
     private static void createDependeency()
     {
-        foreach (var _task in s_dal!.Task1!.ReadAll())
+        foreach (var _task in s_dal!.Task1!.ReadAll()!)
         {
-            foreach (var _task1 in s_dal!.Task1.ReadAll())
+            foreach (var _task1 in s_dal!.Task1.ReadAll()!)
             {
                 if (_task?.Id == _task1!.Id) //Finish scanning previous tasks  
                     break;
