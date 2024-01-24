@@ -23,7 +23,7 @@ public class Task1
     public string? Description { get; set; }//תיאור
     public Status status { get; set; }
     public List<TaskInList> ?dependeencies { get; set;}
-    public MilestoneTask ?Milestone { get; set; }
+    public MilestoneInTask ?Milestone { get; set; }
 
     public DateTime? CreatedAtDate { get; set; } //תאריך יצירת המשימה
     public DateTime? ScheduledDate { get; set; } //תאריך מתוכנן להתחלה
