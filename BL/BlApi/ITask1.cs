@@ -10,4 +10,5 @@ public interface ITask1
     public int Create(BO.Task1 item);
     public void Update(BO.Task1 item);
     public void Delete(int id);
+    public void UpdateStartTime(int id, DateTime dateTime);
 }
