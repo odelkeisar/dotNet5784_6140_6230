@@ -111,4 +111,6 @@ internal class TaskImplementation : ITask1
         listTask.Clear();   
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
     }
+
+
 }
