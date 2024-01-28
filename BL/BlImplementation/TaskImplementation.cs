@@ -1,8 +1,9 @@
 ﻿using BlApi;
 using BO;
-using DalApi;
 using DO;
-
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 
 namespace BlImplementation;
@@ -16,17 +17,20 @@ internal class TaskImplementation : ITask1
         if (item.Alias == "")
             throw new BlEmptyStringException("The string is empty");
 
-        bool flag = true;
+        IEnumerable<BO.TaskInList> tasks = item.dependeencies!;
 
-        if (item.Milestone == null) //אם זה שווה לנל אין לנו אבן דרך
-            flag = false;
+        var dependeenciesList = from _item in tasks
+                                select new DO.Dependeency { Id = 0, DependentTask = item.Id, DependsOnTask = _item.Id };
 
-
+        foreach (var dependeency in dependeenciesList)
+        {
+            _dal.Dependeency.Create(dependeency);
+        }
 
         DO.Task1 doTask = new DO.Task1
        (0, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate, item.RequiredEffortTime,
-       item.DeadlineDate, item.chef!.Id, item.StartDate, item.CompleteDate, (DO.ChefExperience)item.Copmlexity!,
-       item.Dellverables, item.Remarks, flag);
+       item.DeadlineDate, item.chef == null ? 0 : item.chef.Id, item.StartDate, item.CompleteDate, (DO.ChefExperience)item.Copmlexity!,
+       item.Dellverables, item.Remarks, null);
 
         try
         {
@@ -36,22 +40,21 @@ internal class TaskImplementation : ITask1
 
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Student with ID={item.Id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"Task with ID={item.Id} already exists", ex);
         }
-
     }
 
     public void Delete(int id)
-    { 
-        BO.Task1 ?task=Read(id);
+    {
+        BO.Task1? task = Read(id);
 
-        if((_dal.Dependeency.ReadAll(x=>x.DependsOnTask==id))!=null)
+        if ((_dal.Dependeency.ReadAll(x => x.DependsOnTask == id)) != null)
             throw new BlATaskCannotBeDeletedException($"The task cannot be deleted:{id} The task has tasks that depend on it");
-        if(task.StartDate!=null)
+        if (task.StartDate != null)
             throw new BlATaskCannotBeDeletedException($"The task:{id} already in the process of execution and cannot be deleted");
 
         try { _dal.Task1.Delete(id); }
-        catch(DalDoesNotExistException ex) { throw new BlDoesNotExistException($"Task with ID={id} does not exist", ex); };
+        catch (DalDoesNotExistException ex) { throw new BlDoesNotExistException($"Task with ID={id} does not exist", ex); };
     }
 
     public BO.Task1? Read(int id)
@@ -76,20 +79,62 @@ internal class TaskImplementation : ITask1
             RequiredEffortTime = doTask.RequiredEffortTime,
             Dellverables = doTask.Dellverables,
             Remarks = doTask.Remarks,
-            chef =new ChefInTask { Id=doTask.ChefId,Name=_dal.Chef.Read(doTask.ChefId)!.Name },
+            chef = new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
             Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
         };
         return task_;
     }
 
-    public IEnumerable<BO.Task1> ReadAll(Func<DO.Task1, bool>? filter = null)
+    public IEnumerable<BO.Task1>? ReadAll()
     {
-        throw new NotImplementedException();
+        return (from DO.Task1 doTask in _dal.Task1.ReadAll()!
+                select new BO.Task1
+                {
+                    Id = doTask!.Id,
+                    Alias = doTask.Alias,
+                    Description = doTask.Description,
+                    status = GetStatus(doTask),
+                    dependeencies = GetTaskInList(doTask.Id),
+                    CreatedAtDate = doTask.CreatedAtDate,
+                    ScheduledDate = doTask.ScheduledDate,
+                    StartDate = doTask.StartDate,
+                    DeadlineDate = doTask.DeadlineDate,
+                    CompleteDate = doTask.CompleteDate,
+                    RequiredEffortTime = doTask.RequiredEffortTime,
+                    Dellverables = doTask.Dellverables,
+                    Remarks = doTask.Remarks,
+                    chef = new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
+                    Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
+                });
     }
+    public IEnumerable<BO.Task1>? ReadAllPossibleTasks(BO.Chef chef)
+    {
+        List<BO.Task1> ?possibleTasks = new List<BO.Task1>();
+        IEnumerable<BO.Task1>? allTasks = ReadAll()!;
+        // קיבוץ המשימות לפי רמת הקושי שלהם
+        var groupedTasksByComplexity = allTasks.GroupBy(t => t.Copmlexity);
+
+        // עבור כל קבוצת משימות לפי רמת הקושי
+        foreach (var group in groupedTasksByComplexity)
+        {
+            // בדיקה האם רמת הקושי של הקבוצה גבוהה מרמת השף
+            if (group.Key <= chef.Level)
+            {
+                // הוספת כל המשימות של רמת הקושי הנוכחית לרשימת המשימות האפשריות
+                possibleTasks.AddRange(group.Where(x => x.ScheduledDate != null));
+                possibleTasks.AddRange(group.Where(x => x.dependeencies == null ? true : x.dependeencies.All(dependency => dependency.status == Status.Done)));
+            }
+        }
+        if (possibleTasks == null)
+            throw new BlNoTasksToCompleteException($"There are no possible tasks to perform for the chef:{chef.Id}");
+        return possibleTasks;
+    }
+
+
 
     public void Update(BO.Task1 item)
     {
-        if(item.)
+
     }
 
     public void UpdateScheduledDate(int id, DateTime scheduledDate)
@@ -130,7 +175,7 @@ internal class TaskImplementation : ITask1
 
     }
 
-    public IEnumerable<BO.Task1> ReadAllLevel(BO.Chef chef)
+    public IEnumerable<BO.Task1>? ReadAllPerLevel(BO.Chef chef)
     {
         return _dal.Task1.ReadAll()!
       .Where(doTask => doTask!.Copmlexity == (DO.ChefExperience)chef.Level!)
@@ -139,21 +184,18 @@ internal class TaskImplementation : ITask1
           Id = doTask!.Id,
           Alias = doTask.Alias,
           Description = doTask.Description,
-          CreatedAtDate = doTask.CreatedAtDate,
-          ScheduledDate = doTask.ScheduledDate,
-          RequiredEffortTime = doTask.RequiredEffortTime,
-          DeadlineDate = doTask.DeadlineDate,
           status = GetStatus(doTask),
           dependeencies = GetTaskInList(doTask.Id),
+          CreatedAtDate = doTask.CreatedAtDate,
+          ScheduledDate = doTask.ScheduledDate,
           StartDate = doTask.StartDate,
-
-
+          DeadlineDate = doTask.DeadlineDate,
           CompleteDate = doTask.CompleteDate,
-
+          RequiredEffortTime = doTask.RequiredEffortTime,
           Dellverables = doTask.Dellverables,
           Remarks = doTask.Remarks,
-
-
+          chef = new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
+          Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
 
       });
     }
@@ -162,7 +204,7 @@ internal class TaskImplementation : ITask1
         if (task.CompleteDate != null)
             return Status.Done;
 
-        if (task.ChefId != null)
+        if (task.ChefId != 0)
             return Status.OnTrack;
 
         if (task.ScheduledDate != null)
@@ -185,17 +227,16 @@ internal class TaskImplementation : ITask1
 
 
 
-   
-
-
-
-
-
-   
 
 
 
 
 
 
-  
+
+
+
+
+
+
+

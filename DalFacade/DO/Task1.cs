@@ -30,7 +30,7 @@ public record Task1
     ChefExperience? Copmlexity = null, //רמת קושי
     string? Dellverables = null, //תוצר
     string? Remarks = null,//הערות
-    bool isMileStone = false//אבני דרך
+    bool ?isMileStone = false//אבני דרך
 )
 {
     public Task1() : this(0) { }

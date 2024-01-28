@@ -12,6 +12,16 @@ internal class ChefImplementation : IChef
 {
     private DalApi.IDal _dal = Factory.Get;
 
+    /// <summary>
+    /// Create object of BO.Chef
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlWrongNegativeIdException"></exception>
+    /// <exception cref="BO.BlEmptyStringException"></exception>
+    /// <exception cref="BO.BlNegativeHourlyWageException"></exception>
+    /// <exception cref="BO.BlWrongEmailException"></exception>
+    /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Chef item)
     {
         if (item.Id < 0)
@@ -36,15 +46,20 @@ internal class ChefImplementation : IChef
         {
             throw new BO.BlAlreadyExistsException($"Chef with ID={item.Id} already exists", ex);
         }
-
     }
+
+    /// <summary>
+    /// Delete object of Chef
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="BlChefOnTaskException"></exception>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
 
     public void Delete(int id)
     {
         DO.Task1? task = _dal.Task1.Read(t => t.ChefId == id);
         if (task != null)
             throw new BlChefOnTaskException($"The chef with ID {id} has already finished performing a task or is actively performing a task");
-
         try
         {
             _dal.Chef.Delete(id);
@@ -55,6 +70,12 @@ internal class ChefImplementation : IChef
         }
     }
 
+    /// <summary>
+    /// Search and read object of BO.Chef
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public BO.Chef? Read(int id)
     {
         DO.Chef? chef1 = _dal.Chef.Read(id);
@@ -70,8 +91,12 @@ internal class ChefImplementation : IChef
 
         BO.Chef? chef2 = new BO.Chef() { Id = chef1.Id, deleted = chef1.deleted, Email = chef1.Email, Cost = chef1.Cost, Name = chef1.Name, Level = (BO.ChefExperience)chef1.Level!, task = taskInChef };
         return chef2;
-
     }
+
+    /// <summary>
+    /// Read all the objects that in list
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<BO.Chef>? ReadAll()
     {
         return (from DO.Chef chef in _dal.Chef.ReadAll()!
@@ -89,7 +114,14 @@ internal class ChefImplementation : IChef
         );
     }
 
-    public IEnumerable<BO.Chef>? ReadAllLevel(BO.ChefExperience level)
+    /// <summary>
+    /// Read object according level of chef.
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    /// <exception cref="BlNoChefsAccordingLevelException"></exception>
+
+    public IEnumerable<BO.Chef>? ReadAllPerLevel(BO.ChefExperience level)
     {
         IEnumerable<DO.Chef>? listChef = _dal.Chef.ReadAll(x => (BO.ChefExperience)x.Level! == level)!;
         if (listChef == null)
@@ -108,6 +140,12 @@ internal class ChefImplementation : IChef
                     task = task != null ? new TaskInChef() { Id = task.Id, Alias = task.Alias } : null
                 });
     }
+
+    /// <summary>
+    /// Searching for all chefs not assigned to a task.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlNoUnassignedChefsException"></exception>
     public IEnumerable<BO.Chef>? ReadAllNotAssigned()
     {
         var ChefList = _dal.Chef.ReadAll()!.Select(chef => new BO.Chef
@@ -127,6 +165,18 @@ internal class ChefImplementation : IChef
         return ChefList;
     }
 
+    /// <summary>
+    /// Update the object of chef.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="BlDoesNotExistException"></exception>
+    /// <exception cref="BO.BlEmptyStringException"></exception>
+    /// <exception cref="BO.BlNegativeHourlyWageException"></exception>
+    /// <exception cref="BO.BlWrongEmailException"></exception>
+    /// <exception cref="BlChefLevelTooLowException"></exception>
+    /// <exception cref="BlNoChangeChefAssignmentException"></exception>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
+    /// <exception cref="BlTaskAlreadyAssignedException"></exception>
     public void Update(BO.Chef item)
     {
         BO.Chef? chef = Read(item.Id);

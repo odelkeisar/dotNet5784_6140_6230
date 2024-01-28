@@ -108,4 +108,8 @@ public class BlScheduledStartDateNoUpdatedException : Exception //למשימות
 {
     public BlATaskCannotBeDeletedException(string? message) : base(message) { }
 }
-
+[Serializable]
+public class BlNoTasksToCompleteException : Exception //אסור למחוק משימה שיש לה תלויות
+{
+    public BlNoTasksToCompleteException(string? message) : base(message) { }
+}
