@@ -14,8 +14,16 @@ internal class TaskImplementation : ITask1
     }
 
     public void Delete(int id)
-    {
-        throw new NotImplementedException();
+    { 
+        BO.Task1 ?task=Read(id);
+
+        if((_dal.Dependeency.ReadAll(x=>x.DependsOnTask==id))!=null)
+            throw new BlATaskCannotBeDeletedException($"The task cannot be deleted:{id} The task has tasks that depend on it");
+        if(task.StartDate!=null)
+            throw new BlATaskCannotBeDeletedException($"The task:{id} already in the process of execution and cannot be deleted");
+
+        try { _dal.Task1.Delete(id); }
+        catch(DalDoesNotExistException ex) { throw new BlDoesNotExistException($"Task with ID={id} does not exist", ex); };
     }
 
     public BO.Task1? Read(int id)
@@ -30,7 +38,97 @@ internal class TaskImplementation : ITask1
 
     public void Update(BO.Task1 item)
     {
-        throw new NotImplementedException();
+        if(item.
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            )
     }
 
     public void UpdateScheduledDate(int id, DateTime scheduledDate)

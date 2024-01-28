@@ -1,4 +1,6 @@
-﻿using System.Reflection.Emit;
+﻿using System;
+using System.Reflection.Emit;
+using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BO;
@@ -101,3 +103,9 @@ public class BlScheduledStartDateNoUpdatedException : Exception //למשימות
 {
     public BlEarlyFinishDateFromPreviousTaskException(string? message) : base(message) { }
 }
+[Serializable]
+    public class BlATaskCannotBeDeletedException: Exception //אסור למחוק משימה שיש לה תלויות
+{
+    public BlATaskCannotBeDeletedException(string? message) : base(message) { }
+}
+
