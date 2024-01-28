@@ -63,7 +63,7 @@ internal class TaskImplementation : ITask1
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Task1> ReadAll(Func<Task1, bool>? filter = null)
+    public IEnumerable<Task1> ?ReadAll(Func<Task1, bool>? filter = null)
     {
         if (filter == null)
             return DataSource.Tasks!.Select(item => item).ToList(); //retun the list
