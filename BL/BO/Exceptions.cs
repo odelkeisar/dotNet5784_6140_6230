@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Emit;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BO;
 [Serializable]
@@ -87,4 +88,16 @@ public class BlTaskAlreadyAssignedException : Exception //המשימה כבר מ
 public class BlNoChangeChefAssignmentException : Exception //השף כבר מוקצה למשימה אחרת
 {
     public BlNoChangeChefAssignmentException(string? message) : base(message) { }
+}
+[Serializable]
+public class BlScheduledStartDateNoUpdatedException : Exception //למשימות קודמות אין תאריך התחלה מתוכנן
+{
+    public BlScheduledStartDateNoUpdatedException(string? message) : base(message) { }
+}
+
+
+  [Serializable]
+    public class BlEarlyFinishDateFromPreviousTaskException : Exception //תאריך סיום לעידכון אינו יכול להיות מוקדם יותר ממשימה שקודמת לו
+{
+    public BlEarlyFinishDateFromPreviousTaskException(string? message) : base(message) { }
 }

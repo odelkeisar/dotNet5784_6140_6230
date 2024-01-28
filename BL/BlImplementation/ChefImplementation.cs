@@ -129,7 +129,6 @@ internal class ChefImplementation : IChef
 
     public void Update(BO.Chef item)
     {
-
         BO.Chef? chef = Read(item.Id);
         if (chef == null)
             throw new BlDoesNotExistException($"Chef with ID={item.Id} does not exists");
@@ -167,8 +166,8 @@ internal class ChefImplementation : IChef
                     throw new BlTaskAlreadyAssignedException($"The task with the ID{item.task.Id} is already assigned to the chef with the ID {task1.ChefId}");
             }
         }
-        _dal.Chef.Delete(item.Id);
-        Create(item);
+      
+        _dal.Chef.Update(new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!));
     }
 }
 
