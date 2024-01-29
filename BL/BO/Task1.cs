@@ -23,7 +23,6 @@ public class Task1
     public string? Description { get; set; }//תיאור
     public Status status { get; set; }
     public List<TaskInList> ?dependeencies { get; set;}
-
     public DateTime? CreatedAtDate { get; set; } //תאריך יצירת המשימה
     public DateTime? ScheduledDate { get; set; } //תאריך מתוכנן להתחלה
     public DateTime? StartDate { get; set; }//התחלה בפועל

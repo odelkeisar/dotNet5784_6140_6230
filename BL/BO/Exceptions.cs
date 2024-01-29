@@ -86,7 +86,7 @@ public class BlTaskAlreadyAssignedException : Exception //המשימה כבר מ
 }
 
 
-[Serializable]
+ [Serializable]
 public class BlNoChangeChefAssignmentException : Exception //השף כבר מוקצה למשימה אחרת
 {
     public BlNoChangeChefAssignmentException(string? message) : base(message) { }
@@ -98,13 +98,13 @@ public class BlScheduledStartDateNoUpdatedException : Exception //למשימות
 }
 
 
-[Serializable]
-public class BlEarlyFinishDateFromPreviousTaskException : Exception //תאריך סיום לעידכון אינו יכול להיות מוקדם יותר ממשימה שקודמת לו
+  [Serializable]
+    public class BlEarlyFinishDateFromPreviousTaskException : Exception //תאריך סיום לעידכון אינו יכול להיות מוקדם יותר ממשימה שקודמת לו
 {
     public BlEarlyFinishDateFromPreviousTaskException(string? message) : base(message) { }
 }
 [Serializable]
-public class BlATaskCannotBeDeletedException : Exception //אסור למחוק משימה שיש לה תלויות
+    public class BlATaskCannotBeDeletedException: Exception //אסור למחוק משימה שיש לה תלויות
 {
     public BlATaskCannotBeDeletedException(string? message) : base(message) { }
 }
