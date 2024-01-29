@@ -1,15 +1,20 @@
 ﻿using BlApi;
 using BO;
 using DO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
 
 namespace BlImplementation;
 internal class TaskImplementation : ITask1
 {
     private DalApi.IDal _dal = Factory.Get;
+
+    /// <summary>
+    /// create a new task
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    /// <exception cref="BlWrongNegativeIdException"> if the id is negative throw experation</exception>
+    /// <exception cref="BlEmptyStringException">if have empty string</exception>
+    /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Task1 item)
     {
         if (item.Id < 0)
@@ -17,10 +22,10 @@ internal class TaskImplementation : ITask1
         if (item.Alias == "")
             throw new BlEmptyStringException("The string is empty");
 
-        IEnumerable<BO.TaskInList> tasks = item.dependeencies!;
+        IEnumerable<BO.TaskInList> taskInList = item.dependeencies!;
 
-        var dependeenciesList = from _item in tasks
-                                select new DO.Dependeency { Id = 0, DependentTask = item.Id, DependsOnTask = _item.Id };
+        IEnumerable<DO.Dependeency> dependeenciesList = from _item in taskInList
+                                                        select new DO.Dependeency { Id = 0, DependentTask = item.Id, DependsOnTask = _item.Id };
 
         foreach (var dependeency in dependeenciesList)
         {
@@ -44,10 +49,19 @@ internal class TaskImplementation : ITask1
         }
     }
 
+    /// <summary>
+    /// Deleting a task received as a parameter
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
+    /// <exception cref="BlATaskCannotBeDeletedException"></exception>
+    /// <exception cref="BlDoesNotExistException"></exception>
+
     public void Delete(int id)
     {
         BO.Task1? task = Read(id);
-
+        if (task == null)
+            throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
         if ((_dal.Dependeency.ReadAll(x => x.DependsOnTask == id)) != null)
             throw new BlATaskCannotBeDeletedException($"The task cannot be deleted:{id} The task has tasks that depend on it");
         if (task.StartDate != null)
@@ -57,6 +71,12 @@ internal class TaskImplementation : ITask1
         catch (DalDoesNotExistException ex) { throw new BlDoesNotExistException($"Task with ID={id} does not exist", ex); };
     }
 
+    /// <summary>
+    /// You get a mission ID card and return its details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public BO.Task1? Read(int id)
     {
         DO.Task1? doTask = _dal.Task1.Read(id);
@@ -64,52 +84,30 @@ internal class TaskImplementation : ITask1
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
 
-        BO.Task1? task_ = new BO.Task1()
-        {
-            Id = id,
-            Alias = doTask.Alias,
-            Description = doTask.Description,
-            status = GetStatus(doTask),
-            dependeencies = GetTaskInList(id),
-            CreatedAtDate = doTask.CreatedAtDate,
-            ScheduledDate = doTask.ScheduledDate,
-            StartDate = doTask.StartDate,
-            DeadlineDate = doTask.DeadlineDate,
-            CompleteDate = doTask.CompleteDate,
-            RequiredEffortTime = doTask.RequiredEffortTime,
-            Dellverables = doTask.Dellverables,
-            Remarks = doTask.Remarks,
-            chef = new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
-            Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
-        };
-        return task_;
+        BO.Task1? boTask = convert(doTask!);
+        return boTask;
     }
+    /// <summary>
+    /// Returning all task details.
+    /// </summary>
+    /// <returns></returns>
 
     public IEnumerable<BO.Task1>? ReadAll()
     {
         return (from DO.Task1 doTask in _dal.Task1.ReadAll()!
-                select new BO.Task1
-                {
-                    Id = doTask!.Id,
-                    Alias = doTask.Alias,
-                    Description = doTask.Description,
-                    status = GetStatus(doTask),
-                    dependeencies = GetTaskInList(doTask.Id),
-                    CreatedAtDate = doTask.CreatedAtDate,
-                    ScheduledDate = doTask.ScheduledDate,
-                    StartDate = doTask.StartDate,
-                    DeadlineDate = doTask.DeadlineDate,
-                    CompleteDate = doTask.CompleteDate,
-                    RequiredEffortTime = doTask.RequiredEffortTime,
-                    Dellverables = doTask.Dellverables,
-                    Remarks = doTask.Remarks,
-                    chef = new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
-                    Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
-                });
+                select convert(doTask!));
     }
+
+    /// <summary>
+    /// Returning all the tasks that match the chef that was passed as a parameter.
+    /// </summary>
+    /// <param name="chef"></param>
+    /// <returns></returns>
+    /// <exception cref="BlNoTasksToCompleteException"></exception>
+
     public IEnumerable<BO.Task1>? ReadAllPossibleTasks(BO.Chef chef)
     {
-        List<BO.Task1> ?possibleTasks = new List<BO.Task1>();
+        List<BO.Task1>? possibleTasks = new List<BO.Task1>();
         IEnumerable<BO.Task1>? allTasks = ReadAll()!;
         // קיבוץ המשימות לפי רמת הקושי שלהם
         var groupedTasksByComplexity = allTasks.GroupBy(t => t.Copmlexity);
@@ -137,6 +135,13 @@ internal class TaskImplementation : ITask1
 
     }
 
+    /// <summary>
+    /// Update scheduled start date for task.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="scheduledDate"></param>
+    /// <exception cref="BlDoesNotExistException"></exception>
+    /// <exception cref="BlScheduledStartDateNoUpdatedException"></exception>
     public void UpdateScheduledDate(int id, DateTime scheduledDate)
     {
         DO.Task1? task = _dal.Task1.Read(id);
@@ -175,30 +180,89 @@ internal class TaskImplementation : ITask1
 
     }
 
-    public IEnumerable<BO.Task1>? ReadAllPerLevel(BO.Chef chef)
+    /// <summary>
+    /// Returning all tasks matching the level of the chef that the function received as a parameter.
+    /// </summary>
+    /// <param name="chef"></param>
+    /// <returns></returns>
+    public IEnumerable<BO.Task1>? ReadAllPerLevelOfChef(BO.Chef chef)
     {
         return _dal.Task1.ReadAll()!
       .Where(doTask => doTask!.Copmlexity == (DO.ChefExperience)chef.Level!)
-      .Select(doTask => new BO.Task1()
-      {
-          Id = doTask!.Id,
-          Alias = doTask.Alias,
-          Description = doTask.Description,
-          status = GetStatus(doTask),
-          dependeencies = GetTaskInList(doTask.Id),
-          CreatedAtDate = doTask.CreatedAtDate,
-          ScheduledDate = doTask.ScheduledDate,
-          StartDate = doTask.StartDate,
-          DeadlineDate = doTask.DeadlineDate,
-          CompleteDate = doTask.CompleteDate,
-          RequiredEffortTime = doTask.RequiredEffortTime,
-          Dellverables = doTask.Dellverables,
-          Remarks = doTask.Remarks,
-          chef = new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
-          Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
-
-      });
+      .Select(doTask => convert(doTask!));
     }
+
+    /// <summary>
+    /// Returning all tasks that match a certain level.
+    /// </summary>
+    /// <param name="_level"></param>
+    /// <returns></returns>
+
+    public IEnumerable<BO.Task1>? ReadAllPerLevel(BO.ChefExperience _level)
+    {
+        return _dal.Task1.ReadAll()!
+      .Where(doTask => doTask!.Copmlexity == (DO.ChefExperience)_level)
+      .Select(doTask => convert(doTask!));
+    }
+    /// <summary>
+    /// Returning all tasks that have already been completed.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
+    public IEnumerable<BO.Task1>? ReadAllCompleted()
+    {
+        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.CompleteDate != null);
+        if (tasks == null)
+            throw new BlDoesNotExistException("No tasks completed");
+        return tasks.Select(doTask => convert(doTask!));
+    }
+
+    /// <summary>
+    /// Returning all the tasks that are in care.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
+
+    public IEnumerable<BO.Task1>? ReadAllTasksInCare()
+    {
+        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.StartDate != null);
+        if (tasks == null)
+            throw new BlDoesNotExistException("There are no tasks currently being handled by Chef");
+        return tasks.Select(doTask => convert(doTask!));
+    }
+
+    /// <summary>
+    /// Returning all tasks for which no chef is assigned.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
+
+    public IEnumerable<BO.Task1>? ReadAllNoChefWasAssigned()
+    {
+        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ChefId == 0);
+        if (tasks == null)
+            throw new BlDoesNotExistException("All tasks are assigned to chefs");
+        return tasks.Select(doTask => convert(doTask!));
+    }
+
+    /// <summary>
+    /// Returning all tasks that do not have a scheduled start date.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
+    public IEnumerable<BO.Task1>? ReadAllNoScheduledDate()
+    {
+        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ScheduledDate == null);
+        if (tasks == null)
+            throw new BlDoesNotExistException("All tasks have a scheduled start date");
+        return tasks.Select(doTask => convert(doTask!));
+    }
+
+    /// <summary>
+    /// Returning the task status field according to criteria.
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public Status GetStatus(DO.Task1 task)
     {
         if (task.CompleteDate != null)
@@ -213,12 +277,44 @@ internal class TaskImplementation : ITask1
         return Status.Unscheduled;
     }
 
+    /// <summary>
+    /// Returning the list of all tasks that the current task depends on and converting them to an object of type:TaskInList.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public List<TaskInList>? GetTaskInList(int id)
     {
         IEnumerable<DO.Dependeency>? listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
         var results = listDependencies.Select(dependency => _dal.Task1.Read(dependency.DependsOnTask)).
             Select(X => new TaskInList() { Id = X.Id, Alias = X.Alias, Description = X.Description, status = GetStatus(X) });
         return results.ToList();
+    }
+
+    /// <summary>
+    /// Converting an object of type DO.Task 1 to an object of type BO.Task1.
+    /// </summary>
+    /// <param name="doTask"></param>
+    /// <returns></returns>
+    public BO.Task1 convert(DO.Task1 doTask)
+    {
+        return new BO.Task1()
+        {
+            Id = doTask!.Id,
+            Alias = doTask.Alias,
+            Description = doTask.Description,
+            status = GetStatus(doTask),
+            dependeencies = GetTaskInList(doTask.Id),
+            CreatedAtDate = doTask.CreatedAtDate,
+            ScheduledDate = doTask.ScheduledDate,
+            StartDate = doTask.StartDate,
+            DeadlineDate = doTask.DeadlineDate,
+            CompleteDate = doTask.CompleteDate,
+            RequiredEffortTime = doTask.RequiredEffortTime,
+            Dellverables = doTask.Dellverables,
+            Remarks = doTask.Remarks,
+            chef = doTask.ChefId == 0 ? null : new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
+            Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
+        };
     }
 }
 
