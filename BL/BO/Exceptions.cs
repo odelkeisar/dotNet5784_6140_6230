@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -107,4 +107,9 @@ public class BlEarlyFinishDateFromPreviousTaskException : Exception //תאריך
 public class BlATaskCannotBeDeletedException : Exception //אסור למחוק משימה שיש לה תלויות
 {
     public BlATaskCannotBeDeletedException(string? message) : base(message) { }
+}
+[Serializable]
+public class BlNoTasksToCompleteException : Exception //אסור למחוק משימה שיש לה תלויות
+{
+    public BlNoTasksToCompleteException(string? message) : base(message) { }
 }
