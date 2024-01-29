@@ -13,6 +13,6 @@ public enum Status
 {
     Unscheduled,
     Scheduled,
-    OnTrack, 
+    OnTrack,
     Done
 }
