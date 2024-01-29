@@ -2,11 +2,11 @@
 using BO;
 using DO;
 
-
 namespace BlImplementation;
 internal class TaskImplementation : ITask1
 {
     private DalApi.IDal _dal = Factory.Get;
+
     /// <summary>
     /// create a new task
     /// </summary>
@@ -316,45 +316,4 @@ internal class TaskImplementation : ITask1
             Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
         };
     }
-
-    public Status GetStatus(DO.Task1 task)
-    {
-        if (task.CompleteDate != null)
-            return Status.Done;
-
-        if (task.ChefId != null)
-            return Status.OnTrack;
-
-        if (task.ScheduledDate != null)
-            return Status.Scheduled;
-
-        return Status.Unscheduled;
-    }
-
-    public List<TaskInList>? GetTaskInList(int id)
-    {
-        IEnumerable<DO.Dependeency> ?listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
-        var results = listDependencies.Select(dependency => _dal.Task1.Read(dependency.DependsOnTask)).
-            Select(X=>new TaskInList() {Id=X.Id, Alias=X.Alias, Description=X.Description, status= GetStatus(X)});
-        return results.ToList();
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
