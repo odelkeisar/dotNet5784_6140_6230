@@ -24,13 +24,13 @@ public record Task1
     DateTime? ScheduledDate = null,//תאריך מתוכנן להתחלה
     TimeSpan? RequiredEffortTime = null,//משך זמן המשימה
     DateTime? DeadlineDate = null,//תאריך סיום
-    int ChefId = 0,
+    int ?ChefId= 0,
     DateTime? StartDate = null,//התחלה בפועל
     DateTime? CompleteDate = null,//סיום בפועל
     ChefExperience? Copmlexity = null, //רמת קושי
     string? Dellverables = null, //תוצר
     string? Remarks = null,//הערות
-    bool isMileStone = false//אבני דרך
+    bool? isMileStone = false//אבני דרך
 )
 {
     public Task1() : this(0) { }
