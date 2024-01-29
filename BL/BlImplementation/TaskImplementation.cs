@@ -129,10 +129,31 @@ internal class TaskImplementation : ITask1
     }
 
 
-
+    /// <summary>
+    /// Update an existing task
+    /// </summary>
+    /// <param name="item">the new task</param>
+    /// <exception cref="BlWrongNegativeIdException"></exception>
+    /// <exception cref="BlEmptyStringException"></exception>
+    /// <exception cref="BlChefLevelTooLowException"></exception>
     public void Update(BO.Task1 item)
     {
+        if (item.Id < 0)
+            throw new BlWrongNegativeIdException("Task with negative ID");
 
+        if (item.Alias == "")
+            throw new BlEmptyStringException("The string is empty");
+
+        if (item.Copmlexity > (BO.ChefExperience)_dal.Chef.Read(item.chef!.Id)!.Level!)
+            throw new BlChefLevelTooLowException("The level of the engineer is lower than the complexity of the task");
+
+
+        _dal.Task1.Update(new DO.Task1(item.Id, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate,
+                          item.RequiredEffortTime, item.DeadlineDate, item.chef == null ? 0 : item.chef.Id,
+                          item.StartDate, item.CompleteDate, (DO.ChefExperience)item.Copmlexity!, item.Dellverables,
+                          item.Remarks, null));
+
+        //האם צריך לעדכן משהו בשכבת הבל?
     }
 
     /// <summary>
@@ -259,25 +280,6 @@ internal class TaskImplementation : ITask1
     }
 
     /// <summary>
-    /// Returning the task status field according to criteria.
-    /// </summary>
-    /// <param name="task"></param>
-    /// <returns></returns>
-    public Status GetStatus(DO.Task1 task)
-    {
-        if (task.CompleteDate != null)
-            return Status.Done;
-
-        if (task.ChefId != 0)
-            return Status.OnTrack;
-
-        if (task.ScheduledDate != null)
-            return Status.Scheduled;
-
-        return Status.Unscheduled;
-    }
-
-    /// <summary>
     /// Returning the list of all tasks that the current task depends on and converting them to an object of type:TaskInList.
     /// </summary>
     /// <param name="id"></param>
@@ -286,9 +288,10 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<DO.Dependeency>? listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
         var results = listDependencies.Select(dependency => _dal.Task1.Read(dependency.DependsOnTask)).
-            Select(X => new TaskInList() { Id = X.Id, Alias = X.Alias, Description = X.Description, status = GetStatus(X) });
+            Select(X => new TaskInList() { Id = X.Id, Alias = X.Alias, Description = X.Description, status = Tools.GetStatus(X) });
         return results.ToList();
     }
+
 
     /// <summary>
     /// Converting an object of type DO.Task 1 to an object of type BO.Task1.
@@ -302,7 +305,7 @@ internal class TaskImplementation : ITask1
             Id = doTask!.Id,
             Alias = doTask.Alias,
             Description = doTask.Description,
-            status = GetStatus(doTask),
+            status = Tools.GetStatus(doTask),
             dependeencies = GetTaskInList(doTask.Id),
             CreatedAtDate = doTask.CreatedAtDate,
             ScheduledDate = doTask.ScheduledDate,
@@ -312,7 +315,7 @@ internal class TaskImplementation : ITask1
             RequiredEffortTime = doTask.RequiredEffortTime,
             Dellverables = doTask.Dellverables,
             Remarks = doTask.Remarks,
-            chef = doTask.ChefId == 0 ? null : new ChefInTask { Id = doTask.ChefId, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
+            chef = doTask.ChefId == 0 ? null : new ChefInTask { Id = doTask.ChefId!, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
             Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
         };
     }

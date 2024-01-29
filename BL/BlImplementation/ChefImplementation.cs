@@ -6,7 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
-
 namespace BlImplementation;
 internal class ChefImplementation : IChef
 {
