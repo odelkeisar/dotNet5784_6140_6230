@@ -121,8 +121,6 @@ internal class TaskImplementation : ITask1
 
     public IEnumerable<BO.TaskInList> ReadAll()
     {
-        //return (from DO.Task1 doTask in _dal.Task1.ReadAll()!
-        //        select convert(doTask!));
         return (from DO.Task1 doTask in _dal.Task1.ReadAll()!
                 select new BO.TaskInList() { Id = doTask.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
