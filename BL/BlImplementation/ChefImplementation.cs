@@ -33,6 +33,8 @@ internal class ChefImplementation : IChef
             throw new BO.BlEmptyStringException($"The chef's mail field with the ID:{item.Id} is empty");
         if (!item.Email!.Contains("@"))
             throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
+        if (item.Level == null)
+            throw new BlChefLevelNoEnteredException($"Chef ID:{item.Id} lacks a field of level of experience");
 
         DO.Chef chef = new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!);
 
@@ -192,31 +194,33 @@ internal class ChefImplementation : IChef
         if (chef.Level > (BO.ChefExperience)item.Level!)
             throw new BlChefLevelTooLowException($"For the chef with the ID:{item.Id}, it is not possible to update a chef level lower than the existing one");
 
-        DO.Task1? task_ = _dal.Task1.Read(task => task.ChefId == chef.Id);
-
-        if (task_ != null && task_.CompleteDate == null)
-            throw new BlNoChangeChefAssignmentException($"The chef with{item.Id} is already assigned to an unfinished task");
-
         if (item.task != null)
         {
+            DO.Task1? task1 = _dal.Task1.Read(task => task.ChefId == item.Id); //חיפוש המשימה שהשף כבר מוקצה לה
+            if (task1 != null && item.task.Id != task1.Id && task1.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
+                throw new BlNoChangeChefAssignmentException($"The chef with{item.Id} is already assigned to an unfinished task");
 
-            DO.Task1? task1 = _dal.Task1.Read(t => t.Id == item.task.Id);
-            if (task1 != null && task1.ChefId == 0)
-            {
-                DO.Task1 task2 = task1 with { ChefId = item.Id };
-                try { _dal.Task1.Update(task1); }
-                catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException($"Chef with ID={item.Id} does not exists", ex); }
-            }
-            else
-            {
-                if (task1 == null)
-                    throw new BlDoesNotExistException($"Task with ID={item.task.Id} does not exists");
-                if (task1.ChefId != 0)
-                    throw new BlTaskAlreadyAssignedException($"The task with the ID{item.task.Id} is already assigned to the chef with the ID {task1.ChefId}");
-            }
+            DO.Task1? task2 = _dal.Task1.Read(t => t.Id == item.task.Id); //חיפוש המשימה אותה השף מעוניין להקצות לעצמו
+            if (task2 == null) //אם אין משימה כזו
+                throw new BlDoesNotExistException($"Task with ID={item.task.Id} does not exists"); //אם המשימה לא קיימת
+           
+            if (task2.ChefId != 0)   //אם המשימה כבר מוקצית לשף אחר
+                throw new BlTaskAlreadyAssignedException($"The task with the ID{item.task.Id} is already assigned to the chef with the ID {task2.ChefId}");
+           
+            if (_dal.Task1.ReadStartProject == null) //אם לפרויקט אין תאריך התחלה מתוכנן
+                throw new BlScheduledStartDateNoUpdatedException("A chef cannot be assigned to a task when there is no scheduled start date for the project");
+            
+            if(task2.Copmlexity==null)
+                throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
+
+            if ((DO.ChefExperience)item.Level < task2.Copmlexity)
+                throw new BlChefLevelTooLowException($"The level of the chef ID:{item.Id} is lower than the complexity of the task");
+
+            try { _dal.Task1.Update( task2 with { ChefId = item.Id }); }//עדכון הקצאת השף למשימה
+            catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException($"Chef with ID={item.Id} does not exists", ex); }
         }
-      
-        _dal.Chef.Update(new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!));
+
+        _dal.Chef.Update(new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!)); //עדכון פרטי שף
     }
 }
 

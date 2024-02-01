@@ -8,17 +8,17 @@ public interface ITask1
     public int Create(BO.Task1 item);
     public void Delete(int id);
     public BO.Task1? Read(int id);
-    public IEnumerable<BO.Task1>? ReadAll();
-    public IEnumerable<BO.Task1>? ReadAllPossibleTasks(BO.Chef chef);
+    public IEnumerable<BO.TaskInList>? ReadAll();
+    public IEnumerable<BO.TaskInList>? ReadAllPossibleTasks(BO.Chef chef);
 
-    public IEnumerable<BO.Task1>? ReadAllPerLevelOfChef(BO.Chef chef);
+    public IEnumerable<BO.TaskInList>? ReadAllPerLevelOfChef(BO.Chef chef);
 
-    public IEnumerable<BO.Task1>? ReadAllPerLevel(BO.ChefExperience _level);
-    public IEnumerable<BO.Task1>? ReadAllCompleted();
+    public IEnumerable<BO.TaskInList>? ReadAllPerLevel(BO.ChefExperience _level);
+    public IEnumerable<BO.TaskInList>? ReadAllCompleted();
 
-    public IEnumerable<BO.Task1>? ReadAllTasksInCare();
-    public IEnumerable<BO.Task1>? ReadAllNoChefWasAssigned();
-    public IEnumerable<BO.Task1>? ReadAllNoScheduledDate();
+    public IEnumerable<BO.TaskInList>? ReadAllTasksInCare();
+    public IEnumerable<BO.TaskInList>? ReadAllNoChefWasAssigned();
+    public IEnumerable<BO.TaskInList>? ReadAllNoScheduledDate();
     public void Update(BO.Task1 item);
     public void UpdateScheduledDate(int id, DateTime scheduledDate);
 }

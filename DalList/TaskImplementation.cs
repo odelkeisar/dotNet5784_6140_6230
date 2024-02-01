@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 /// <summary>
 /// Implementing methods for the tasks data structure.
@@ -89,4 +90,23 @@ internal class TaskImplementation : ITask1
     }
 
     public void DeleteAll() { DataSource.Tasks!.Clear(); }
+
+    public void UpdateStarEndtProject(DateTime startProject, DateTime endProject)
+    {
+        StartProject = startProject;
+        EndProject=endProject;
+    }
+    public DateTime? ReadStartProject()
+    {
+        return StartProject;
+    }
+
+    public DateTime? ReadEndProject()
+    {
+       
+        return EndProject;
+    }
+
+    public DateTime? StartProject = null;
+    public DateTime? EndProject = null;
 }
