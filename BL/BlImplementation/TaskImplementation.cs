@@ -171,26 +171,28 @@ internal class TaskImplementation : ITask1
 
         IEnumerable<BO.TaskInList>? listDependeencies = Read(id)!.dependeencies;  //יצירת רשימת תלויות של כל המשימות שהמשימה תלויה בהם  
 
+        if (listDependeencies != null)
+        {
+            foreach (var taskinlist in listDependeencies!)     //מעבר על כל משימה קודמת ובדיקה שתאריך ההתחלה המתוכנן קיים וגם שהתאריך שהתקבל כפרמטר אינו מוקדם מתאריך הסיום המשוער של כל משימה שקודמת לה 
+            {
+                BO.Task1 task_ = Read(taskinlist.Id)!;
+                if (task_.ScheduledDate == null)
+                    throw new BlScheduledStartDateNoUpdatedException($"Scheduled start date of previous mission: {taskinlist.Id}, not updated");
+                if (task_.ForecastDate > scheduledDate)
+                    throw new BlEarlyFinishDateFromPreviousTaskException($"It is not possible to update an end date for task ID:{id} earlier than the end date of a previous task ID:{task_.Id}");
+            }
+        }
 
-        //foreach (var taskinlist in listDependeencies)     //מעבר על כל משימה קודמת ובדיקה שתאריך ההתחלה המתוכנן קיים וגם שהתאריך שהתקבל כפרמטר אינו מוקדם מתאריך הסיום המשוער של כל משימה שקודמת לה 
+        //DateTime? scheduledDate_ = Read(listDependeencies!.FirstOrDefault()!.Id)!.ScheduledDate;
+
+        //foreach (var taskinlist in listDependeencies!)     //מעבר על כל משימה קודמת ובדיקה שתאריך ההתחלה המתוכנן קיים וגם שהתאריך שהתקבל כפרמטר אינו מוקדם מתאריך הסיום המשוער של כל משימה שקודמת לה 
         //{
         //    BO.Task1 task_ = Read(taskinlist.Id)!;
         //    if (task_.ScheduledDate == null)
         //        throw new BlScheduledStartDateNoUpdatedException($"Scheduled start date of previous mission: {taskinlist.Id}, not updated");
-        //    if (task_.ForecastDate > scheduledDate)
-        //        throw new BlEarlyFinishDateFromPreviousTaskException($"It is not possible to update an end date for task ID:{id} earlier than the end date of a previous task ID:{task_.Id}");
+        //    if (task_.ForecastDate > scheduledDate_)
+        //        scheduledDate_ = task_.ForecastDate;
         //}
-
-        DateTime? scheduledDate_ = Read(listDependeencies!.FirstOrDefault()!.Id)!.ScheduledDate;
-
-        foreach (var taskinlist in listDependeencies!)     //מעבר על כל משימה קודמת ובדיקה שתאריך ההתחלה המתוכנן קיים וגם שהתאריך שהתקבל כפרמטר אינו מוקדם מתאריך הסיום המשוער של כל משימה שקודמת לה 
-        {
-            BO.Task1 task_ = Read(taskinlist.Id)!;
-            if (task_.ScheduledDate == null)
-                throw new BlScheduledStartDateNoUpdatedException($"Scheduled start date of previous mission: {taskinlist.Id}, not updated");
-            if (task_.ForecastDate > scheduledDate_)
-                scheduledDate_ = task_.ForecastDate;
-        }
 
         //שליחת תאריך 
         try
@@ -315,7 +317,7 @@ internal class TaskImplementation : ITask1
             RequiredEffortTime = doTask.RequiredEffortTime,
             Dellverables = doTask.Dellverables,
             Remarks = doTask.Remarks,
-            chef = doTask.ChefId == 0 ? null : new ChefInTask { Id = doTask.ChefId!, Name = _dal.Chef.Read(doTask.ChefId)!.Name },
+            chef = doTask.ChefId == 0 ? null : new ChefInTask { Id = (int)doTask.ChefId!, Name = _dal.Chef.Read((int)doTask.ChefId)!.Name },
             Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
         };
     }
