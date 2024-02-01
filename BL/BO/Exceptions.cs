@@ -131,4 +131,8 @@ public class BlChefLevelNoEnteredException : Exception
     public BlChefLevelNoEnteredException(string? message) : base(message) { }
 }
 
+public class BlNoTasksbyCriterionException : Exception
+{
+    public BlNoTasksbyCriterionException(string? message) : base(message) { }
+}
 
