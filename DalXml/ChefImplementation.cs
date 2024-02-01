@@ -117,6 +117,4 @@ internal class ChefImplementation : IChef
         return listChef!.Where(item => item.deleted == true).ToList(); //retun the list
     }
 
-   
-
 }

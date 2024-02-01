@@ -97,57 +97,19 @@ public class BlScheduledStartDateNoUpdatedException : Exception //למשימות
     public BlScheduledStartDateNoUpdatedException(string? message) : base(message) { }
 }
 
-[Serializable]
-public class BlNoChangeRequiredEffortTimeException : Exception //אסור לשנות זמן משך זמן למשימה שיש לה כבר תאריך התחלה מתוכנן
-{
-    public BlNoChangeRequiredEffortTimeException(string? message) : base(message) { }
-}
 
-[Serializable]
-public class BlNoChangeScheduledDateException : Exception //אסור לשנות תאריך התחלה מתוכנן
-{
-    public BlNoChangeScheduledDateException(string? message) : base(message) { }
-}
-
-
-
-[Serializable]
-public class BlChefLevelNoEnteredException : Exception //
-{
-    public BlChefLevelNoEnteredException(string? message) : base(message) { }
-}
-
-
-[Serializable]
+  [Serializable]
     public class BlEarlyFinishDateFromPreviousTaskException : Exception //תאריך סיום לעידכון אינו יכול להיות מוקדם יותר ממשימה שקודמת לו
 {
     public BlEarlyFinishDateFromPreviousTaskException(string? message) : base(message) { }
 }
 [Serializable]
-    public class BlATaskCannotBeDeletedException: Exception //אסור למחוק משימה
+    public class BlATaskCannotBeDeletedException: Exception //אסור למחוק משימה שיש לה תלויות
 {
     public BlATaskCannotBeDeletedException(string? message) : base(message) { }
 }
 [Serializable]
-public class BlNoTasksToCompleteException : Exception //
+public class BlNoTasksToCompleteException : Exception //אסור למחוק משימה שיש לה תלויות
 {
     public BlNoTasksToCompleteException(string? message) : base(message) { }
-}
-
-[Serializable]
-public class BlWrongDateException : Exception //תאריך שגוי
-{
-    public BlWrongDateException(string? message) : base(message) { }
-}
-
-[Serializable]
-public class BlNoTasksbyCriterionException : Exception //לא קיימות משימות לפי קריטריון
-{
-    public BlNoTasksbyCriterionException(string? message) : base(message) { }
-}
-
-[Serializable]
-public class BllackingInLevelException : Exception //חסר רמת מהנדס  
-{
-    public BllackingInLevelException(string? message) : base(message) { }
 }

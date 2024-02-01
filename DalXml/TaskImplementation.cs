@@ -9,10 +9,7 @@ namespace Dal;
 /// </summary>
 internal class TaskImplementation : ITask1
 {
-
     readonly string s_tasks_xml = "tasks";
-    readonly string s_data_config_xml = "data-config";
-
     string taskPath = @"tasks.xml";
     public TaskImplementation()
     {
@@ -114,33 +111,6 @@ internal class TaskImplementation : ITask1
         listTask.Clear();   
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
     }
-
-    public void UpdateStarEndtProject(DateTime startProject, DateTime endProject)
-    {
-        XElement root = XElement.Load(s_data_config_xml);
-        root.Element("startProject")!.Value = startProject.ToString();
-        root.Element("endProject")!.Value = endProject.ToString();
-        root.Save(s_data_config_xml);
-    }
-
-    public DateTime? ReadStartProject()
-    {
-        XElement root = XElement.Load(s_data_config_xml);
-        string ?statProject = root.Element("startProject")?.Value;
-        if (statProject != null)
-            return DateTime.Parse(statProject);
-        return null;
-    }
-
-    public DateTime? ReadEndProject()
-    {
-        XElement root = XElement.Load(s_data_config_xml);
-        string? endProject = root.Element("endProject")?.Value;
-        if (endProject != null)
-            return DateTime.Parse(endProject);
-        return null;
-    }
-
 
 
 }
