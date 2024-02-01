@@ -220,7 +220,7 @@ internal class ChefImplementation : IChef
             catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException($"Chef with ID={item.Id} does not exists", ex); }
         }
 
-        _dal.Chef.Update(new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!)); //עדכון פרטי שף
+        _dal.Chef.Update(new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!)); //עדכון פרטי שף.
     }
 }
 
