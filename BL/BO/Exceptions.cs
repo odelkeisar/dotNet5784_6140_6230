@@ -113,3 +113,22 @@ public class BlNoTasksToCompleteException : Exception //אסור למחוק מש
 {
     public BlNoTasksToCompleteException(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlWrongDateException : Exception //אסור למחוק משימה שיש לה תלויות
+{
+    public BlWrongDateException(string? message) : base(message) { }
+}
+
+[Serializable]
+public class BllackingInLevelException : Exception //
+{
+    public BllackingInLevelException(string? message) : base(message) { }
+}
+[Serializable]
+public class BlChefLevelNoEnteredException : Exception 
+{
+    public BlChefLevelNoEnteredException(string? message) : base(message) { }
+}
+
+

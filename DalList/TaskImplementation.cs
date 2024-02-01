@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 /// <summary>
 /// Implementing methods for the tasks data structure.
@@ -21,7 +22,7 @@ internal class TaskImplementation : ITask1
         int newId = DataSource.Config.NextTaskId;
         Task1 item1 = item with { Id = newId };
         DataSource.Tasks!.Add(item1);    //add item to the list
-        return newId;   
+        return newId;
     }
 
     /// <summary>
@@ -32,7 +33,7 @@ internal class TaskImplementation : ITask1
     public void Delete(int id)
     {
         Task1? item1 = Read(id);
-   
+
         if (item1 == null)
             throw new DalDoesNotExistException($"Task with ID={id} does not exist");
         DataSource.Tasks!.Remove(item1);
@@ -53,7 +54,7 @@ internal class TaskImplementation : ITask1
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public Task1? Read(Func<Task1, bool> filter) 
+    public Task1? Read(Func<Task1, bool> filter)
     {
         return DataSource.Tasks!.FirstOrDefault(filter); //Returns the first value in the list equal to the filter
     }
@@ -63,7 +64,7 @@ internal class TaskImplementation : ITask1
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Task1> ?ReadAll(Func<Task1, bool>? filter = null)
+    public IEnumerable<Task1>? ReadAll(Func<Task1, bool>? filter = null)
     {
         if (filter == null)
             return DataSource.Tasks!.Select(item => item).ToList(); //retun the list
@@ -89,4 +90,23 @@ internal class TaskImplementation : ITask1
     }
 
     public void DeleteAll() { DataSource.Tasks!.Clear(); }
+
+    public void UpdateStarEndtProject(DateTime startProject, DateTime endProject)
+    {
+        StartProject = startProject;
+        EndProject = endProject;
+    }
+    public DateTime? ReadStartProject()
+    {
+        return StartProject;
+    }
+
+    public DateTime? ReadEndProject()
+    {
+
+        return EndProject;
+    }
+
+    public DateTime? StartProject = null;
+    public DateTime? EndProject = null;
 }
