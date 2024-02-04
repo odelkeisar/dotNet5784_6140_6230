@@ -11,8 +11,8 @@ public enum ChefExperience
 
 public enum Status
 {
-    Unscheduled,
-    Scheduled,
-    OnTrack, 
-    Done
+    Unscheduled, //לא מתוכנן
+    Scheduled,  //מתוזמן
+    OnTrack,  //במעקב
+    Done  //בוצע
 }

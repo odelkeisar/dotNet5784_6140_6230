@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BO;
 using DO;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace BlImplementation;
@@ -17,6 +18,15 @@ internal class TaskImplementation : ITask1
     /// <exception cref="BlEmptyStringException">if have empty string</exception>
     /// <exception cref="BO.BlAlreadyExistsException"></exception>
 
+    public DateTime? ReadStartProject()
+    {
+        return _dal.Task1.ReadStartProject();
+    }
+
+    public DateTime? ReadEndProject()
+    {
+        return _dal.Task1.ReadEndProject();
+    }
     public void CreateStartEndProject(DateTime starProject, DateTime endProject)
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
@@ -31,23 +41,17 @@ internal class TaskImplementation : ITask1
         _dal.Task1.UpdateStarEndtProject(starProject, endProject);
     }
 
-    public DateTime? ReadStartProject()
-    {
-        return _dal.Task1.ReadStartProject();
-    }
-
-    public DateTime? ReadEndProject()
-    {
-        return (_dal.Task1.ReadEndProject());
-    }
-
 
     public int Create(BO.Task1 item)
     {
+        if (_dal.Task1.ReadStartProject != null)
+            throw new BlInappropriateStepException("It is not possible to add a task after the schedule has been set");
         if (item.Id < 0)
             throw new BlWrongNegativeIdException("Task with negative ID");
         if (item.Alias == "")
             throw new BlEmptyStringException("The string is empty");
+        if (item.chef != null)
+            throw new BlInappropriateStepException("A chef cannot be assigned before the schedule is set");
 
         IEnumerable<BO.TaskInList> taskInList = item.dependeencies!;
 
@@ -58,6 +62,11 @@ internal class TaskImplementation : ITask1
         {
             _dal.Dependeency.Create(dependeency);
         }
+
+        if (item.ScheduledDate == null)
+            item.status = 0;
+        else
+            item.status = Scheduled;
 
         DO.Task1 doTask = new DO.Task1
        (0, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate, item.RequiredEffortTime,
@@ -86,7 +95,11 @@ internal class TaskImplementation : ITask1
 
     public void Delete(int id)
     {
+        if (_dal.Task1.ReadStartProject != null)
+            throw new BlInappropriateStepException("It is not possible to delete a task after the schedule has been set");
+
         BO.Task1? task = Read(id);
+
         if (task == null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
         if ((_dal.Dependeency.ReadAll(x => x.DependsOnTask == id)) != null)
@@ -165,49 +178,77 @@ internal class TaskImplementation : ITask1
     /// <exception cref="BlChefLevelTooLowException"></exception>
     public void Update(BO.Task1 item)
     {
-        if (item.Alias == "")
-            throw new BlEmptyStringException("The string is empty");
-
         BO.Task1? botask = Read(item.Id); //בדיקה שהמשימה קיימת
+        
         if (botask == null)
             throw new BlDoesNotExistException($"Task with ID={item.Id} does not exists");
 
-        //if(botask.ScheduledDate==null)
-        //{
-        //    if (item.StartDate != botask.StartDate || item.CompleteDate != botask.CompleteDate || botask.DeadlineDate != item.DeadlineDate)
-        //        throw new BlScheduledStartDateNoUpdatedException("It is not possible to update start, end or deadline dates as long as a planned date for the start of the task has not yet been updated.");
+        if (item.Alias == "")
+            throw new BlEmptyStringException("The string is empty");
 
-        //    if(item.chef != null )
-        //        throw new BlScheduledStartDateNoUpdatedException("A chef cannot be assigned to a task that does not have a scheduled start date");
-        //}
-
-        //if (botask.ScheduledDate != null && item.RequiredEffortTime != botask.RequiredEffortTime) //לא ניתן לשנות משך זמן משימה למשימה עם תאריך התחלה מתוכנן
-        //    throw new BlNoChangeRequiredEffortTimeException($"It is not possible to change the required effort time for the task ID:{item.Id}");
-
-        //if (botask.ScheduledDate != item.ScheduledDate)  //לא ניתן לשנות תאריך התחלה מתוכנן
-        //    throw new BlNoChangeScheduledDateException("Do not change a task's scheduled start date");
-
-        if (item.chef != null)
+        if (ReadStartProject==null)
         {
-            if (item.Copmlexity == null)
-                throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
+            if (item.chef != null)
+                throw new BlInappropriateStepException("A chef cannot be assigned to a task before the schedule is set");
+            if (item.StartDate != null)
+                throw new BlInappropriateStepException("It is not possible to update an actual start date before the schedule is set");
+            if(item.CompleteDate != null)
+                throw new BlInappropriateStepException("It is not possible to update an actual complete date before the schedule is set");
+            if (item.ScheduledDate != null)
+            {
+                try
+                {
+                    UpdateScheduledDate(item.Id, (DateTime)item.ScheduledDate);
+                }
+              
+                catch(BlDoesNotExistException ex)
+                {
+                    throw new BlDoesNotExistException(ex.Message);
+                }
+                catch(BlScheduledStartDateNoUpdatedException ex)
+                {
+                    throw new BlScheduledStartDateNoUpdatedException(ex.Message);
+                }
+                catch(BlEarlyFinishDateFromPreviousTaskException ex)
+                {
+                    throw new BlEarlyFinishDateFromPreviousTaskException(ex.Message);
+                }
+            }
 
-            DO.Chef? _chef = _dal.Chef.Read(item.chef.Id);
-            if (_chef == null)
-                throw new BlDoesNotExistException($"Chef with ID={item.Id} does not exists");
-
-            DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id); //חיפוש המשימה שהשף כבר מוקצה לה
-            if (dotask != null && dotask.Id != item.Id && dotask.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
-                throw new BlNoChangeChefAssignmentException($"The chef with{item.Id} is already assigned to an unfinished task");
-
-            if (botask.chef != null && botask.chef.Id != item.chef.Id)   // לא ניתן להקצות משימה לשף אם המשימה כבר מוקצית לשף אחר
-                throw new BlTaskAlreadyAssignedException($"The task with the ID{botask.Id} is already assigned to the chef with the ID {botask.chef.Id}");
-
-            if (item.Copmlexity > (BO.ChefExperience)_chef.Level!) //בדיקה שרמת השף הנדרשת מתאימה לשף המתעדכן
-                throw new BlChefLevelTooLowException("The level of the engineer is lower than the complexity of the task");
         }
 
+        else
+        {
+            if(item.ScheduledDate!=botask.ScheduledDate)
+                throw new BlInappropriateStepException("It is not possible to change a planned start date after the schedule has been set");
 
+            if (item.chef == null && botask.chef != null)
+                throw new BlTaskAlreadyAssignedException("It is not possible to cancel a chef that already exists in the mission");
+            if (item.CompleteDate != null && item.StartDate == null)
+                throw new BlWrongDateException("You cannot enter an actual end date before an actual start date");
+
+            if (item.chef != null)
+            {
+                if (item.Copmlexity == null)
+                    throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
+
+                DO.Chef? _chef = _dal.Chef.Read(item.chef.Id);
+                if (_chef == null)
+                    throw new BlDoesNotExistException($"Chef with ID={item.Id} does not exists");
+
+                DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id); //חיפוש המשימה שהשף כבר מוקצה לה
+                if (dotask != null && dotask.Id != item.Id && dotask.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
+                    throw new BlNoChangeChefAssignmentException($"The chef with{item.Id} is already assigned to an unfinished task");
+
+                if (botask.chef != null && botask.chef.Id != item.chef.Id)   // לא ניתן להקצות משימה לשף אם המשימה כבר מוקצית לשף אחר
+                    throw new BlTaskAlreadyAssignedException($"The task with the ID{botask.Id} is already assigned to the chef with the ID {botask.chef.Id}");
+
+                if (item.Copmlexity > (BO.ChefExperience)_chef.Level!) //בדיקה שרמת השף הנדרשת מתאימה לשף המתעדכן
+                    throw new BlChefLevelTooLowException("The level of the engineer is lower than the complexity of the task");
+            }
+
+        }
+    
         _dal.Task1.Update(new DO.Task1(item.Id, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate,
                           item.RequiredEffortTime, item.DeadlineDate, item.chef == null ? 0 : item.chef.Id,
                           item.StartDate, item.CompleteDate, (DO.ChefExperience)item.Copmlexity!, item.Dellverables,

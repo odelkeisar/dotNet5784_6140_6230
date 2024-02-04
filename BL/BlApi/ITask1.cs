@@ -1,10 +1,16 @@
-﻿namespace BlApi;
+﻿using DalApi;
+
+namespace BlApi;
 /// <summary>
 /// Interface for the logical entity "Task1"
 /// </summary>
 
 public interface ITask1
 {
+    public DateTime? ReadStartProject();
+
+    public DateTime? ReadEndProject();
+    public void CreateStartEndProject(DateTime starProject, DateTime endProject);
     public int Create(BO.Task1 item);
     public void Delete(int id);
     public BO.Task1? Read(int id);

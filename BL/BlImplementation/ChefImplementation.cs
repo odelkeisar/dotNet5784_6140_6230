@@ -35,7 +35,8 @@ internal class ChefImplementation : IChef
             throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
         if (item.Level == null)
             throw new BlChefLevelNoEnteredException($"Chef ID:{item.Id} lacks a field of level of experience");
-
+        if (item.task != null)
+            throw new BlUnablToAssociateException("A task cannot be assigned to a chef while he is being added to the list");
         DO.Chef chef = new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!);
 
         try
@@ -98,7 +99,7 @@ internal class ChefImplementation : IChef
     /// Read all the objects that in list
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.Chef>? ReadAll()
+    public IEnumerable<BO.Chef> ReadAll()
     {
         return (from DO.Chef chef in _dal.Chef.ReadAll()!
                 let task = _dal.Task1.Read(t => t.ChefId == chef.Id)
@@ -122,7 +123,7 @@ internal class ChefImplementation : IChef
     /// <returns></returns>
     /// <exception cref="BlNoChefsAccordingLevelException"></exception>
 
-    public IEnumerable<BO.Chef>? ReadAllPerLevel(BO.ChefExperience level)
+    public IEnumerable<BO.Chef> ReadAllPerLevel(BO.ChefExperience level)
     {
         IEnumerable<DO.Chef>? listChef = _dal.Chef.ReadAll(x => (BO.ChefExperience)x.Level! == level)!;
         if (listChef == null)
@@ -147,7 +148,7 @@ internal class ChefImplementation : IChef
     /// </summary>
     /// <returns></returns>
     /// <exception cref="BlNoUnassignedChefsException"></exception>
-    public IEnumerable<BO.Chef>? ReadAllNotAssigned()
+    public IEnumerable<BO.Chef> ReadAllNotAssigned()
     {
         var ChefList = _dal.Chef.ReadAll()!.Select(chef => new BO.Chef
         {

@@ -80,7 +80,7 @@ public class BlChefLevelTooLowException : Exception //רמת מהנדס נמוכ
 }
 
 [Serializable]
-public class BlTaskAlreadyAssignedException : Exception //המשימה כבר מוקצית למהנדס אחר
+public class BlTaskAlreadyAssignedException : Exception //המשימה כבר מוקצית לשף אחר
 {
     public BlTaskAlreadyAssignedException(string? message) : base(message) { }
 }
@@ -115,24 +115,33 @@ public class BlNoTasksToCompleteException : Exception //אסור למחוק מש
 }
 
 [Serializable]
-public class BlWrongDateException : Exception //אסור למחוק משימה שיש לה תלויות
+public class BlWrongDateException : Exception //,תאריך שגוי
 {
     public BlWrongDateException(string? message) : base(message) { }
 }
 
 [Serializable]
-public class BllackingInLevelException : Exception //
+public class BllackingInLevelException : Exception //חסר רמה
 {
     public BllackingInLevelException(string? message) : base(message) { }
 }
 [Serializable]
-public class BlChefLevelNoEnteredException : Exception 
+public class BlChefLevelNoEnteredException : Exception  //לא הוכנס רמת מהנדס
 {
     public BlChefLevelNoEnteredException(string? message) : base(message) { }
 }
 
-public class BlNoTasksbyCriterionException : Exception
+public class BlNoTasksbyCriterionException : Exception //אין משימות מתאימות לקרטריון המבוקש
 {
     public BlNoTasksbyCriterionException(string? message) : base(message) { }
 }
 
+public class BlInappropriateStepException : Exception //הפעולה לא מתאימה לשלה הפרוקיט
+{
+    public BlInappropriateStepException(string? message) : base(message) { }
+}
+
+public class BlUnablToAssociateException : Exception //לא ניתן לשיוך
+{
+    public BlUnablToAssociateException(string? message) : base(message) { }
+}
