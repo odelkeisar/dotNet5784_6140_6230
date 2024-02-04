@@ -115,10 +115,15 @@ internal class TaskImplementation : ITask1
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
     }
 
-    public void UpdateStarEndtProject(DateTime startProject, DateTime endProject)
+    public void UpdateStartProject(DateTime startProject, DateTime endProject)
     {
         XElement root = XElement.Load(s_data_config_xml);
         root.Element("startProject")!.Value = startProject.ToString();
+        root.Save(s_data_config_xml);
+    }
+    public void UpdateEndtProject(DateTime startProject, DateTime endProject)
+    {
+        XElement root = XElement.Load(s_data_config_xml);
         root.Element("endProject")!.Value = endProject.ToString();
         root.Save(s_data_config_xml);
     }
@@ -140,7 +145,6 @@ internal class TaskImplementation : ITask1
             return DateTime.Parse(endProject);
         return null;
     }
-
 
 
 }

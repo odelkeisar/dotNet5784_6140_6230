@@ -91,9 +91,15 @@ internal class TaskImplementation : ITask1
 
     public void DeleteAll() { DataSource.Tasks!.Clear(); }
 
-    public void UpdateStarEndtProject(DateTime startProject, DateTime endProject)
+    public void UpdateStartProject(DateTime startProject)
     {
         StartProject = startProject;
+        
+    }
+
+    public void UpdateEndtProject( DateTime endProject)
+    {
+        
         EndProject = endProject;
     }
     public DateTime? ReadStartProject()
@@ -107,6 +113,7 @@ internal class TaskImplementation : ITask1
         return EndProject;
     }
 
-    public DateTime? StartProject = null;
-    public DateTime? EndProject = null;
+    public static DateTime? StartProject = null;
+    public static DateTime? EndProject = null;
+
 }

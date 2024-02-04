@@ -7,10 +7,12 @@ using System.Diagnostics.Metrics;
 using System.Diagnostics;
 using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
+
 internal class Program
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-    private DalApi.IDal _dal = Factory.Get;
+
     /// <summary>
     /// main menue to change entity
     /// </summary>
@@ -30,7 +32,7 @@ internal class Program
         return int.Parse(change!);
     }
 
-    private static void TaskMenue()
+    private static int TaskMenue()
     {
         Console.WriteLine(@"
             please enter a number
@@ -49,13 +51,13 @@ internal class Program
             12 to read all no scheduled date
             13 to update scheduled date
             ");
+        string? change = Console.ReadLine();
+        return int.Parse(change!);
     }
-    private static bool actTask()
+    private static void actTask()
     {
-        TaskMenue();
-        string? y = Console.ReadLine();
-        int act = int.Parse(y!);
-       
+        int act = TaskMenue();
+
         while (act != 0)
         {
            switch(act)
@@ -68,13 +70,17 @@ internal class Program
                         Console.WriteLine("Enter a descripation");
                         string? descripation = Console.ReadLine();
                         
-                        Console.WriteLine("Enter CreatedAtDate Enter CreatedAtDate in the format 00.00.0000");
-                        DateTime? createdAtDate = DateTime.Parse(Console.ReadLine()!);
+                        //Console.WriteLine("Enter CreatedAtDate Enter CreatedAtDate in the format 00.00.0000");
+                        DateTime? createdAtDate = DateTime.Now;
+                        //DateTime? createdAtDate = DateTime.Parse(Console.ReadLine()!);
 
-                        Console.WriteLine("Enter ScheduledDate in the format 00.00.0000");
-                        DateTime ScheduledDate = DateTime.Parse(Console.ReadLine()!);
-
-                        Console.WriteLine("RequiredEffortTime");
+                        DateTime? ScheduledDate = null;
+                        Console.WriteLine("Would you like to update the Scheduled Task Start Date now (Y/N)?");
+                        if (Console.ReadLine() == "Y")
+                        { Console.WriteLine("Enter ScheduledDate in the format 00.00.0000");
+                           ScheduledDate = DateTime.Parse(Console.ReadLine()!); }
+                        
+                        Console.WriteLine("RequiredE ffort Time");
                         Console.WriteLine("Enter num of days");
                         string day = Console.ReadLine()!;
                         Console.WriteLine("Enter num of hours");
@@ -98,17 +104,109 @@ internal class Program
                         Experet=4
                         ");
                         ChefExperience Copmlexity = (ChefExperience)int.Parse(Console.ReadLine()!);
-                        
-                        Task1 newTask=new(0,alias,descripation, Scheduled,)
-                    }
 
+                        Console.WriteLine("Does the task depend on other tasks? (Y/N)");
+                        List<BO.TaskInList> tasksInList = new List<BO.TaskInList>();
+                        if (Console.ReadLine() == "Y")
+                        {
+                            Console.WriteLine("Insert a list of task IDs that the current task depends on. Write with a space between the strings");
+                            string? dependeencies = Console.ReadLine();
+                            // פיצול המחרוזת למספרי תעודות זהות
+                            string[] idNumbers = dependeencies!.Split(new char[] { '-', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (string id in idNumbers)
+                            {
+                                BO.Task1? task_ = s_bl.Task1.Read(int.Parse(id));
+                                tasksInList.Add(new BO.TaskInList() { Id = task_!.Id, Alias = task_.Alias, Description = task_.Description, status = task_.status });
+                            }
+                        }
+
+                        Task1 newTask = new()
+                        { Id= 0,Alias= alias,Description= descripation,status = ScheduledDate == null ? Status.Unscheduled : Status.Scheduled ,dependeencies= tasksInList, CreatedAtDate= createdAtDate, ScheduledDate= ScheduledDate, RequiredEffortTime= RequiredEffortTime,Dellverables= Dellverables, Remarks= Remarks, Copmlexity= Copmlexity };
+                        s_bl.Task1.Create(newTask);
+                        break;
+                    }
+                case 2:
+                    {
+                        Console.WriteLine("Enter a task ID number");
+                        BO.Task1 task= s_bl.Task1.Read(int.Parse( Console.ReadLine()!))!;
+                        Console.WriteLine($@"
+ID= {task.Id}
+Alias= {task.Alias}
+Description= {task.Description}
+Status= {task.status.ToString()}
+CreatedAtDate= {task.CreatedAtDate}
+ScheduledDate= {task.ScheduledDate}
+StartDate= {task.StartDate}
+ForecastDate= {task.ForecastDate}
+CompleteDate= {task.CompleteDate}
+RequiredEffortTime= {task.RequiredEffortTime}
+Dellverables= {task.Dellverables}
+Remarks= {task.Remarks}
+Copmlexity= {task.Copmlexity}                   
+chef= {task.chef}      
+");
+                        if(task.dependeencies!=null)
+                         foreach(var x in task.dependeencies)
+                            {
+                                Console.WriteLine($@"
+ID= {x.Id}
+Alias= {x.Alias}
+Description= {x.Description}
+status= {x.status}
+");                          
+                            }
+                        break;
+                    }
+                case 3:
+                    {
+                        IEnumerable< BO.TaskInList> tasks = s_bl.Task1.ReadAll();
+                        print(tasks);
+                        break;
+                    }
+                case 4: 
+                    {
+                        
+                        Console.WriteLine("Enter an ID number");
+                        int id=int.Parse(Console.ReadLine()!);
+                        BO.Task1 task = s_bl.Task1.Read(id)!;
+                       
+                   
+                        Console.WriteLine("Enter Alias");
+                        string? alias =Console.ReadLine()!;  
+                        if(string.IsNullOrEmpty(alias) ) 
+                            alias = null;
+
+
+                      
+
+
+
+                        break;
+                    }
+                 case 5: 
+                    {
+                        Console.WriteLine("Enter an ID number to delete");
+                        s_bl.Task1.Delete(int.Parse(Console.ReadLine()!));
+                        break;
+                    }
             }
-            TaskMenue();
-            y = Console.ReadLine();
-            act = int.Parse(y!);
+            
+            act = TaskMenue();
         }
 
-        return true;
+        return;
+    }
+    public static void print(IEnumerable<BO.TaskInList> tasks)
+    {
+        foreach (BO.TaskInList task in tasks)
+        {
+            Console.WriteLine($@"
+ID= {task.Id}
+Alias= {task.Alias}
+Description= {task.Description}
+status={task.status}
+");
+        }
     }
     static void Main(string[] args)
     {
@@ -128,12 +226,12 @@ internal class Program
                 {
                     case 1:
                     {
-                            flag = actTask();
+                        actTask();
                         break;
                     }
                     case 2:
                     {
-                            flag = actChef();
+                         //actChef();
                          break;
                     }
                     case 3:

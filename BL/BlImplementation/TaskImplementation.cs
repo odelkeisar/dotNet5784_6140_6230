@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using System.Linq;
 using DO;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
@@ -27,24 +28,32 @@ internal class TaskImplementation : ITask1
     {
         return _dal.Task1.ReadEndProject();
     }
-    public void CreateStartEndProject(DateTime starProject, DateTime endProject)
+    public void CreateStartProject(DateTime starProject)
+    {
+        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
+ 
+        if (tasks!.Any(task => task!.ScheduledDate < starProject))
+            throw new BlWrongDateException("An earlier date must be entered for the project");
+   
+        _dal.Task1.UpdateStartProject(starProject);
+    }
+
+    public void CreateEndProject( DateTime endProject)
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
         if (tasks!.Any(task => task!.ScheduledDate == null))
             throw new BlScheduledStartDateNoUpdatedException("Not all missions have an updated scheduled start date yet.");
 
-        if (tasks!.Any(task => task!.ScheduledDate < starProject))
-            throw new BlWrongDateException("An earlier date must be entered for the project");
         if (tasks!.Any(task => (task!.ScheduledDate + task.RequiredEffortTime) < endProject))
             throw new BlWrongDateException("A later end date must be entered for the project");
 
-        _dal.Task1.UpdateStarEndtProject(starProject, endProject);
+        _dal.Task1.UpdateEndtProject(endProject);
     }
 
 
     public int Create(BO.Task1 item)
     {
-        if (_dal.Task1.ReadStartProject != null)
+        if (_dal.Task1.ReadEndProject != null)
             throw new BlInappropriateStepException("It is not possible to add a task after the schedule has been set");
         if (item.Id < 0)
             throw new BlWrongNegativeIdException("Task with negative ID");
@@ -62,11 +71,6 @@ internal class TaskImplementation : ITask1
         {
             _dal.Dependeency.Create(dependeency);
         }
-
-        if (item.ScheduledDate == null)
-            item.status = 0;
-        else
-            item.status = Scheduled;
 
         DO.Task1 doTask = new DO.Task1
        (0, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate, item.RequiredEffortTime,
@@ -95,7 +99,7 @@ internal class TaskImplementation : ITask1
 
     public void Delete(int id)
     {
-        if (_dal.Task1.ReadStartProject != null)
+        if (_dal.Task1.ReadEndProject != null)
             throw new BlInappropriateStepException("It is not possible to delete a task after the schedule has been set");
 
         BO.Task1? task = Read(id);
@@ -186,7 +190,7 @@ internal class TaskImplementation : ITask1
         if (item.Alias == "")
             throw new BlEmptyStringException("The string is empty");
 
-        if (ReadStartProject==null)
+        if (ReadEndProject==null)
         {
             if (item.chef != null)
                 throw new BlInappropriateStepException("A chef cannot be assigned to a task before the schedule is set");
@@ -392,9 +396,19 @@ internal class TaskImplementation : ITask1
     public List<TaskInList>? GetTaskInList(int id)
     {
         IEnumerable<DO.Dependeency>? listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
-        var results = listDependencies.Select(dependency => _dal.Task1.Read(dependency.DependsOnTask)).
-            Select(dotask => new TaskInList() { Id = dotask!.Id, Alias = dotask.Alias, Description = dotask.Description, status = Tools.GetStatus(dotask) });
-        return results.ToList();
+        List<BO.TaskInList>? results = new List<BO.TaskInList>();
+        foreach (var dependency in listDependencies)
+        {
+            DO.Task1 task = _dal.Task1.Read(dependency.DependsOnTask)!;
+            results.Add(new TaskInList() { Id = task!.Id, Alias = task.Alias, Description = task.Description, status = Tools.GetStatus(task) });
+           
+        }
+        return results;
+        //IEnumerable<DO.Dependeency>? listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
+        //var results = listDependencies.Select(dependency => _dal.Task1.Read(dependency.DependsOnTask)).
+        //    Select(dotask => new TaskInList() { Id = dotask!.Id, Alias = dotask.Alias, Description = dotask.Description, status = Tools.GetStatus(dotask) });
+        //return results.ToList();
+
     }
 
 

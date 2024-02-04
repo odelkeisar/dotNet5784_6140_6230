@@ -22,13 +22,15 @@ public class Task1
     public string? Alias { get; set; } //כינוי
     public string? Description { get; set; }//תיאור
     public Status status { get; set; }
-    public List<TaskInList> ?dependeencies { get; set;}
+   
+    public List<TaskInList>? dependeencies { get; set;}
+   
     public DateTime? CreatedAtDate { get; set; } //תאריך יצירת המשימה
     public DateTime? ScheduledDate { get; set; } //תאריך מתוכנן להתחלה
     public DateTime? StartDate { get; set; }//התחלה בפועל
     public DateTime? ForecastDate 
     {
-        get { return ScheduledDate < StartDate ? StartDate + RequiredEffortTime : ScheduledDate + RequiredEffortTime; }
+        get { return ScheduledDate == null ? null : (ScheduledDate < StartDate ? StartDate + RequiredEffortTime : ScheduledDate + RequiredEffortTime); }
     }
     public DateTime? DeadlineDate { get; set; }//תאריך סיום
     public DateTime? CompleteDate { get; set; } //סיום בפועל

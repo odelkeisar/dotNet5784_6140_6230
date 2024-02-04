@@ -130,11 +130,12 @@ public class BlChefLevelNoEnteredException : Exception  //לא הוכנס רמת
 {
     public BlChefLevelNoEnteredException(string? message) : base(message) { }
 }
-
+[Serializable]
 public class BlNoTasksbyCriterionException : Exception //אין משימות מתאימות לקרטריון המבוקש
 {
     public BlNoTasksbyCriterionException(string? message) : base(message) { }
 }
+[Serializable]
 
 public class BlInappropriateStepException : Exception //הפעולה לא מתאימה לשלה הפרוקיט
 {
