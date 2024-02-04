@@ -109,6 +109,11 @@ public static class Initialization
     public static void Do()
     {
         s_dal = Factory.Get;
+
+        s_dal.Dependeency.DeleteAll();
+        s_dal.Task1.DeleteAll();
+        s_dal.Chef.DeleteAll();
+
         createTask();
         createChef();
         createDependeency();
