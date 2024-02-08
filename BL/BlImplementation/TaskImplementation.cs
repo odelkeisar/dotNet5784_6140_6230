@@ -38,7 +38,7 @@ internal class TaskImplementation : ITask1
         _dal.Task1.UpdateStartProject(starProject);
     }
 
-    public void CreateEndProject( DateTime endProject)
+    public void CreateEndProject(DateTime endProject)
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
         if (tasks!.Any(task => task!.ScheduledDate == null))
@@ -47,13 +47,13 @@ internal class TaskImplementation : ITask1
         if (tasks!.Any(task => (task!.ScheduledDate + task.RequiredEffortTime) < endProject))
             throw new BlWrongDateException("A later end date must be entered for the project");
 
-        _dal.Task1.UpdateEndtProject(endProject);
+        _dal.Task1.UpdateEndProject(endProject);
     }
 
 
     public int Create(BO.Task1 item)
     {
-        if (_dal.Task1.ReadEndProject != null)
+        if (_dal.Task1.ReadEndProject() != null)
             throw new BlInappropriateStepException("It is not possible to add a task after the schedule has been set");
         if (item.Id < 0)
             throw new BlWrongNegativeIdException("Task with negative ID");
@@ -80,6 +80,15 @@ internal class TaskImplementation : ITask1
         try
         {
             int idTask1 = _dal.Task1.Create(doTask);
+            IEnumerable<BO.TaskInList> taskInList = item.dependeencies!;
+
+            IEnumerable<DO.Dependeency> dependeenciesList = from _item in taskInList
+                                                            select new DO.Dependeency { Id = 0, DependentTask = idTask1, DependsOnTask = _item.Id };
+
+            foreach (var dependeency in dependeenciesList)
+            {
+                _dal.Dependeency.Create(dependeency);
+            }
             return idTask1;
         }
 
@@ -236,7 +245,7 @@ internal class TaskImplementation : ITask1
                 if (item.Copmlexity == null)
                     throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
 
-                DO.Chef? _chef = _dal.Chef.Read(item.chef.Id);
+                DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
                 if (_chef == null)
                     throw new BlDoesNotExistException($"Chef with ID={item.Id} does not exists");
 
@@ -397,18 +406,15 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<DO.Dependeency>? listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
         List<BO.TaskInList>? results = new List<BO.TaskInList>();
-        foreach (var dependency in listDependencies)
+
+        var v = from item in listDependencies
+                select (_dal.Task1.Read(item.DependsOnTask));
+
+        foreach (var task in v)
         {
-            DO.Task1 task = _dal.Task1.Read(dependency.DependsOnTask)!;
-            results.Add(new TaskInList() { Id = task!.Id, Alias = task.Alias, Description = task.Description, status = Tools.GetStatus(task) });
-           
+            results.Add(new BO.TaskInList() { Id = task.Id, Alias = task.Alias, Description = task.Description, status = Tools.GetStatus(task) });
         }
         return results;
-        //IEnumerable<DO.Dependeency>? listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
-        //var results = listDependencies.Select(dependency => _dal.Task1.Read(dependency.DependsOnTask)).
-        //    Select(dotask => new TaskInList() { Id = dotask!.Id, Alias = dotask.Alias, Description = dotask.Description, status = Tools.GetStatus(dotask) });
-        //return results.ToList();
-
     }
 
 
@@ -435,7 +441,6 @@ internal class TaskImplementation : ITask1
             Dellverables = doTask.Dellverables,
             Remarks = doTask.Remarks,
             chef = doTask.ChefId == 0 ? null : new ChefInTask { Id = (int)doTask.ChefId!, Name = _dal.Chef.Read((int)doTask.ChefId)!.Name },
-            Copmlexity = (BO.ChefExperience)doTask.Copmlexity!
+            Copmlexity = doTask.Copmlexity != null ? (BO.ChefExperience)doTask.Copmlexity : null
         };
     }
-}
