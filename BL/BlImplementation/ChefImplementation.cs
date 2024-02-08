@@ -23,8 +23,8 @@ internal class ChefImplementation : IChef
     /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Chef item)
     {
-        if (item.Id < 0)
-            throw new BO.BlWrongNegativeIdException($"The ID={item.Id} is negative");
+        if (item.Id < 100000000 || item.Id >999999999)
+            throw new BO.BlWrongNegativeIdException($"The ID={item.Id} Invalid");
         if (item.Name == " ")
             throw new BO.BlEmptyStringException($"The chef's name field with the ID:{item.Id} is empty");
         if (item.Cost < 0)
@@ -86,7 +86,12 @@ internal class ChefImplementation : IChef
 
         DO.Task1? task = _dal.Task1.Read(t => t.ChefId == id);
 
-        TaskInChef? taskInChef = null;
+        TaskInChef? taskInChef;
+
+        if (task == null)
+            taskInChef = null;
+        else
+            taskInChef = new() { Id = task.Id, Alias = task.Alias };
 
         if (task != null)
             taskInChef = new TaskInChef() { Id = task.Id, Alias = task.Alias };
@@ -194,7 +199,8 @@ internal class ChefImplementation : IChef
             throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
         if (chef.Level > (BO.ChefExperience)item.Level!)
             throw new BlChefLevelTooLowException($"For the chef with the ID:{item.Id}, it is not possible to update a chef level lower than the existing one");
-
+        
+       
         if (item.task != null)
         {
             DO.Task1? task1 = _dal.Task1.Read(task => task.ChefId == item.Id); //חיפוש המשימה שהשף כבר מוקצה לה
@@ -205,11 +211,11 @@ internal class ChefImplementation : IChef
             if (task2 == null) //אם אין משימה כזו
                 throw new BlDoesNotExistException($"Task with ID={item.task.Id} does not exists"); //אם המשימה לא קיימת
 
-            if (task2.ChefId != 0)   //אם המשימה כבר מוקצית לשף אחר
+            if (task2.ChefId != 0 && task2.ChefId != item.Id)    //אם המשימה כבר מוקצית לשף אחר
                 throw new BlTaskAlreadyAssignedException($"The task with the ID{item.task.Id} is already assigned to the chef with the ID {task2.ChefId}");
 
-            if (_dal.Task1.ReadStartProject == null) //אם לפרויקט אין תאריך התחלה מתוכנן
-                throw new BlScheduledStartDateNoUpdatedException("A chef cannot be assigned to a task when there is no scheduled start date for the project");
+            if (_dal.Task1.ReadEndProject() == null) //אם לפרויקט אין תאריך סיום מתוכנן
+                throw new BlScheduledStartDateNoUpdatedException("A chef cannot be assigned to a task when there is no scheduled end date for the project");
 
             if (task2.Copmlexity == null)
                 throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");

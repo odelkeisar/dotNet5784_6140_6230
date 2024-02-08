@@ -336,7 +336,7 @@ status= {x.status}
                     }
                 default:
                     {
-                        Console.WriteLine("Error\n");
+                        Console.WriteLine("Error");
                         break;
                     }
             }
@@ -380,7 +380,7 @@ status= {x.status}
                         string? email= Console.ReadLine();
                         Console.WriteLine("Enter a cost");
                         double cost= double.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter a name\n");
+                        Console.WriteLine("Enter a name");
                         string? name = Console.ReadLine();
                         Console.WriteLine(@"
                         Enter a level:
@@ -396,24 +396,24 @@ status= {x.status}
                         s_bl.Chef.Create(chef);
                         break;
                     }
-                    case 2: //האם צריך לשנות כאשר אין לשף משימה עדיין?
+                    case 2: 
                     {
-                        Console.WriteLine("Enter an Id\n");
+                        Console.WriteLine("Enter an Id");
                         int id = int.Parse(Console.ReadLine()!);
                         Chef chef = s_bl.Chef.Read(id)!;
-                        Console.WriteLine($@"
+                       
+                        if (chef.task == null)
+                        {
+                            Console.WriteLine($@"
 ID: {chef.Id}
 Name: {chef.Name}
 Email: {chef.Email}
 Cost of hour: {chef.Cost}
-Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
+Task of the chef: {chef.task}
 ");
-                        break;
-                    }
-                case 3:
-                    {
-                        IEnumerable<BO.Chef> chefs =s_bl.Chef.ReadAll();
-                        foreach(BO.Chef chef in chefs)
+                        }
+
+                        else
                         {
                             Console.WriteLine($@"
 ID: {chef.Id}
@@ -425,15 +425,44 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         }
                         break;
                     }
+                case 3:
+                    {
+                        IEnumerable<BO.Chef> chefs =s_bl.Chef.ReadAll();
+                        foreach(BO.Chef chef in chefs)
+                        {
+                            if (chef.task == null)
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: {chef.task}
+");
+                            }
+
+                            else
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
+");
+                            }
+                        }
+                        break;
+                    }
                 case 4: 
                     {
-                        Console.WriteLine("Enter an Id\n");
+                        Console.WriteLine("Enter an Id");
                         int id=int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter a mail\n");
+                        Console.WriteLine("Enter a mail");
                         string? email = Console.ReadLine();
-                        Console.WriteLine("Enter a cost\n");
+                        Console.WriteLine("Enter a cost");
                         double cost = double.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter a name\n");
+                        Console.WriteLine("Enter a name");
                         string? name = Console.ReadLine();
                         Console.WriteLine(@"
                         Enter a level:
@@ -444,11 +473,22 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         Experet=4
                         ");
                         ChefExperience Level = (ChefExperience)int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter Id of the task\n");
-                        int? taskId = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter Alias of the task\n");
-                        string? alias= Console.ReadLine();
-                        TaskInChef _task = new() { Id=taskId,Alias=alias};
+                        
+                        Console.WriteLine("Do you want to add task? Y/N");
+
+                        TaskInChef? _task = null;
+
+                        if (Console.ReadLine() == "Y")
+                        {
+                            Console.WriteLine("Enter Id of the task");
+                            int? taskId = int.Parse(Console.ReadLine()!);
+                            Console.WriteLine("Enter Alias of the task");
+                            string? alias = Console.ReadLine();
+                            _task = new() { Id = taskId, Alias = alias };
+                        }
+
+                        else
+                            _task = s_bl.Chef.Read(id).task;
 
                         Chef chef = new() { Id=id, Name=name, Email=email, Cost=cost, Level=Level, task=_task};
                         s_bl.Chef.Update(chef);
@@ -456,7 +496,7 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                     }
                     case 5:
                     {
-                        Console.WriteLine("Enter an Id\n");
+                        Console.WriteLine("Enter an Id");
                         int id = int.Parse(Console.ReadLine()!);
                         s_bl.Chef.Delete(id);
                         break;
@@ -476,15 +516,29 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         IEnumerable<BO.Chef> chefs = s_bl.Chef.ReadAllPerLevel(Level);
                         foreach (BO.Chef chef in chefs)
                         {
-                            Console.WriteLine($@"
+                            if (chef.task == null)
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: {chef.task}
+");
+                            }
+
+                            else
+                            {
+                                Console.WriteLine($@"
 ID: {chef.Id}
 Name: {chef.Name}
 Email: {chef.Email}
 Cost of hour: {chef.Cost}
 Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
 ");
+                            }
                         }
-                        break;
+                            break;
 
                     }
                 case 7:
@@ -492,20 +546,34 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         IEnumerable<BO.Chef> chefs = s_bl.Chef.ReadAllNotAssigned();
                         foreach (BO.Chef chef in chefs)
                         {
-                            Console.WriteLine($@"
+                            if (chef.task == null)
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: {chef.task}
+");
+                            }
+
+                            else
+                            {
+                                Console.WriteLine($@"
 ID: {chef.Id}
 Name: {chef.Name}
 Email: {chef.Email}
 Cost of hour: {chef.Cost}
 Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
 ");
+                            }
                         }
                         break;
                     }
 
                 default:
                     {
-                        Console.WriteLine("Error\n");
+                        Console.WriteLine("Error");
                         break;
                     }
             }
@@ -564,7 +632,7 @@ status={task.status}
                         }
                     case 3:
                         {
-                            Console.WriteLine("Enter start date of project date:\n");
+                            Console.WriteLine("Enter start date of project date:");
                             DateTime startProject = DateTime.Parse(Console.ReadLine()!);
                             s_bl.Task1.CreateStartProject(startProject);
                             break;
@@ -575,13 +643,13 @@ status={task.status}
                             DateTime? endProject = s_bl.Task1.ReadEndProject();
 
                             if (startProject == null)
-                                Console.WriteLine("Start date not updated\n");
+                                Console.WriteLine("Start date not updated");
 
                             else
                                 Console.WriteLine(startProject);
 
                             if (endProject == null)
-                                Console.WriteLine("End date not updated\n");
+                                Console.WriteLine("End date not updated");
 
                             else
                                 Console.WriteLine(endProject);
@@ -590,7 +658,7 @@ status={task.status}
                         }
                     case 5:
                         {
-                            Console.WriteLine("Enter end date of project date:\n");
+                            Console.WriteLine("Enter end date of project date:");
                             DateTime endProject = DateTime.Parse(Console.ReadLine()!);
                             s_bl.Task1.CreateEndProject(endProject);
                             break;
@@ -598,7 +666,7 @@ status={task.status}
 
                     default:
                         {
-                            Console.WriteLine("Error\n");
+                            Console.WriteLine("Error");
                             break;
                         }
                 }

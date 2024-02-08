@@ -9,6 +9,7 @@ namespace BlImplementation;
 internal class TaskImplementation : ITask1
 {
     private DalApi.IDal _dal = Factory.Get;
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     /// <summary>
     /// create a new task
@@ -256,8 +257,21 @@ internal class TaskImplementation : ITask1
 
             if (item.chef == null && botask.chef != null)
                 throw new BlTaskAlreadyAssignedException("It is not possible to cancel a chef that already exists in the mission");
+           
             if (item.CompleteDate != null && item.StartDate == null)
                 throw new BlWrongDateException("You cannot enter an actual end date before an actual start date");
+          
+            if (item.chef == null && item.StartDate != null)
+                throw new BlWrongDateException("You can't enter a start date for a task if it doesn't have an chef");
+
+            if (item.chef != null)
+            {
+                if (ReadAllPossibleTasks(s_bl.Chef.Read(item.chef.Id)!).Any(x => x.Id == item.Id) == false && item.StartDate != null)
+                {
+                    item.status = Status.Scheduled;
+                    throw new BlWrongDateException("A start date cannot be entered when the task is not available");
+                }
+            }
 
             if (item.chef != null)
             {
@@ -267,16 +281,16 @@ internal class TaskImplementation : ITask1
                 DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
 
                 if (_chef == null)
-                    throw new BlDoesNotExistException($"Chef with ID={item.Id} does not exists");
+                    throw new BlDoesNotExistException($"Chef with ID= {item.Id} does not exists");
 
                 if (botask.chef == null || botask.chef.Id != item.chef.Id)
                 {
                     DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id); //חיפוש המשימה שהשף כבר מוקצה לה
                     if (dotask != null && dotask.Id != item.Id && dotask.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
-                        throw new BlNoChangeChefAssignmentException($"The chef with{item.Id} is already assigned to an unfinished task");
+                        throw new BlNoChangeChefAssignmentException($"The chef with {item.Id} is already assigned to an unfinished task");
 
                     if (botask.chef != null && botask.chef.Id != item.chef.Id)   // לא ניתן להקצות משימה לשף אם המשימה כבר מוקצית לשף אחר
-                        throw new BlTaskAlreadyAssignedException($"The task with the ID{botask.Id} is already assigned to the chef with the ID {botask.chef.Id}");
+                        throw new BlTaskAlreadyAssignedException($"The task with the ID {botask.Id} is already assigned to the chef with the ID {botask.chef.Id}");
 
                     if (item.Copmlexity > (BO.ChefExperience)_chef.Level!) //בדיקה שרמת השף הנדרשת מתאימה לשף המתעדכן
                         throw new BlChefLevelTooLowException("The level of the chef is lower than the complexity of the task");
