@@ -1,0 +1,62 @@
+﻿<Window x:Class="PL.Chef.ChefWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Chef"
+        mc:Ignorable="d"
+        Title="ChefWindow" Height="640" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+
+
+    <Grid Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="תעודת זהות" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Background="{x:Null}" Foreground="#FFBF2BC6"/>
+        <Label Content="דואר אלקטרוני" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFBF2BC6" Background="Transparent"/>
+        <Label Content="מחיר לשעה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Foreground="#FF131E64"/>
+        <Label Content="שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
+        <Label Content="רמת השף" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"/>
+        <Label Content="מספר מזהה של משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top"/>
+        <Label Content="שם של המשימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" VerticalAlignment="Top"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="161,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
+                 Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="161,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" 
+                     Grid.Row="1"  Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="161,0,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"
+                      Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="161,0,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" 
+                     Width="120" Height="57" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <ComboBox HorizontalAlignment="Left" Margin="161,10,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120"
+                      ItemsSource="{Binding Source={StaticResource LevelChefKey}}" SelectedValue="{Binding Path=level, Mode=TwoWay}"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="161,13,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top"
+                     Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="161,10,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
+                     Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <Button HorizontalAlignment="Left" Margin="362,0,0,0" Grid.Row="7"  VerticalAlignment="Center"
+                    Width="76" Height="29" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</Window>
