@@ -8,7 +8,7 @@ namespace DalApi;
 public interface ITask1 : ICrud<Task1> 
 {
     public void UpdateStartProject(DateTime startProject);
-    public void UpdateEndtProject( DateTime endProject);
+    public void UpdateEndProject( DateTime endProject);
     public DateTime? ReadStartProject();
     public DateTime? ReadEndProject();
 }
