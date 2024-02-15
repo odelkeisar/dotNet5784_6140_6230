@@ -74,7 +74,7 @@ public class BlNoUnassignedChefsException : Exception //חסר מהנדסים ל
 
 
 [Serializable]
-public class BlChefLevelTooLowException : Exception //רמת מהנדס נמוכה מדי
+public class BlChefLevelTooLowException : Exception //רמת  נמוכה מדי
 {
     public BlChefLevelTooLowException(string? message) : base(message) { }
 }
@@ -137,12 +137,23 @@ public class BlNoTasksbyCriterionException : Exception //אין משימות מ�
 }
 [Serializable]
 
-public class BlInappropriateStepException : Exception //הפעולה לא מתאימה לשלה הפרוקיט
+public class BlInappropriateStepException : Exception //הפעולה לא מתאימה לשלב הפרוקיט
 {
     public BlInappropriateStepException(string? message) : base(message) { }
 }
-
+[Serializable]
 public class BlUnablToAssociateException : Exception //לא ניתן לשיוך
 {
     public BlUnablToAssociateException(string? message) : base(message) { }
 }
+[Serializable]
+public class BlScheduledStartDateMayNotBeChangedException : Exception //לא ניתן לשנות תאריך מתוכנן להתחלה
+{
+    public BlScheduledStartDateMayNotBeChangedException(string? message) : base(message) { }
+}
+
+[Serializable]
+public class BlProblemAboutRequiredEffortTimeException : Exception //שגיאה משך זמן המשימה
+{
+    public BlProblemAboutRequiredEffortTimeException(string? message) : base(message) { }
+} 

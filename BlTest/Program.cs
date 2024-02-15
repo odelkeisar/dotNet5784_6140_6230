@@ -72,9 +72,9 @@ internal class Program
 
                         Console.WriteLine("Enter a descripation");
                         string? descripation = Console.ReadLine();
-
+                        
                         DateTime? createdAtDate = DateTime.Now;
-
+                        
                         DateTime? ScheduledDate = null;
                         Console.WriteLine("Would you like to update the Scheduled Task Start Date now (Y/N)?");
                         if (Console.ReadLine() == "Y")
@@ -168,6 +168,7 @@ status= {x.status}
                     }
                 case 4:
                     {
+                        string? ans;
 
                         Console.WriteLine("Enter an ID number");
                         int id = int.Parse(Console.ReadLine()!);
@@ -180,23 +181,28 @@ status= {x.status}
                         string? descripation = Console.ReadLine();
 
                         Console.WriteLine("Enter Scheduled Date in the format 00.00.0000");
-                        DateTime? ScheduledDate = DateTime.Parse(Console.ReadLine()!);
+                        ans = Console.ReadLine();
+                        DateTime?ScheduledDate = ans==" "?null:DateTime.Parse(ans);
+  
 
-                       // Console.WriteLine("Enter Start Date in the format 00.00.0000");
-                        DateTime? StartDate =null;
+                        Console.WriteLine("Enter Start Date in the format 00.00.0000");
+                        ans = Console.ReadLine();
+                        DateTime? StartDate = ans == " " ? null : DateTime.Parse(ans);
+                        
 
-                       // Console.WriteLine("Enter Complete Date in the format 00.00.0000");
-                        DateTime? CompleteDate = null;
+                        Console.WriteLine("Enter Complete Date in the format 00.00.0000");
+                        ans = Console.ReadLine();
+                        DateTime? CompleteDate = ans == " " ? null : DateTime.Parse(ans);
 
 
-                       //// Console.WriteLine("RequiredE ffort Time");
-                       // Console.WriteLine("Enter num of days");
-                       // string day = Console.ReadLine()!;
-                       // Console.WriteLine("Enter num of hours");
-                       // string? hours = Console.ReadLine();
-                       // Console.WriteLine("Enter num of minutes");
-                       // string? minutes = Console.ReadLine();
-                        TimeSpan RequiredEffortTime = (TimeSpan)task.RequiredEffortTime!;
+                        Console.WriteLine("RequiredE ffort Time");
+                        Console.WriteLine("Enter num of days");
+                        string day = Console.ReadLine()!;
+                        Console.WriteLine("Enter num of hours");
+                        string? hours = Console.ReadLine();
+                        Console.WriteLine("Enter num of minutes");
+                        string? minutes = Console.ReadLine();
+                        TimeSpan RequiredEffortTime = new TimeSpan(int.Parse(day!), int.Parse(hours!), int.Parse(minutes!), 0);
 
                         Console.WriteLine("Enter Dellverables");
                         string? Dellverables = Console.ReadLine();
@@ -204,12 +210,25 @@ status= {x.status}
                         Console.WriteLine("Enter remarks");
                         string? Remarks = Console.ReadLine();
 
-                        Console.WriteLine("Enter id of chef\n");
-                        int _id = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Enter id of chef\n");
-                        string? _name = Console.ReadLine();
-                        ChefInTask chef = new() { Id = _id, Name = _name };
+                        Console.WriteLine("Do you want to add chef? Y/N");
 
+                        ChefInTask? chef = null;
+
+                        if (Console.ReadLine() == "Y")
+                        {
+                            Console.WriteLine("Enter id of chef");
+                            int _id = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter name of chef");
+                            string? _name = Console.ReadLine();
+                            chef = new() { Id = _id, Name = _name };
+                        }
+
+                        else
+                        {
+                            chef = s_bl.Task1.Read(id)!.chef;
+                        }
+
+                        
 
                         Console.WriteLine(@"
                         Enter Copmlexity:
@@ -225,7 +244,7 @@ status= {x.status}
 
                         if (botask == null)
                             throw new BlDoesNotExistException($"Task with ID={id} does not exists");
-
+                        
                         Status _status = Status.Unscheduled;
                         if (CompleteDate != null)
                             _status = Status.Done;
@@ -236,24 +255,13 @@ status= {x.status}
 
 
                         Task1 newTask = new()
-                        {
-                            Id = id,
-                            Alias = alias,
-                            Description = descripation,
-                            status = _status,
-                            dependeencies = s_bl.Task1.Read(id).dependeencies,
-                            CreatedAtDate = s_bl.Task1.Read(id)!.CreatedAtDate,
-                            ScheduledDate = ScheduledDate,
-                            StartDate = StartDate,
-                            CompleteDate = CompleteDate,
-                            RequiredEffortTime = RequiredEffortTime,
-                            Dellverables = Dellverables,
-                            Remarks = Remarks,
-                            chef = chef,
-                            Copmlexity = Copmlexity
-                        };
+                        { Id = id, Alias = alias, Description = descripation, status =_status,
+                          dependeencies= s_bl.Task1.Read(id).dependeencies, CreatedAtDate= s_bl.Task1.Read(id)!.CreatedAtDate,
+                          ScheduledDate = ScheduledDate,StartDate=StartDate, CompleteDate=CompleteDate,
+                          RequiredEffortTime = RequiredEffortTime, Dellverables = Dellverables, Remarks = Remarks, chef = chef,
+                          Copmlexity = Copmlexity };
                         s_bl.Task1.Update(newTask);
-
+                       
                         break;
                     }
                 case 5:
@@ -262,16 +270,16 @@ status= {x.status}
                         s_bl.Task1.Delete(int.Parse(Console.ReadLine()!));
                         break;
                     }
-                case 6:
+                 case 6:
                     {
                         Console.WriteLine("Enter an ID of chef");
-                        int id = int.Parse(Console.ReadLine()!);
+                        int id=int.Parse(Console.ReadLine()!);
                         Chef chef = s_bl.Chef.Read(id)!;
                         IEnumerable<BO.TaskInList> tasks = s_bl.Task1.ReadAllPossibleTasks(chef);
                         print(tasks);
                         break;
                     }
-                case 7:
+                 case 7:
                     {
                         Console.WriteLine("Enter an ID of chef");
                         int id = int.Parse(Console.ReadLine()!);
@@ -280,7 +288,7 @@ status= {x.status}
                         print(tasks);
                         break;
                     }
-                case 8:
+                 case 8:
                     {
                         Console.WriteLine(@"
                         Enter Copmlexity:
@@ -295,19 +303,19 @@ status= {x.status}
                         print(tasks);
                         break;
                     }
-                case 9:
+                 case 9: 
                     {
                         IEnumerable<BO.TaskInList> tasks = s_bl.Task1.ReadAllCompleted();
                         print(tasks);
                         break;
                     }
-                case 10:
+                 case 10:
                     {
                         IEnumerable<BO.TaskInList> tasks = s_bl.Task1.ReadAllTasksInCare();
                         print(tasks);
                         break;
                     }
-                case 11:
+                 case 11:
                     {
                         IEnumerable<BO.TaskInList> tasks = s_bl.Task1.ReadAllNoChefWasAssigned();
                         print(tasks);
@@ -319,7 +327,7 @@ status= {x.status}
                         print(tasks);
                         break;
                     }
-                case 13:
+                case 13: 
                     {
                         Console.WriteLine("Enter an ID of task");
                         int id = int.Parse(Console.ReadLine()!);
@@ -330,11 +338,11 @@ status= {x.status}
                     }
                 default:
                     {
-                        Console.WriteLine("Error\n");
+                        Console.WriteLine("Error");
                         break;
                     }
             }
-
+            
             act = TaskMenue();
         }
 
@@ -366,15 +374,15 @@ status= {x.status}
         {
             switch (act)
             {
-                case 1:
+                case 1: 
                     {
                         Console.WriteLine("Enter an Id");
                         int id = int.Parse(Console.ReadLine()!);
                         Console.WriteLine("Enter a mail");
-                        string? email = Console.ReadLine();
+                        string? email= Console.ReadLine();
                         Console.WriteLine("Enter a cost");
-                        double cost = double.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter a name\n");
+                        double cost= double.Parse(Console.ReadLine()!);
+                        Console.WriteLine("Enter a name");
                         string? name = Console.ReadLine();
                         Console.WriteLine(@"
                         Enter a level:
@@ -386,28 +394,28 @@ status= {x.status}
                         ");
                         ChefExperience Level = (ChefExperience)int.Parse(Console.ReadLine()!);
 
-                        Chef chef = new() { Id = id, Email = email, Cost = cost, Name = name, Level = Level, deleted = false };
+                        Chef chef= new() { Id = id, Email=email, Cost = cost, Name = name,Level = Level ,deleted=false};
                         s_bl.Chef.Create(chef);
                         break;
                     }
-                case 2: //האם צריך לשנות כאשר אין לשף משימה עדיין?
+                    case 2: 
                     {
-                        Console.WriteLine("Enter an Id\n");
+                        Console.WriteLine("Enter an Id");
                         int id = int.Parse(Console.ReadLine()!);
                         Chef chef = s_bl.Chef.Read(id)!;
-                        Console.WriteLine($@"
+                       
+                        if (chef.task == null)
+                        {
+                            Console.WriteLine($@"
 ID: {chef.Id}
 Name: {chef.Name}
 Email: {chef.Email}
 Cost of hour: {chef.Cost}
-Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
+Task of the chef: {chef.task}
 ");
-                        break;
-                    }
-                case 3:
-                    {
-                        IEnumerable<BO.Chef> chefs = s_bl.Chef.ReadAll();
-                        foreach (BO.Chef chef in chefs)
+                        }
+
+                        else
                         {
                             Console.WriteLine($@"
 ID: {chef.Id}
@@ -419,15 +427,44 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         }
                         break;
                     }
-                case 4:
+                case 3:
                     {
-                        Console.WriteLine("Enter an Id\n");
-                        int id = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter a mail\n");
+                        IEnumerable<BO.Chef> chefs =s_bl.Chef.ReadAll();
+                        foreach(BO.Chef chef in chefs)
+                        {
+                            if (chef.task == null)
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: {chef.task}
+");
+                            }
+
+                            else
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
+");
+                            }
+                        }
+                        break;
+                    }
+                case 4: 
+                    {
+                        Console.WriteLine("Enter an Id");
+                        int id=int.Parse(Console.ReadLine()!);
+                        Console.WriteLine("Enter a mail");
                         string? email = Console.ReadLine();
-                        Console.WriteLine("Enter a cost\n");
+                        Console.WriteLine("Enter a cost");
                         double cost = double.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter a name\n");
+                        Console.WriteLine("Enter a name");
                         string? name = Console.ReadLine();
                         Console.WriteLine(@"
                         Enter a level:
@@ -438,24 +475,35 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         Experet=4
                         ");
                         ChefExperience Level = (ChefExperience)int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter Id of the task\n");
-                        int taskId = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter Alias of the task\n");
-                        string? alias = Console.ReadLine();
-                        TaskInChef _task = new() { Id = taskId, Alias = alias };
+                        
+                        Console.WriteLine("Do you want to add task? Y/N");
 
-                        Chef chef = new() { Id = id, Name = name, Email = email, Cost = cost, Level = Level, task = _task };
+                        TaskInChef? _task = null;
+
+                        if (Console.ReadLine() == "Y")
+                        {
+                            Console.WriteLine("Enter Id of the task");
+                            int? taskId = int.Parse(Console.ReadLine()!);
+                            Console.WriteLine("Enter Alias of the task");
+                            string? alias = Console.ReadLine();
+                            _task = new() { Id = taskId, Alias = alias };
+                        }
+
+                        else
+                            _task = s_bl.Chef.Read(id).task;
+
+                        Chef chef = new() { Id=id, Name=name, Email=email, Cost=cost, Level=Level, task=_task};
                         s_bl.Chef.Update(chef);
                         break;
                     }
-                case 5:
+                    case 5:
                     {
-                        Console.WriteLine("Enter an Id\n");
+                        Console.WriteLine("Enter an Id");
                         int id = int.Parse(Console.ReadLine()!);
                         s_bl.Chef.Delete(id);
                         break;
                     }
-                case 6:
+                    case 6:
                     {
                         Console.WriteLine(@"
                         Enter a level:
@@ -470,15 +518,29 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         IEnumerable<BO.Chef> chefs = s_bl.Chef.ReadAllPerLevel(Level);
                         foreach (BO.Chef chef in chefs)
                         {
-                            Console.WriteLine($@"
+                            if (chef.task == null)
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: {chef.task}
+");
+                            }
+
+                            else
+                            {
+                                Console.WriteLine($@"
 ID: {chef.Id}
 Name: {chef.Name}
 Email: {chef.Email}
 Cost of hour: {chef.Cost}
 Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
 ");
+                            }
                         }
-                        break;
+                            break;
 
                     }
                 case 7:
@@ -486,20 +548,34 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         IEnumerable<BO.Chef> chefs = s_bl.Chef.ReadAllNotAssigned();
                         foreach (BO.Chef chef in chefs)
                         {
-                            Console.WriteLine($@"
+                            if (chef.task == null)
+                            {
+                                Console.WriteLine($@"
+ID: {chef.Id}
+Name: {chef.Name}
+Email: {chef.Email}
+Cost of hour: {chef.Cost}
+Task of the chef: {chef.task}
+");
+                            }
+
+                            else
+                            {
+                                Console.WriteLine($@"
 ID: {chef.Id}
 Name: {chef.Name}
 Email: {chef.Email}
 Cost of hour: {chef.Cost}
 Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
 ");
+                            }
                         }
                         break;
                     }
 
                 default:
                     {
-                        Console.WriteLine("Error\n");
+                        Console.WriteLine("Error");
                         break;
                     }
             }
@@ -527,20 +603,18 @@ status={task.status}
         string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
         if (ans == "Y")
         {
+            DalTest.Initialization.Do();
             string s_data_config_xml = "data-config";
             const string s_xml_dir = @"..\xml\";
 
             XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
             root.Element("endProject")!.Value = " ";
             root.Element("startProject")!.Value = " ";
-            root.Element("NextTask1Id")!.Value = "1";
             root.Save($"{s_xml_dir + s_data_config_xml}.xml");
-            DalTest.Initialization.Do();
-      
         }
+            
 
-
-        int _object = mainMenue();
+        int _object=mainMenue();
 
         while (_object != 0)
         {
@@ -560,7 +634,7 @@ status={task.status}
                         }
                     case 3:
                         {
-                            Console.WriteLine("Enter start date of project date:\n");
+                            Console.WriteLine("Enter start date of project date:");
                             DateTime startProject = DateTime.Parse(Console.ReadLine()!);
                             s_bl.Task1.CreateStartProject(startProject);
                             break;
@@ -571,13 +645,13 @@ status={task.status}
                             DateTime? endProject = s_bl.Task1.ReadEndProject();
 
                             if (startProject == null)
-                                Console.WriteLine("Start date not updated\n");
+                                Console.WriteLine("Start date not updated");
 
                             else
                                 Console.WriteLine(startProject);
 
                             if (endProject == null)
-                                Console.WriteLine("End date not updated\n");
+                                Console.WriteLine("End date not updated");
 
                             else
                                 Console.WriteLine(endProject);
@@ -586,7 +660,7 @@ status={task.status}
                         }
                     case 5:
                         {
-                            Console.WriteLine("Enter end date of project date:\n");
+                            Console.WriteLine("Enter end date of project date:");
                             DateTime endProject = DateTime.Parse(Console.ReadLine()!);
                             s_bl.Task1.CreateEndProject(endProject);
                             break;
@@ -594,7 +668,7 @@ status={task.status}
 
                     default:
                         {
-                            Console.WriteLine("Error\n");
+                            Console.WriteLine("Error");
                             break;
                         }
                 }

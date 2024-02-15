@@ -14,8 +14,7 @@ public record Chef
     string? Email = null,
     double? Cost = null,
     string? Name = null,
-    ChefExperience? Level = null
-    
+    ChefExperience Level = 0   
  )
 {
     public Chef() : this(0,false){ }

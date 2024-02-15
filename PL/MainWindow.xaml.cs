@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using PL.Chef;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,34 +9,42 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BlApi;
+using BO;
 
 namespace PL;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace PL
 {
-
-    public MainWindow()
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-        InitializeComponent();
-    }
 
-    private void ChefList_Click(object sender, RoutedEventArgs e)
-    {
-        new ChefListWindow().Show();
-    }
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
 
-    private void InitializeTheDatabase_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לבצע את האתחול?", "אישור אתחול", MessageBoxButton.YesNo);
+        private void ChefList_Click(object sender, RoutedEventArgs e)
+        {
+            new ChefListWindow().Show();
+        }
+
+        private void DataInitialization_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo);
 
         // בדיקת התשובה של המשתמש
-        if (result == MessageBoxResult.Yes)
+            if (result == MessageBoxResult.Yes)
         {
             // אם המשתמש אישר, קריאה למתודת האתחול
-            DalTest.Initialization.Do();
+                DalTest.Initialization.Do();
+
+            //Factory.Get().InitializeDB();
+
+
         }
     }
 }

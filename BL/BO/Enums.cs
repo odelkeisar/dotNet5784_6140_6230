@@ -6,7 +6,8 @@ public enum ChefExperience
     AdvancedBeginner,
     Intermediate,
     Advanced,
-    Expert
+    Expert,
+    None
 }
 
 public enum Status
@@ -14,5 +15,5 @@ public enum Status
     Unscheduled, //לא מתוכנן
     Scheduled,  //מתוזמן
     OnTrack,  //במעקב
-    Done  //בוצע
+    Done,  //בוצע
 }

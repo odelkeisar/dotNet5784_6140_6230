@@ -1,6 +1,9 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,35 +15,37 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.Chef;
+
+
+/// <summary>
+/// Interaction logic for ChefListWindow.xaml
+/// </summary>
+public partial class ChefListWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for ChefListWindow.xaml
-    /// </summary>
-    public partial class ChefListWindow : Window
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public BO.ChefExperience level { get; set; } /*BO.ChefExperience.None;*/
+    public ChefListWindow()
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public ChefListWindow()
-        {
-            InitializeComponent();
-            ChefList = s_bl?.Chef.ReadAll()!;
-        }
-    
+        InitializeComponent();
+        //ChefList = new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAll() ?? Enumerable.Empty<BO.Chef>());
 
-        public IEnumerable<BO.Chef> ChefList
-        {
-            
-            get { return (IEnumerable<BO.Chef>) GetValue(ChefListProperty); }
-            set { SetValue(ChefListProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ChefListProperty =
-            DependencyProperty.Register("ChefList", typeof(IEnumerable<BO.Chef>), typeof(ChefListWindow), new PropertyMetadata(null));
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
+    public ObservableCollection<BO.Chef> ChefList
+    {
+        get { return (ObservableCollection< BO.Chef >) GetValue(ChefListProparty); }
+        set { SetValue(ChefListProparty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ChefListProparty =
+        DependencyProperty.Register("ChefList", typeof(ObservableCollection<BO.Chef>), typeof(ChefListWindow), new PropertyMetadata(null));
+
+    private void ChangeSelect(object sender, SelectionChangedEventArgs e)
+    {
+        ChefList = (level == BO.ChefExperience.None) ?
+            new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAllPerLevel(level)!);
+
+    }
+}
 }

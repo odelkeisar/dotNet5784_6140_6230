@@ -34,9 +34,9 @@ public static class Initialization
         {
             string alias = TaskNum[y++];
 
-            DateTime createDate = new DateTime(2023, 12, 30);
+            DateTime createDate = DateTime.Now;
 
-            DateTime scheduledDate = new DateTime(2024, 1, 1, 8, 0, 0);
+            DateTime scheduledDate = new DateTime(2024, 10, 10, 8, 0, 0);
             scheduledDate = scheduledDate.AddHours(x);
 
             TimeSpan taskTime = new TimeSpan(0, 1, 0, 0);
@@ -44,7 +44,7 @@ public static class Initialization
             DateTime deadLine = scheduledDate + taskTime;
    
 
-            Task1 newTask = new(0,alias,_name,createDate, scheduledDate, taskTime, deadLine, 0,null,null,DO.ChefExperience.Beginner);
+            Task1 newTask = new(0,alias,_name,createDate, scheduledDate, taskTime, deadLine,0,null,null,DO.ChefExperience.Beginner);
             s_dal!.Task1!.Create(newTask);
             
 
@@ -70,7 +70,7 @@ public static class Initialization
             int _id = s_rand.Next(100000000, 900000000);
             string _email = EngineertMail[x++];
             double _cost = s_rand.Next(50, 300);
-            DO.ChefExperience? _Level = (DO.ChefExperience)s_rand.Next(0, 4);
+            DO.ChefExperience _Level = (DO.ChefExperience)s_rand.Next(0, 4);
 
             Chef newChef = new(_id,false, _email, _cost, _name, _Level);
 
@@ -114,6 +114,14 @@ public static class Initialization
         s_dal.Dependeency.DeleteAll();
         s_dal.Task1.DeleteAll();
         s_dal.Chef.DeleteAll();
+
+        string s_data_config_xml = "data-config";
+        const string s_xml_dir = @"..\xml\";
+
+        XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
+        root.Element("NextTask1Id")!.Value = "1";
+        root.Element("NextDependeencyId")!.Value = "1";
+        root.Save($"{s_xml_dir + s_data_config_xml}.xml");
 
         createTask();
         createChef();

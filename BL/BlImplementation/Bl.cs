@@ -9,4 +9,7 @@ internal class Bl : IBl
     public ITask1 Task1 => new TaskImplementation();
 
     public IChef Chef => new ChefImplementation();
+
+    public void InitializeDB() => DalTest.Initialization.Do();
+
 }
