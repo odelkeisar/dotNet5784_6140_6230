@@ -15,7 +15,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="image\123.jpg" />
+    <None Remove="image\back.jpg" />
+    <None Remove="image\chef.jpg" />
+    <None Remove="image\chefs.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="image\back.jpg" />
+    <Resource Include="image\chef.jpg" />
   </ItemGroup>
 
 </Project>

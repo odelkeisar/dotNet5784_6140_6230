@@ -189,11 +189,11 @@ internal class ChefImplementation : IChef
         BO.Chef? chef = Read(item.Id);
         if (chef == null)
             throw new BlDoesNotExistException($"Chef with ID={item.Id} does not exists");
-        if (item.Name == " ")
+        if (item.Name == "")
             throw new BO.BlEmptyStringException($"The chef's name field with the ID:{item.Id} is empty");
         if (item.Cost < 0)
             throw new BO.BlNegativeHourlyWageException($"The cost of ID={item.Id} is negative");
-        if (item.Email == " ")
+        if (item.Email == "")
             throw new BO.BlEmptyStringException($"The chef's mail field with the ID:{item.Id} is empty");
         if (!item.Email!.Contains("@"))
             throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
@@ -205,7 +205,7 @@ internal class ChefImplementation : IChef
         {
             DO.Task1? task1 = _dal.Task1.Read(task => task.ChefId == item.Id); //חיפוש המשימה שהשף כבר מוקצה לה
             if (task1 != null && item.task.Id != task1.Id && task1.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
-                throw new BlNoChangeChefAssignmentException($"The chef with{item.Id} is already assigned to an unfinished task");
+                throw new BlNoChangeChefAssignmentException($"The chef with ID: {item.Id} is already assigned to an unfinished task");
 
             DO.Task1? task2 = _dal.Task1.Read(t => t.Id == item.task.Id); //חיפוש המשימה אותה השף מעוניין להקצות לעצמו
             if (task2 == null) //אם אין משימה כזו

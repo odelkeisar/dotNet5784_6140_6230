@@ -7,5 +7,7 @@
     <Application.Resources>
         <local:LevelChef x:Key="LevelChefKey"/>
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
+        <local:ConvertIdToBool x:Key="ConvertIdToBoolKey"/>
+        
     </Application.Resources>
 </Application>

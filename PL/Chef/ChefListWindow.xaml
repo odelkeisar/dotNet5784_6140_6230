@@ -16,14 +16,14 @@
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
+  
         <!--Internal, Upper Grid-->
         <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Label" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
+            <Label Content="Professional level" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <ComboBox HorizontalAlignment="Stretch" 
                       SelectedValue="{Binding Path=level, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
                       SelectionChanged="ChangeSelect" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
@@ -35,16 +35,23 @@
                 </ComboBox.Background>
             </ComboBox>
 
-            <!--<ListBox d:ItemsSource="{d:SampleData ItemCount=6}"/>-->
-
+          
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=ChefList}">
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=ChefList}"  MouseDoubleClick="ListView_UpdateChef_Click">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <!--<Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click"/>-->
+
+        <Button Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/image/chef.jpg" Width="50" Height="30"/>
+                <TextBlock Text="Add"/>
+            </StackPanel>
+        </Button>
+
     </Grid>
 </Window>

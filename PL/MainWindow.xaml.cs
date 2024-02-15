@@ -12,7 +12,6 @@ using System.Windows.Shapes;
 using BlApi;
 using BO;
 
-namespace PL;
 
 namespace PL
 {
@@ -21,7 +20,6 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
@@ -29,22 +27,26 @@ namespace PL
 
         private void ChefList_Click(object sender, RoutedEventArgs e)
         {
-            new ChefListWindow().Show();
+            new ChefListWindow().ShowDialog();
         }
 
         private void DataInitialization_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo);
 
-        // בדיקת התשובה של המשתמש
             if (result == MessageBoxResult.Yes)
-        {
-            // אם המשתמש אישר, קריאה למתודת האתחול
                 DalTest.Initialization.Do();
 
             //Factory.Get().InitializeDB();
 
+        }
 
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+                DalTest.Initialization.Reset();
         }
     }
 }

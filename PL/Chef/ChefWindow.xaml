@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Chef"
         mc:Ignorable="d"
-        Title="ChefWindow" Height="640" Width="800"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+       Title="ChefWindow" Height="500" Width="400" 
+        DataContext="{Binding Chef, RelativeSource={RelativeSource Self }, Mode=TwoWay}">
+    <!--DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">-->
+    <!--DataContext="{Binding CurrentCourse, RelativeSource={RelativeSource Self}, Mode=TwoWay}">-->
+    <!--Mode=TwoWay-->
 
 
 
@@ -27,36 +30,36 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Content="תעודת זהות" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Background="{x:Null}" Foreground="#FFBF2BC6"/>
-        <Label Content="דואר אלקטרוני" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFBF2BC6" Background="Transparent"/>
+        <Label Content="שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFBF2BC6" Background="Transparent"/>
         <Label Content="מחיר לשעה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Foreground="#FF131E64"/>
-        <Label Content="שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
+        <Label Content="דואר אלקטרוני" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
         <Label Content="רמת השף" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"/>
         <Label Content="מספר מזהה של משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top"/>
         <Label Content="שם של המשימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" VerticalAlignment="Top"/>
 
-        <TextBox HorizontalAlignment="Left" Margin="161,0,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
-                 Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
+                 IsEnabled= "{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToBoolKey}}" Width="120" Height="25" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <TextBox HorizontalAlignment="Left" Margin="161,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" 
-                     Grid.Row="1"  Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" 
+                     Grid.Row="1"  Height="25" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <TextBox HorizontalAlignment="Left" Margin="161,0,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"
-                      Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"
+                      Width="120" Height="25" Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <TextBox HorizontalAlignment="Left" Margin="161,0,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" 
-                     Width="120" Height="57" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" 
+                     Width="120" Height="25" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <ComboBox HorizontalAlignment="Left" Margin="161,10,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120"
-                      ItemsSource="{Binding Source={StaticResource LevelChefKey}}" SelectedValue="{Binding Path=level, Mode=TwoWay}"/>
+        <ComboBox   HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Width="120" 
+                     Height="25" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" SelectedValue="{Binding Path=Level, Mode=TwoWay}"/>
 
-        <TextBox HorizontalAlignment="Left" Margin="161,13,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top"
-                     Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top"
+                     Width="120" Height="25" Text="{Binding task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <TextBox HorizontalAlignment="Left" Margin="161,10,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
-                     Width="120" Text="{Binding Chef, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
+                     Width="120" Height="25" Text="{Binding task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <Button HorizontalAlignment="Left" Margin="362,0,0,0" Grid.Row="7"  VerticalAlignment="Center"
-                    Width="76" Height="29" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Grid.ColumnSpan="2"/>
+        <Button  HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="7"  VerticalAlignment="Center"
+                    Width="120" Height="30" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Grid.ColumnSpan="2" Click="ButtonAddUpdate_Click" />
 
     </Grid>
 </Window>

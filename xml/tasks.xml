@@ -3,8 +3,8 @@
   <Task1>
     <Id>1</Id>
     <Alias>T1</Alias>
-    <Description>Buying food products</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.1710051+02:00</CreatedAtDate>
+    <Description>Buying food and disposable products</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.557643+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T08:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T09:00:00</DeadlineDate>
@@ -17,8 +17,8 @@
   <Task1>
     <Id>2</Id>
     <Alias>T2</Alias>
-    <Description>Dough preparation</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.2045936+02:00</CreatedAtDate>
+    <Description>Making dough</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.5664329+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T09:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T10:00:00</DeadlineDate>
@@ -32,7 +32,7 @@
     <Id>3</Id>
     <Alias>T3</Alias>
     <Description>Washing and peeling vegetables</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.2288959+02:00</CreatedAtDate>
+    <CreatedAtDate>2024-02-15T21:21:25.5723078+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T09:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T10:00:00</DeadlineDate>
@@ -46,7 +46,7 @@
     <Id>4</Id>
     <Alias>T4</Alias>
     <Description>Baking the dough for bread</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.2599948+02:00</CreatedAtDate>
+    <CreatedAtDate>2024-02-15T21:21:25.578774+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T10:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T11:00:00</DeadlineDate>
@@ -59,8 +59,8 @@
   <Task1>
     <Id>5</Id>
     <Alias>T5</Alias>
-    <Description>cutting vegetables</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.2915155+02:00</CreatedAtDate>
+    <Description>Cutting vegetables</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.5854526+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T10:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T11:00:00</DeadlineDate>
@@ -73,8 +73,8 @@
   <Task1>
     <Id>6</Id>
     <Alias>T6</Alias>
-    <Description>making salads</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.3220626+02:00</CreatedAtDate>
+    <Description>Making salads</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.5924819+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T11:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T12:00:00</DeadlineDate>
@@ -87,8 +87,8 @@
   <Task1>
     <Id>7</Id>
     <Alias>T7</Alias>
-    <Description>cook soup</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.3520139+02:00</CreatedAtDate>
+    <Description>Cooking soup</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.5995846+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T12:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T13:00:00</DeadlineDate>
@@ -102,7 +102,7 @@
     <Id>8</Id>
     <Alias>T8</Alias>
     <Description>Baking fish</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.3766885+02:00</CreatedAtDate>
+    <CreatedAtDate>2024-02-15T21:21:25.6081488+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T12:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T13:00:00</DeadlineDate>
@@ -115,8 +115,8 @@
   <Task1>
     <Id>9</Id>
     <Alias>T9</Alias>
-    <Description>Meat preparation</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.3955676+02:00</CreatedAtDate>
+    <Description>Preparing meat</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.6164614+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T13:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T14:00:00</DeadlineDate>
@@ -129,8 +129,8 @@
   <Task1>
     <Id>10</Id>
     <Alias>T10</Alias>
-    <Description>Preparation of side dish for meat</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.4180099+02:00</CreatedAtDate>
+    <Description>Preparing a side dish for meat</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.6259863+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T13:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T14:00:00</DeadlineDate>
@@ -144,7 +144,7 @@
     <Id>11</Id>
     <Alias>T11</Alias>
     <Description>making dessert</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.4442975+02:00</CreatedAtDate>
+    <CreatedAtDate>2024-02-15T21:21:25.6356101+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T14:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T15:00:00</DeadlineDate>
@@ -157,8 +157,8 @@
   <Task1>
     <Id>12</Id>
     <Alias>T12</Alias>
-    <Description>Kitchen cleaning</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.4657618+02:00</CreatedAtDate>
+    <Description>kitchen cleaning</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.6452065+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T15:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T16:00:00</DeadlineDate>
@@ -171,8 +171,8 @@
   <Task1>
     <Id>13</Id>
     <Alias>T13</Alias>
-    <Description>Shopping for disposable tools</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.498252+02:00</CreatedAtDate>
+    <Description>Designing serving dishes</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.655588+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T16:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T17:00:00</DeadlineDate>
@@ -185,8 +185,8 @@
   <Task1>
     <Id>14</Id>
     <Alias>T14</Alias>
-    <Description>Shopping for drinks</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.5289804+02:00</CreatedAtDate>
+    <Description>Dessert design</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.6648466+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T16:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T17:00:00</DeadlineDate>
@@ -199,8 +199,8 @@
   <Task1>
     <Id>15</Id>
     <Alias>T15</Alias>
-    <Description>Arrangement of tables with maps</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.5536872+02:00</CreatedAtDate>
+    <Description>table design</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.6748915+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T17:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T18:00:00</DeadlineDate>
@@ -213,8 +213,22 @@
   <Task1>
     <Id>16</Id>
     <Alias>T16</Alias>
-    <Description>Arrange the disposable on the table</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.5746939+02:00</CreatedAtDate>
+    <Description>chair design</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.6859035+02:00</CreatedAtDate>
+    <ScheduledDate>2024-10-10T17:00:00</ScheduledDate>
+    <RequiredEffortTime>PT1H</RequiredEffortTime>
+    <DeadlineDate>2024-10-10T18:00:00</DeadlineDate>
+    <ChefId>0</ChefId>
+    <StartDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Copmlexity>Beginner</Copmlexity>
+    <isMileStone>false</isMileStone>
+  </Task1>
+  <Task1>
+    <Id>17</Id>
+    <Alias>T17</Alias>
+    <Description>Serving drinks</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.6963496+02:00</CreatedAtDate>
     <ScheduledDate>2024-10-10T18:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T19:00:00</DeadlineDate>
@@ -225,27 +239,13 @@
     <isMileStone>false</isMileStone>
   </Task1>
   <Task1>
-    <Id>17</Id>
-    <Alias>T17</Alias>
-    <Description>Serve the drink</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.5967328+02:00</CreatedAtDate>
-    <ScheduledDate>2024-10-10T19:00:00</ScheduledDate>
-    <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-10-10T20:00:00</DeadlineDate>
-    <ChefId>0</ChefId>
-    <StartDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Copmlexity>Beginner</Copmlexity>
-    <isMileStone>false</isMileStone>
-  </Task1>
-  <Task1>
     <Id>18</Id>
     <Alias>T18</Alias>
-    <Description>serve the food</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.6180968+02:00</CreatedAtDate>
-    <ScheduledDate>2024-10-10T19:00:00</ScheduledDate>
+    <Description>Serving dishes</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.707589+02:00</CreatedAtDate>
+    <ScheduledDate>2024-10-10T18:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-10-10T20:00:00</DeadlineDate>
+    <DeadlineDate>2024-10-10T19:00:00</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -256,10 +256,10 @@
     <Id>19</Id>
     <Alias>T19</Alias>
     <Description>Order and cleanliness of the place</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.6397878+02:00</CreatedAtDate>
-    <ScheduledDate>2024-10-10T20:00:00</ScheduledDate>
+    <CreatedAtDate>2024-02-15T21:21:25.7204407+02:00</CreatedAtDate>
+    <ScheduledDate>2024-10-10T19:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-10-10T21:00:00</DeadlineDate>
+    <DeadlineDate>2024-10-10T20:00:00</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -269,11 +269,11 @@
   <Task1>
     <Id>20</Id>
     <Alias>T20</Alias>
-    <Description>You submitted a review of the meal</Description>
-    <CreatedAtDate>2024-02-14T20:30:18.6670792+02:00</CreatedAtDate>
-    <ScheduledDate>2024-10-10T21:00:00</ScheduledDate>
+    <Description>Submitting an opinion on the meal</Description>
+    <CreatedAtDate>2024-02-15T21:21:25.7319691+02:00</CreatedAtDate>
+    <ScheduledDate>2024-10-10T20:00:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-10-10T22:00:00</DeadlineDate>
+    <DeadlineDate>2024-10-10T21:00:00</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />

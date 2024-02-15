@@ -18,11 +18,18 @@ public class Chef
     public double? Cost { get; set; }
     public string? Name { get; set; }
     public ChefExperience? Level { get; set; }
-    public TaskInChef ?task { get; set; }
-    public override string ToString() => this.ToString_();
+    public TaskInChef? task { get; set; }
+    public override string ToString() => ToString_();
     public string ToString_()
     {
-        return($"Id={Id}, Name={Name}, Email={Email}, Level={Level}, Cost={Cost}, task={task}");
+        return ($@"
+Id={Id} 
+Name={Name} 
+Email={Email} 
+Level={Level} 
+Cost={Cost}
+task={task}
+");
     }
 
 }

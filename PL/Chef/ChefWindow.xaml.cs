@@ -24,31 +24,30 @@ namespace PL.Chef
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public ChefWindow()
         {
-            int num = 0;
+            Chef = new BO.Chef() { Id = 0, deleted = false };
+            Chef.task = new BO.TaskInChef();
             InitializeComponent();
-
-            if (num == 0)
+        }
+        public ChefWindow(int Id)
+        {
+            try
             {
-                Chef = new BO.Chef();
-            }
-
-            else
-            {
-
-                try
+                Chef = s_bl.Chef.Read(Id);
+                if(Chef!.task == null) 
                 {
-                    Chef = s_bl.Chef.Read(num);
-
+                    Chef.task=new BO.TaskInChef();
                 }
 
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error: {ex.Message}");
-                }
             }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            InitializeComponent();
         }
 
-        public BO.Chef Chef
+        public BO.Chef? Chef
         {
             get { return (BO.Chef)GetValue(ChefProparty); }
             set { SetValue(ChefProparty, value); }
@@ -56,8 +55,44 @@ namespace PL.Chef
 
         public static readonly DependencyProperty ChefProparty =
        DependencyProperty.Register("Chef", typeof(BO.Chef), typeof(ChefWindow), new PropertyMetadata(null));
+
+
+        private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            // מחזיר את הכפתור שנלחץ
+            Button? clickedButton = sender as Button;
+
+            // בדיקה אם הכפתור הוא הכפתור שהתבצעה עליו הלחיצה
+            if (clickedButton != null)
+            {
+                if (Chef.task.Id == null)
+                    Chef.task = null;
+                try
+                {
+                    if (clickedButton.Content == "Update")
+                    {
+                        s_bl.Chef.Update(Chef!);
+                    }
+                    if (clickedButton.Content == "Add")
+                    {
+                        s_bl.Chef.Create(Chef!);
+                    }
+                    MessageBox.Show("הפעולה בוצעה בהצלחה!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}");
+                    if (Chef!.task == null)
+                    {
+                        Chef.task = new BO.TaskInChef();
+                    }
+                }
+
+            }
+        }
     }
 
-   
+
 
 }
