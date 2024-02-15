@@ -2,6 +2,7 @@
 using DalApi;
 using DO;
 using System.Data;
+using System.Xml.Linq;
 
 public static class Initialization
 {
@@ -43,7 +44,7 @@ public static class Initialization
             DateTime deadLine = scheduledDate + taskTime;
    
 
-            Task1 newTask = new(0,alias,_name,createDate, scheduledDate, taskTime, deadLine);
+            Task1 newTask = new(0,alias,_name,createDate, scheduledDate, taskTime, deadLine, 0,null,null,DO.ChefExperience.Beginner);
             s_dal!.Task1!.Create(newTask);
             
 

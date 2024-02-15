@@ -97,7 +97,7 @@ internal class TaskImplementation : ITask1
         
     }
 
-    public void UpdateEndtProject( DateTime endProject)
+    public void UpdateEndProject( DateTime endProject)
     {
         
         EndProject = endProject;

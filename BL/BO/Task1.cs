@@ -18,7 +18,7 @@
 /// <param name="Remarks">Notes for the assignment</param>
 public class Task1
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
     public string? Alias { get; set; } //כינוי
     public string? Description { get; set; }//תיאור
     public Status status { get; set; }
@@ -39,5 +39,5 @@ public class Task1
     public string? Remarks { get; set; }//הערות
     public ChefInTask? chef { get; set; } 
     public  ChefExperience? Copmlexity { get; set; } //רמת קושי
-    public override string ToString() => this.ToString();
+  //  public override string ToString() => this.ToString();
 }

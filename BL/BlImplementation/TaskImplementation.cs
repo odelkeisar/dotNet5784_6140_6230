@@ -31,10 +31,10 @@ internal class TaskImplementation : ITask1
     public void CreateStartProject(DateTime starProject)
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
- 
+
         if (tasks!.Any(task => task!.ScheduledDate < starProject))
             throw new BlWrongDateException("An earlier date must be entered for the project");
-   
+
         _dal.Task1.UpdateStartProject(starProject);
     }
 
@@ -44,7 +44,7 @@ internal class TaskImplementation : ITask1
         if (tasks!.Any(task => task!.ScheduledDate == null))
             throw new BlScheduledStartDateNoUpdatedException("Not all missions have an updated scheduled start date yet.");
 
-        if (tasks!.Any(task => (task!.ScheduledDate + task.RequiredEffortTime) < endProject))
+        if (tasks!.Any(task => (task!.ScheduledDate + task.RequiredEffortTime) > endProject))
             throw new BlWrongDateException("A later end date must be entered for the project");
 
         _dal.Task1.UpdateEndProject(endProject);
@@ -61,16 +61,6 @@ internal class TaskImplementation : ITask1
             throw new BlEmptyStringException("The string is empty");
         if (item.chef != null)
             throw new BlInappropriateStepException("A chef cannot be assigned before the schedule is set");
-
-        IEnumerable<BO.TaskInList> taskInList = item.dependeencies!;
-
-        IEnumerable<DO.Dependeency> dependeenciesList = from _item in taskInList
-                                                        select new DO.Dependeency { Id = 0, DependentTask = item.Id, DependsOnTask = _item.Id };
-
-        foreach (var dependeency in dependeenciesList)
-        {
-            _dal.Dependeency.Create(dependeency);
-        }
 
         DO.Task1 doTask = new DO.Task1
        (0, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate, item.RequiredEffortTime,
@@ -172,11 +162,10 @@ internal class TaskImplementation : ITask1
             if (group.Key <= chef.Level)
             {
                 // הוספת כל המשימות של רמת הקושי הנוכחית לרשימת המשימות האפשריות
-                possibleTasks.AddRange(group.Where(x => x.ScheduledDate != null));
-                possibleTasks.AddRange(group.Where(x => x.dependeencies == null ? true : x.dependeencies.All(dependency => dependency.status == Status.Done)));
+                possibleTasks.AddRange(group.Where(x => x.chef==null).Where(x => x.dependeencies == null ? true : x.dependeencies.All(dependency => dependency.status == Status.Done)));
             }
         }
-        if (possibleTasks == null)
+        if (possibleTasks.Count()==0)
             throw new BlNoTasksToCompleteException($"There are no possible tasks to perform for the chef:{chef.Id}");
         return (possibleTasks.Select(boTask => new BO.TaskInList() { Id = boTask.Id, Description = boTask.Description, Alias = boTask.Alias, status = boTask.status }));
     }
@@ -192,20 +181,20 @@ internal class TaskImplementation : ITask1
     public void Update(BO.Task1 item)
     {
         BO.Task1? botask = Read(item.Id); //בדיקה שהמשימה קיימת
-        
+
         if (botask == null)
             throw new BlDoesNotExistException($"Task with ID={item.Id} does not exists");
 
         if (item.Alias == "")
             throw new BlEmptyStringException("The string is empty");
 
-        if (ReadEndProject==null)
+        if (ReadEndProject == null)
         {
             if (item.chef != null)
                 throw new BlInappropriateStepException("A chef cannot be assigned to a task before the schedule is set");
             if (item.StartDate != null)
                 throw new BlInappropriateStepException("It is not possible to update an actual start date before the schedule is set");
-            if(item.CompleteDate != null)
+            if (item.CompleteDate != null)
                 throw new BlInappropriateStepException("It is not possible to update an actual complete date before the schedule is set");
             if (item.ScheduledDate != null)
             {
@@ -213,16 +202,16 @@ internal class TaskImplementation : ITask1
                 {
                     UpdateScheduledDate(item.Id, (DateTime)item.ScheduledDate);
                 }
-              
-                catch(BlDoesNotExistException ex)
+
+                catch (BlDoesNotExistException ex)
                 {
                     throw new BlDoesNotExistException(ex.Message);
                 }
-                catch(BlScheduledStartDateNoUpdatedException ex)
+                catch (BlScheduledStartDateNoUpdatedException ex)
                 {
                     throw new BlScheduledStartDateNoUpdatedException(ex.Message);
                 }
-                catch(BlEarlyFinishDateFromPreviousTaskException ex)
+                catch (BlEarlyFinishDateFromPreviousTaskException ex)
                 {
                     throw new BlEarlyFinishDateFromPreviousTaskException(ex.Message);
                 }
@@ -232,7 +221,7 @@ internal class TaskImplementation : ITask1
 
         else
         {
-            if(item.ScheduledDate!=botask.ScheduledDate)
+            if (item.ScheduledDate != botask.ScheduledDate)
                 throw new BlInappropriateStepException("It is not possible to change a planned start date after the schedule has been set");
 
             if (item.chef == null && botask.chef != null)
@@ -261,7 +250,7 @@ internal class TaskImplementation : ITask1
             }
 
         }
-    
+
         _dal.Task1.Update(new DO.Task1(item.Id, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate,
                           item.RequiredEffortTime, item.DeadlineDate, item.chef == null ? 0 : item.chef.Id,
                           item.StartDate, item.CompleteDate, (DO.ChefExperience)item.Copmlexity!, item.Dellverables,
@@ -365,7 +354,7 @@ internal class TaskImplementation : ITask1
     public IEnumerable<BO.TaskInList> ReadAllTasksInCare()
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.StartDate != null);
-        if (tasks == null)
+        if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("There are no tasks currently being handled by Chef");
         return tasks.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
@@ -405,6 +394,7 @@ internal class TaskImplementation : ITask1
     public List<TaskInList>? GetTaskInList(int id)
     {
         IEnumerable<DO.Dependeency>? listDependencies = _dal.Dependeency.ReadAll(X => X.DependentTask == id)!;
+
         List<BO.TaskInList>? results = new List<BO.TaskInList>();
 
         var v = from item in listDependencies
@@ -444,3 +434,5 @@ internal class TaskImplementation : ITask1
             Copmlexity = doTask.Copmlexity != null ? (BO.ChefExperience)doTask.Copmlexity : null
         };
     }
+
+}

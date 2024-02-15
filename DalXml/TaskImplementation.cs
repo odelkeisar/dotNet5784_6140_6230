@@ -9,11 +9,12 @@ namespace Dal;
 /// </summary>
 internal class TaskImplementation : ITask1
 {
+    string taskPath = @"tasks.xml";
+    const string s_xml_dir = @"..\xml\";
 
     readonly string s_tasks_xml = "tasks";
     readonly string s_data_config_xml = "data-config";
 
-    string taskPath = @"tasks.xml";
     public TaskImplementation()
     {
         XMLTools.LoadListFromXMLSerializer<Task1>(s_tasks_xml);
@@ -115,33 +116,34 @@ internal class TaskImplementation : ITask1
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
     }
 
-    public void UpdateStartProject(DateTime startProject, DateTime endProject)
+    public void UpdateStartProject(DateTime startProject)
     {
-        XElement root = XElement.Load(s_data_config_xml);
+
+        XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
         root.Element("startProject")!.Value = startProject.ToString();
-        root.Save(s_data_config_xml);
+        root.Save($"{s_xml_dir + s_data_config_xml}.xml");
     }
-    public void UpdateEndtProject(DateTime startProject, DateTime endProject)
+    public void UpdateEndProject(DateTime endProject)
     {
-        XElement root = XElement.Load(s_data_config_xml);
+        XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
         root.Element("endProject")!.Value = endProject.ToString();
-        root.Save(s_data_config_xml);
+        root.Save($"{s_xml_dir + s_data_config_xml}.xml");
     }
 
     public DateTime? ReadStartProject()
     {
-        XElement root = XElement.Load(s_data_config_xml);
+        XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
         string? statProject = root.Element("startProject")?.Value;
-        if (statProject != null)
+        if (!string.IsNullOrEmpty(statProject))
             return DateTime.Parse(statProject);
         return null;
     }
 
     public DateTime? ReadEndProject()
     {
-        XElement root = XElement.Load(s_data_config_xml);
+        XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
         string? endProject = root.Element("endProject")?.Value;
-        if (endProject != null)
+        if (!string.IsNullOrEmpty(endProject))
             return DateTime.Parse(endProject);
         return null;
     }
