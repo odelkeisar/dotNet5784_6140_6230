@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="640" Width="800">
+        Title="MainWindow" Height="400" Width="500">
 
     <Grid>
         <Image Source="/image/back.jpg" Stretch="Fill"/>
 
-        <Button Content="טיפול בשפים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="300" Click="ChefList_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"  FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,191,0,0" />
-        <Button Content="ניקוי נתונים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="300"  Click="Reset_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"  FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,312,0,0"  />
-        <Button Content="אתחול נתונים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="66" Width="300" Click="DataInitialization_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"   FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,445,0,0"/>
+        <Button Content="טיפול בשפים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="48" Width="194" Click="ChefList_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"  FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,80,0,0" />
+        <Button Content="ניקוי נתונים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="48" Width="194"  Click="Reset_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"  FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,160,0,0"  />
+        <Button Content="אתחול נתונים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="48" Width="194" Click="DataInitialization_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"   FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,240,0,0"/>
 
         <!--<Button.BorderBrush>
                 <ImageBrush/>
