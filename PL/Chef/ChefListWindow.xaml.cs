@@ -38,14 +38,18 @@ public partial class ChefListWindow : Window
     public static readonly DependencyProperty levelProperty =
         DependencyProperty.Register("level", typeof(BO.ChefExperience), typeof(ChefListWindow), new PropertyMetadata(BO.ChefExperience.None));
 
-
+    /// <summary>
+    /// constructor
+    /// </summary>
     public ChefListWindow()
     {
         ChefList = new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAll() ?? Enumerable.Empty<BO.Chef>());
         InitializeComponent();
     }
 
-
+    /// <summary>
+    /// The list of chefs, of the dependent type.
+    /// </summary>
     public ObservableCollection<BO.Chef> ChefList
     {
         get { return (ObservableCollection<BO.Chef>)GetValue(ChefListProparty); }
@@ -56,13 +60,22 @@ public partial class ChefListWindow : Window
     public static readonly DependencyProperty ChefListProparty =
         DependencyProperty.Register("ChefList", typeof(ObservableCollection<BO.Chef>), typeof(ChefListWindow), new PropertyMetadata(null));
 
+    /// <summary>
+    /// Filter the list view by level.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ChangeSelect(object sender, SelectionChangedEventArgs e)
     {
         ChefList = (level == BO.ChefExperience.None) ?
             new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAllPerLevel(level)!);
     }
 
-
+    /// <summary>
+    /// Opening a window to create a new chef and refresh the list afterwards.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ButtonAdd_Click(object sender, RoutedEventArgs e)
     {
         ChefWindow chefWindow = new ChefWindow();
@@ -72,7 +85,11 @@ public partial class ChefListWindow : Window
         };
         chefWindow.ShowDialog();
     }
-
+    /// <summary>
+    /// Opening a window to display a single chef and update his details, and refresh the list afterwards
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ListView_UpdateChef_Click(object sender, MouseButtonEventArgs e)
     {
         BO.Chef? chef = (sender as ListView)?.SelectedItem as BO.Chef;

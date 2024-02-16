@@ -20,16 +20,27 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// conctractor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Button implementation: treatment of chefs, displaying the list of chefs.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChefList_Click(object sender, RoutedEventArgs e)
         {
             new ChefListWindow().ShowDialog();
         }
-
+        /// <summary>
+        /// Data initialization button implementation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DataInitialization_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo);
@@ -40,7 +51,11 @@ namespace PL
             //Factory.Get().InitializeDB();
 
         }
-
+        /// <summary>
+        /// Implementing a data clear button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo);

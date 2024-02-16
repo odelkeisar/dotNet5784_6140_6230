@@ -22,12 +22,19 @@ namespace PL.Chef
     public partial class ChefWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        /// <summary>
+        /// An empty constructor to create a new chef.
+        /// </summary>
         public ChefWindow()
         {
             Chef = new BO.Chef() { Id = 0, deleted = false };
             Chef.task = new BO.TaskInChef();
             InitializeComponent();
         }
+        /// <summary>
+        /// A parameter builder that receives an ID and displays details of an existing chef for updating details.
+        /// </summary>
+        /// <param name="Id"></param>
         public ChefWindow(int Id)
         {
             try
@@ -46,7 +53,9 @@ namespace PL.Chef
             }
             InitializeComponent();
         }
-
+        /// <summary>
+        /// A dependent type chef.
+        /// </summary>
         public BO.Chef? Chef
         {
             get { return (BO.Chef)GetValue(ChefProparty); }
@@ -56,7 +65,11 @@ namespace PL.Chef
         public static readonly DependencyProperty ChefProparty =
        DependencyProperty.Register("Chef", typeof(BO.Chef), typeof(ChefWindow), new PropertyMetadata(null));
 
-
+        /// <summary>
+        /// Button implementation: add/update.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             // מחזיר את הכפתור שנלחץ
