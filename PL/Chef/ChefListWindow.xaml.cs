@@ -1,3 +1,10 @@
+﻿
+using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows;
+
+
 ﻿using BO;
 using DO;
 using System;
@@ -98,7 +105,7 @@ public partial class ChefListWindow : Window
             ChefWindow chefWindow = new ChefWindow(chef.Id);
             chefWindow.Closed += (s, args) =>
             {
-                ChefList =(level== BO.ChefExperience.None)? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!):new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
+                ChefList = (level == BO.ChefExperience.None) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
             };
             chefWindow.ShowDialog();
         }

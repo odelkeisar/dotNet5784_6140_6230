@@ -1,0 +1,99 @@
+﻿<Window x:Class="PL.Chef.ActChefWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Chef"
+        mc:Ignorable="d"
+        Title="ActChefWindow" Height="750" Width="800"
+         DataContext="{Binding task, RelativeSource={RelativeSource Self }, Mode=TwoWay}">
+
+    <Grid Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Label Content="מספר משימה" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label Content="שם משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Content="תיאור" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" />
+        <Label Content="סטטוס" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
+        <Label Content="יצירת משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"/>
+        <Label Content="תאריך מתוכנן לתחילת המשימה" HorizontalAlignment="Center" Grid.Column="5" Grid.Row="5" VerticalAlignment="Top"/>
+        <Label Content="תאריך צפוי לסיום" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" VerticalAlignment="Top" />
+        <Label Content="התחלה בפועל" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="7" VerticalAlignment="Top"/>
+        <Label Content="סיום בפועל" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.Row="8"/>
+        <Label Content="משך זמן משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="9" VerticalAlignment="Top"/>
+        <Label Content="תוצר" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="10" VerticalAlignment="Top"/>
+        <Label Content="הערות" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="11" VerticalAlignment="Top"/>
+        <Label Content="מורכבות המשימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="12" VerticalAlignment="Top"/>
+        <Label Content="שף-מספר זהות" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="13" VerticalAlignment="Top"/>
+        <Label Content="שף-שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="14" VerticalAlignment="Top"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
+          IsEnabled= "False" Width="120" Height="25" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" 
+              Grid.Row="1"  Height="25" Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"
+               Width="120" Height="25" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" 
+              Width="120" Height="25" Text="{Binding status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top"
+              Width="120" Height="25" Text="{Binding CreatedAtDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
+      Width="120" Height="25" Text="{Binding ScheduledDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <!--<TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding ForecastDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>-->
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding CompleteDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="10" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="11" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding Dellverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="13" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding Copmlexity, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="14" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding chef.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="15" TextWrapping="Wrap" VerticalAlignment="Top" 
+Width="120" Height="25" Text="{Binding chef.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+   
+    </Grid>
+</Window>

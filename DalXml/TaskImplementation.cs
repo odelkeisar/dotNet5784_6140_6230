@@ -148,5 +148,16 @@ internal class TaskImplementation : ITask1
         return null;
     }
 
-
+    public void UpdateClockProject(DateTime clockProject)
+    {
+        XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
+        root.Element("clockProject")!.Value = clockProject.ToString();
+        root.Save($"{s_xml_dir + s_data_config_xml}.xml");
+    }
+    public DateTime ReadClockProject()
+    {
+        XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
+        string clockProject = root.Element("clockProject")?.Value;
+        return DateTime.Parse(clockProject);
+    }
 }

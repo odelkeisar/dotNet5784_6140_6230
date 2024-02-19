@@ -113,7 +113,17 @@ internal class TaskImplementation : ITask1
         return EndProject;
     }
 
+    public void UpdateClockProject(DateTime clockProject)
+    {
+        ClockProject= clockProject;
+    }
+    public DateTime ReadClockProject()
+    {
+        return ClockProject;
+    }
+
     public static DateTime? StartProject = null;
     public static DateTime? EndProject = null;
+    public static DateTime ClockProject = DateTime.Now;
 
 }

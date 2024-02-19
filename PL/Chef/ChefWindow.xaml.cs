@@ -96,6 +96,7 @@ namespace PL.Chef
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error: {ex.Message}");
+
                     if (Chef!.task == null)
                     {
                         Chef.task = new BO.TaskInChef();
@@ -105,7 +106,4 @@ namespace PL.Chef
             }
         }
     }
-
-
-
 }

@@ -7,9 +7,6 @@
         mc:Ignorable="d"
        Title="ChefWindow" Height="500" Width="400" 
         DataContext="{Binding Chef, RelativeSource={RelativeSource Self }, Mode=TwoWay}">
-    <!--DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">-->
-    <!--DataContext="{Binding CurrentCourse, RelativeSource={RelativeSource Self}, Mode=TwoWay}">-->
-    <!--Mode=TwoWay-->
 
 
 
@@ -31,7 +28,7 @@
         </Grid.ColumnDefinitions>
         <Label Content="תעודת זהות" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Background="{x:Null}" Foreground="#FFBF2BC6"/>
         <Label Content="שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFBF2BC6" Background="Transparent"/>
-        <Label Content="מחיר לשעה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Foreground="#FF131E64"/>
+        <Label Content="מחיר לשעה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Foreground="#FFBF2BC6"/>
         <Label Content="דואר אלקטרוני" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
         <Label Content="רמת השף" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"/>
         <Label Content="מספר מזהה של משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top"/>
@@ -56,7 +53,7 @@
                      Width="120" Height="25" Text="{Binding task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
-                     Width="120" Height="25" Text="{Binding task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+             Width="120" Height="25" Text="{Binding task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <Button  HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="7"  VerticalAlignment="Center"
                     Width="120" Height="30" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Grid.ColumnSpan="2" Click="ButtonAddUpdate_Click" />

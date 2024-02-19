@@ -499,6 +499,16 @@ internal class TaskImplementation : ITask1
         };
     }
 
+    public void UpdateClockProject(TimeSpan timeProject)
+    {
+        DateTime date = _dal.Task1.ReadClockProject();
+        date += timeProject;
+        _dal.Task1.UpdateClockProject(date);
+    }
+    public DateTime ReadClockProject()
+    {
+       return _dal.Task1.ReadClockProject();
+    }
 }
 
 

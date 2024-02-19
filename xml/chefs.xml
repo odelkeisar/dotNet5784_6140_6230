@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfChef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Chef>
-    <Id>412681505</Id>
-    <deleted>false</deleted>
-    <Email>Dani@gmail.com</Email>
-    <Cost>218</Cost>
-    <Name>Dani Levi</Name>
-    <Level>Beginner</Level>
-  </Chef>
-  <Chef>
     <Id>881060565</Id>
     <deleted>false</deleted>
     <Email>Eli@gmail.com</Email>
@@ -39,5 +31,13 @@
     <Cost>264</Cost>
     <Name>David Klein</Name>
     <Level>AdvancedBeginner</Level>
+  </Chef>
+  <Chef>
+    <Id>412681505</Id>
+    <deleted>false</deleted>
+    <Email>Dani@gmail.com</Email>
+    <Cost>218</Cost>
+    <Name>Dani </Name>
+    <Level>Beginner</Level>
   </Chef>
 </ArrayOfChef>

@@ -28,14 +28,17 @@ public static class Initialization
 
         int x = 0; //Helps advance the dates for the next tasks
         int y = 0;
+       
+        DateTime date= s_dal.Task1.ReadClockProject();
+        TimeSpan time =new TimeSpan(0,1,0,0);
 
         foreach (var _name in TaskNames)
         {
             string alias = TaskNum[y++];
 
-            DateTime createDate = DateTime.Now;
+            DateTime createDate = date;
 
-            DateTime scheduledDate = new DateTime(2024, 10, 10, 8, 0, 0);
+            DateTime scheduledDate = date + time;
             scheduledDate = scheduledDate.AddHours(x);
 
             TimeSpan taskTime = new TimeSpan(0, 1, 0, 0);
@@ -118,8 +121,9 @@ public static class Initialization
         const string s_xml_dir = @"..\xml\";
 
         XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
+        root.Element("clockProject")!.Value = DateTime.Now.ToString();
         root.Element("endProject")!.Value = " ";
-        root.Element("startProject")!.Value = " ";
+        root.Element("startProject")!.Value = DateTime.Now.ToString();
 
         root.Element("NextTask1Id")!.Value = "1";
         root.Element("NextDependeencyId")!.Value = "1";
@@ -141,6 +145,7 @@ public static class Initialization
         const string s_xml_dir = @"..\xml\";
 
         XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
+        root.Element("clockProject")!.Value = DateTime.Now.ToString();
         root.Element("endProject")!.Value = " ";
         root.Element("startProject")!.Value = " ";
 
