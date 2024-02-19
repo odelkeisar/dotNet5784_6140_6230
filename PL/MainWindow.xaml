@@ -7,16 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="500">
 
+    <Window.Resources>
+        <!-- הגדרת סגנון לכפתורים -->
+        <Style x:Key="MyButtonStyle1" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Width" Value="194"/>
+            <Setter Property="BorderBrush" Value="#FFB95AD6"/>
+            <Setter Property="Background" Value="#ADD8E6"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontFamily" Value="Bahnschrift SemiBold"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Image Source="/image/back.jpg" Stretch="Fill"/>
 
-        <Button Content="טיפול בשפים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="48" Width="194" Click="ChefList_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"  FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,80,0,0" />
-        <Button Content="ניקוי נתונים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="48" Width="194"  Click="Reset_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"  FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,160,0,0"  />
-        <Button Content="אתחול נתונים" HorizontalAlignment="Center" VerticalAlignment="Top" Height="48" Width="194" Click="DataInitialization_Click" BorderBrush="#FFB95AD6" Background="#ADD8E6"   FontSize="18" FontFamily="Bahnschrift SemiBold" Margin="0,240,0,0"/>
+        <Button Content="טיפול בשפים"  Click="ChefList_Click" Style="{StaticResource MyButtonStyle1}"  Margin="0,80,0,0" />
+        <Button Content="ניקוי נתונים" Click="Reset_Click"   Style="{StaticResource MyButtonStyle1}" Margin="0,160,0,0"  />
+        <Button Content="אתחול נתונים" Click="DataInitialization_Click"  Style="{StaticResource MyButtonStyle1}" Margin="0,240,0,0"/>
 
-        <!--<Button.BorderBrush>
-                <ImageBrush/>
-            </Button.BorderBrush>
-        </Button>-->
+
     </Grid>
 </Window>
