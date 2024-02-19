@@ -394,7 +394,7 @@ internal class TaskImplementation : ITask1
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("No tasks per level");
 
-        return (tasks.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) }));
+        return (tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) }));
     }
     /// <summary>
     /// Returning all tasks that have already been completed.
@@ -406,7 +406,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.CompleteDate != null);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("No tasks completed");
-        return tasks.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
     /// <summary>
@@ -420,7 +420,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.StartDate != null && task.CompleteDate == null);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("There are no tasks currently being handled by Chef");
-        return tasks.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
     /// <summary>
@@ -434,7 +434,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ChefId == 0);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("All tasks are assigned to chefs");
-        return tasks.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
     /// <summary>
@@ -447,7 +447,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ScheduledDate == null);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("All tasks have a scheduled start date");
-        return tasks.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
     /// <summary>

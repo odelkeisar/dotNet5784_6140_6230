@@ -158,6 +158,6 @@ internal class TaskImplementation : ITask1
     {
         XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
         string clockProject = root.Element("clockProject")?.Value;
-        return DateTime.Parse(clockProject);
+        return DateTime.Parse(clockProject!);
     }
 }

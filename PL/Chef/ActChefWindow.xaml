@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Chef"
         mc:Ignorable="d"
-        Title="ActChefWindow" Height="750" Width="800"
+        Title="ActChefWindow" Height="750" Width="550"
          DataContext="{Binding task, RelativeSource={RelativeSource Self }, Mode=TwoWay}">
 
     <Grid Margin="0,10,0,0">
@@ -34,66 +34,66 @@
         </Grid.ColumnDefinitions>
 
 
-        <Label Content="מספר משימה" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1"/>
-        <Label Content="שם משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label Content="תיאור" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" />
-        <Label Content="סטטוס" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
-        <Label Content="יצירת משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"/>
-        <Label Content="תאריך מתוכנן לתחילת המשימה" HorizontalAlignment="Center" Grid.Column="5" Grid.Row="5" VerticalAlignment="Top"/>
-        <Label Content="תאריך צפוי לסיום" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" VerticalAlignment="Top" />
-        <Label Content="התחלה בפועל" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="7" VerticalAlignment="Top"/>
-        <Label Content="סיום בפועל" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Grid.Row="8"/>
-        <Label Content="משך זמן משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="9" VerticalAlignment="Top"/>
-        <Label Content="תוצר" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="10" VerticalAlignment="Top"/>
-        <Label Content="הערות" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="11" VerticalAlignment="Top"/>
-        <Label Content="מורכבות המשימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="12" VerticalAlignment="Top"/>
-        <Label Content="שף-מספר זהות" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="13" VerticalAlignment="Top"/>
-        <Label Content="שף-שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="14" VerticalAlignment="Top"/>
+        <Label Content="מספר משימה" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+        <Label Content="שם משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"/>
+        <Label Content="תיאור" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" />
+        <Label Content="סטטוס" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"/>
+        <Label Content="יצירת משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
+        <Label Content="תאריך מתוכנן לתחילת המשימה" HorizontalAlignment="Center" Grid.Column="5" Grid.Row="5" VerticalAlignment="Center"/>
+        <Label Content="תאריך צפוי לסיום" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" />
+        <Label Content="התחלה בפועל" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center"/>
+        <Label Content="סיום בפועל" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="8"/>
+        <Label Content="משך זמן משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="9" VerticalAlignment="Center"/>
+        <Label Content="תוצר" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="10" VerticalAlignment="Center"/>
+        <Label Content="הערות" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="11" VerticalAlignment="Center"/>
+        <Label Content="מורכבות המשימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="12" VerticalAlignment="Center"/>
+        <Label Content="שף-מספר זהות" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="13" VerticalAlignment="Center"/>
+        <Label Content="שף-שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="14" VerticalAlignment="Center"/>
 
-        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
+        <!--<TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
           IsEnabled= "False" Width="120" Height="25" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" 
-              Grid.Row="1"  Height="25" Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+              IsEnabled= "False" Grid.Row="1"  Height="25" Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top"
-               Width="120" Height="25" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+              IsEnabled= "False"  Width="120" Height="25" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" 
-              Width="120" Height="25" Text="{Binding status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+              IsEnabled= "False" Width="120" Height="25" Text="{Binding status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top"
-              Width="120" Height="25" Text="{Binding CreatedAtDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top"
+              IsEnabled= "False" Width="120" Height="25" Text="{Binding CreatedAtDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
-      Width="120" Height="25" Text="{Binding ScheduledDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" 
+         IsEnabled= "False" Width="120" Height="25" Text="{Binding ScheduledDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
-        <!--<TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding ForecastDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>-->
+        --><!--<TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
+            IsEnabled= "False" Width="120" Height="25" Text="{Binding ForecastDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>--><!--
+
+        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top" 
+        IsEnabled= "False" Width="120" Height="25" Text="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding StartDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+          IsEnabled= "False" Width="120" Height="25" Text="{Binding CompleteDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="9" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding CompleteDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        IsEnabled= "False" Width="120" Height="25" Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="10" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+          IsEnabled= "False" Width="120" Height="25" Text="{Binding Dellverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="11" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding Dellverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        IsEnabled= "False" Width="120" Height="25" Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="12" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        IsEnabled= "False" Width="120" Height="25" Text="{Binding Copmlexity, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="13" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding Copmlexity, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+        Width="120" Height="25" Text="{Binding chef.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="14" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding chef.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+         Width="120" Height="25" Text="{Binding chef.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>-->
 
-        <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="15" TextWrapping="Wrap" VerticalAlignment="Top" 
-Width="120" Height="25" Text="{Binding chef.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
-   
     </Grid>
 </Window>

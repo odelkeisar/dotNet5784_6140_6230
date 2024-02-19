@@ -78,15 +78,15 @@ namespace PL.Chef
             // בדיקה אם הכפתור הוא הכפתור שהתבצעה עליו הלחיצה
             if (clickedButton != null)
             {
-                if (Chef.task.Id == null)
+                if (Chef!.task!.Id == null)
                     Chef.task = null;
                 try
                 {
-                    if (clickedButton.Content == "Update")
+                    if ((string)clickedButton.Content == "Update")
                     {
                         s_bl.Chef.Update(Chef!);
                     }
-                    if (clickedButton.Content == "Add")
+                    if ((string)clickedButton.Content == "Add")
                     {
                         s_bl.Chef.Create(Chef!);
                     }

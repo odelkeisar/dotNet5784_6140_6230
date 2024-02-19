@@ -30,7 +30,8 @@ public class Task1
     public DateTime? StartDate { get; set; }//התחלה בפועל
     public DateTime? ForecastDate 
     {
-        get { return ScheduledDate == null ? null : (ScheduledDate < StartDate ? StartDate + RequiredEffortTime : ScheduledDate + RequiredEffortTime); }
+        get; set;
+        //get { return ScheduledDate == null ? null : (StartDate==null)?null:(ScheduledDate < StartDate ? StartDate + RequiredEffortTime : ScheduledDate + RequiredEffortTime); }
     }
     public DateTime? DeadlineDate { get; set; }//תאריך סיום
     public DateTime? CompleteDate { get; set; } //סיום בפועל
