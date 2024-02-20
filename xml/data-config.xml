@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-  <startProject></startProject>
-  <endProject></endProject>
-  <clockProject>23/02/2024 00:12:57</clockProject>
+  <startProject>10/02/2024 00:12:57</startProject>
+  <endProject>10/03/2024 00:12:57</endProject>
+  <clockProject>23/02/2024 01:12:57</clockProject>
   <NextTask1Id>21</NextTask1Id>
   <NextDependeencyId>184</NextDependeencyId>
 </config>

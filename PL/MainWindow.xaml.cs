@@ -95,8 +95,28 @@ public partial class MainWindow : Window
             try
             {
                 chef = s_bl.Chef.Read(int.Parse(idNumber))!;
-                new ActChefWindow(int.Parse(idNumber)).ShowDialog();
+
+                if (chef.task == null)
+                {
+                    new SelectTaskOfChefWindow(chef).ShowDialog();
+                }
+
+                else
+                {
+                    var _task = s_bl.Task1.Read((int)chef.task.Id!);
+
+                    if (_task!.status != Status.Done)
+                    {
+                        new ActChefWindow(int.Parse(idNumber)).ShowDialog();
+                    }
+
+                    else
+                    {
+                        new SelectTaskOfChefWindow(chef).ShowDialog();
+                    }
+                }
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");

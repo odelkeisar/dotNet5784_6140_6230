@@ -35,20 +35,44 @@ public partial class ActChefWindow : Window
     public ActChefWindow(int idNumber)
     {
         chef = s_bl.Chef.Read(idNumber)!;
-        
-        if (chef.task != null)
-        {
-            task = s_bl.Task1.Read((int)chef.task.Id);
-        }
-
-        else
-        {
-            task=new BO.Task1();
-        }
-
+        task = s_bl.Task1.Read((int)chef.task.Id);
+     
         InitializeComponent();
     }
 
-    
-    
+    private void StartDate_Checked(object sender, RoutedEventArgs e)
+    {
+        task.StartDate = s_bl.Task1.ReadClockProject();
+
+        try
+        {
+            s_bl.Task1.UpdateStartDate(task);
+            MessageBox.Show("הפעולה בוצעה בהצלחה!");
+            this.Close();
+        }
+
+        catch (Exception ex) 
+        {
+            MessageBox.Show($"Error: {ex.Message}");
+            this.Close();
+        }
+    }
+
+    private void CompleteDate_Checked(object sender, RoutedEventArgs e)
+    {
+        task.CompleteDate = s_bl.Task1.ReadClockProject();
+
+        try
+        {
+            s_bl.Task1.UpdateFinalDate(task);
+            MessageBox.Show("הפעולה בוצעה בהצלחה!");
+            this.Close();
+        }
+
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error: {ex.Message}");
+            this.Close();
+        }
+    }
 }

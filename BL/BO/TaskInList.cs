@@ -5,5 +5,14 @@ public class TaskInList
     public string? Alias { get; set; } //כינוי
     public string? Description { get; set; }//תיאור
     public Status status { get; set; }
- //   public override string ToString() => this.ToString();
+
+    public override string ToString() => this.ToString_();
+    public string ToString_()
+    {
+        return $@"
+Id= {Id},  Alias= {Alias}
+Description= {Description}
+status= {status}"
+;
+    }
 }

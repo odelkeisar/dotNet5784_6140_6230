@@ -30,4 +30,6 @@ public interface ITask1
     public void UpdateScheduledDate(int id, DateTime scheduledDate);
     public void UpdateClockProject(TimeSpan timeProject);
     public DateTime ReadClockProject();
+    public void UpdateStartDate(BO.Task1 item);
+    public void UpdateFinalDate(BO.Task1 item);
 }

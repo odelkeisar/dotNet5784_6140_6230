@@ -108,21 +108,22 @@ internal class TaskImplementation : ITask1
 
         if (task == null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
-        if ((_dal.Dependeency.ReadAll(x => x.DependsOnTask == id)!.Count()!=0))
+        if ((_dal.Dependeency.ReadAll(x => x.DependsOnTask == id)!.Count() != 0))
             throw new BlATaskCannotBeDeletedException($"The task cannot be deleted:{id} The task has tasks that depend on it");
         if (task.StartDate != null)
             throw new BlATaskCannotBeDeletedException($"The task:{id} already in the process of execution and cannot be deleted");
 
-        try {
+        try
+        {
             var depend = _dal.Dependeency.ReadAll(X => X.DependentTask == id);
-            
-            foreach(var item in depend!)
+
+            foreach (var item in depend!)
             {
                 _dal.Dependeency.Delete(item!.Id);
             }
-           
-            _dal.Task1.Delete(id); 
-            }
+
+            _dal.Task1.Delete(id);
+        }
         catch (DalDoesNotExistException ex) { throw new BlDoesNotExistException($"Task with ID={id} does not exist", ex); };
     }
 
@@ -174,8 +175,8 @@ internal class TaskImplementation : ITask1
             if (group.Key <= chef.Level)
             {
                 // הוספת כל המשימות של רמת הקושי הנוכחית לרשימת המשימות האפשריות
-                possibleTasks.AddRange(group.Where(x => x.chef==null).Where(x => x.dependeencies == null ? true : x.dependeencies.All(dependency => dependency.status == Status.Done)));
-                
+                possibleTasks.AddRange(group.Where(x => x.chef == null).Where(x => x.dependeencies == null ? true : x.dependeencies.All(dependency => dependency.status == Status.Done)));
+
             }
         }
 
@@ -214,18 +215,18 @@ internal class TaskImplementation : ITask1
             if (item.RequiredEffortTime != botask.RequiredEffortTime)
             {
                 IEnumerable<DO.Dependeency?>? listDependeenciseOfTask = _dal.Dependeency.ReadAll(X => X.DependsOnTask == item.Id);
-                foreach(var depend in listDependeenciseOfTask!)
+                foreach (var depend in listDependeenciseOfTask!)
                 {
                     if (_dal.Task1.Read(depend!.DependentTask)!.ScheduledDate != null)
                         throw new BlProblemAboutRequiredEffortTimeException("A task duration must not be changed when dependencies have a scheduled start date");
                 }
             }
 
-            if (item.ScheduledDate != null && item.ScheduledDate!=botask.ScheduledDate)
+            if (item.ScheduledDate != null && item.ScheduledDate != botask.ScheduledDate)
             {
                 try
                 {
-                        UpdateScheduledDate(item.Id, (DateTime)item.ScheduledDate);
+                    UpdateScheduledDate(item.Id, (DateTime)item.ScheduledDate);
                 }
 
                 catch (BlDoesNotExistException ex)
@@ -257,10 +258,10 @@ internal class TaskImplementation : ITask1
 
             if (item.chef == null && botask.chef != null)
                 throw new BlTaskAlreadyAssignedException("It is not possible to cancel a chef that already exists in the mission");
-           
+
             if (item.CompleteDate != null && item.StartDate == null)
                 throw new BlWrongDateException("You cannot enter an actual end date before an actual start date");
-          
+
             if (item.chef == null && item.StartDate != null)
                 throw new BlWrongDateException("You can't enter a start date for a task if it doesn't have an chef");
 
@@ -277,7 +278,7 @@ internal class TaskImplementation : ITask1
             {
                 if (item.Copmlexity == null)
                     throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
-               
+
                 DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
 
                 if (_chef == null)
@@ -346,19 +347,7 @@ internal class TaskImplementation : ITask1
             throw new BlScheduledStartDateMayNotBeChangedException($"The task ID: {id} has dependencies so it is not possible to change the scheduled start date");
 
 
-
-        //DateTime? scheduledDate_ = Read(listDependeencies!.FirstOrDefault()!.Id)!.ScheduledDate;
-
-            //foreach (var taskinlist in listDependeencies!)     //מעבר על כל משימה קודמת ובדיקה שתאריך ההתחלה המתוכנן קיים וגם שהתאריך שהתקבל כפרמטר אינו מוקדם מתאריך הסיום המשוער של כל משימה שקודמת לה 
-            //{
-            //    BO.Task1 task_ = Read(taskinlist.Id)!;
-            //    if (task_.ScheduledDate == null)
-            //        throw new BlScheduledStartDateNoUpdatedException($"Scheduled start date of previous mission: {taskinlist.Id}, not updated");
-            //    if (task_.ForecastDate > scheduledDate_)
-            //        scheduledDate_ = task_.ForecastDate;
-            //}
-
-            //שליחת תאריך 
+        //שליחת תאריך 
         try
         { _dal.Task1.Update(new DO.Task1(task.Id, task.Alias, task.Description, task.CreatedAtDate, scheduledDate, task.RequiredEffortTime, task.DeadlineDate, task.ChefId, task.StartDate, task.CompleteDate, task.Copmlexity, task.Dellverables, task.Remarks, task.isMileStone)); }
 
@@ -507,7 +496,44 @@ internal class TaskImplementation : ITask1
     }
     public DateTime ReadClockProject()
     {
-       return _dal.Task1.ReadClockProject();
+        return _dal.Task1.ReadClockProject();
+    }
+
+    public void UpdateStartDate(BO.Task1 item)
+    {
+        DO.Task1? task1 = _dal.Task1.Read(item.Id);
+       
+        if(task1 == null)
+        {
+            throw new BlDoesNotExistException($"No task with ID: {item.Id} exists");
+        }
+
+        _dal.Task1.Update(new DO.Task1(item.Id, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate,
+                           item.RequiredEffortTime, item.DeadlineDate, item.chef!.Id,
+                           item.StartDate, item.CompleteDate, (DO.ChefExperience)item.Copmlexity!, item.Dellverables,
+                           item.Remarks, null));
+
+    }
+
+    public void UpdateFinalDate(BO.Task1 item)
+    {
+        DO.Task1? task1 = _dal.Task1.Read(item.Id);
+
+        if (task1 == null)
+        {
+            throw new BlDoesNotExistException($"No task with ID: {item.Id} exists");
+        }
+
+        if(task1.CompleteDate!=null)
+        {
+            throw new BlAlreadyExistsException("Actual end date has already been updated");
+        }
+
+        _dal.Task1.Update(new DO.Task1(item.Id, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate,
+                           item.RequiredEffortTime, item.DeadlineDate, item.chef!.Id,
+                           item.StartDate, item.CompleteDate, (DO.ChefExperience)item.Copmlexity!, item.Dellverables,
+                           item.Remarks, null));
+
     }
 }
 

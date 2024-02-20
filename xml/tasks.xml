@@ -275,9 +275,9 @@
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-10-10T21:00:00</DeadlineDate>
     <ChefId>692015744</ChefId>
-    <StartDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
+    <StartDate>2024-02-23T01:12:57</StartDate>
+    <CompleteDate>2024-02-23T01:12:57</CompleteDate>
     <Copmlexity>Beginner</Copmlexity>
-    <isMileStone>false</isMileStone>
+    <isMileStone xsi:nil="true" />
   </Task1>
 </ArrayOfTask1>
