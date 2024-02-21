@@ -22,11 +22,13 @@ namespace PL.Chef
     public partial class SelectTaskOfChefWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        BO.Chef chef1 = new BO.Chef();
         public SelectTaskOfChefWindow(BO.Chef chef)
         {
             try
             {
                 TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPossibleTasks(chef));
+                chef1 = chef;
             } 
             catch(Exception ex)
             {
@@ -51,5 +53,27 @@ namespace PL.Chef
         {
 
         }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                BO.TaskInList? selectedTask = ((ListView)sender).SelectedItem as BO.TaskInList;
+                
+                if (selectedTask != null)
+                {
+                    chef1.task = new BO.TaskInChef { Id = selectedTask.Id, Alias = selectedTask.Alias };
+                    s_bl.Chef.Update(chef1);
+                    MessageBox.Show($"משימה {selectedTask.Id} הוקצתה בהצלחה");
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+                this.Close();
+            }
+        }
+
     }
 }

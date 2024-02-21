@@ -8,6 +8,6 @@
         <local:LevelChef x:Key="LevelChefKey"/>
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:ConvertIdToBool x:Key="ConvertIdToBoolKey"/>
-        
+        <local:ConverTtaskAssignmentToBool x:Key="ConverTtaskAssignmentToBoolKey"/> 
     </Application.Resources>
 </Application>

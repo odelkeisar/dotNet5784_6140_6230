@@ -22,6 +22,7 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     public DateTime clock
     {
         get { return (DateTime)GetValue(clockProparty); }
@@ -31,54 +32,31 @@ public partial class MainWindow : Window
     public static readonly DependencyProperty clockProparty =
         DependencyProperty.Register("clock", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(null));
 
-    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public DateTime? startDate
+    {
+        get { return (DateTime)GetValue(startDateProparty); }
+        set { SetValue(startDateProparty, value); }
+    }
+    public static readonly DependencyProperty startDateProparty =
+        DependencyProperty.Register("startDate", typeof(DateTime?), typeof(MainWindow), new PropertyMetadata(null));
+    public DateTime? endDate
+    {
+        get { return (DateTime)GetValue(endDateProparty); }
+        set { SetValue(endDateProparty, value); }
+    }
+    public static readonly DependencyProperty endDateProparty =
+        DependencyProperty.Register("endDate", typeof(DateTime?), typeof(MainWindow), new PropertyMetadata(null));
 
     public MainWindow()
     {
         // יש להגדיר את המשתנה clock לפני הקריאה ל-InitializeComponent
         clock = s_bl.Task1.ReadClockProject();
+        startDate = s_bl.Task1.ReadStartProject();
+        endDate = s_bl.Task1.ReadEndProject();
 
         // כאן המשתנה clock כבר הוא חלק מהמערכת הקשר
         InitializeComponent();
     }
-
-    /// <summary>
-    /// Button implementation: treatment of chefs, displaying the list of chefs.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ChefList_Click(object sender, RoutedEventArgs e)
-    {
-        new ChefListWindow().ShowDialog();
-    }
-    /// <summary>
-    /// Data initialization button implementation.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void DataInitialization_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo);
-
-        if (result == MessageBoxResult.Yes)
-            DalTest.Initialization.Do();
-
-        //Factory.Get().InitializeDB();
-
-    }
-    /// <summary>
-    /// Implementing a data clear button.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void Reset_Click(object sender, RoutedEventArgs e)
-    {
-        MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo);
-
-        if (result == MessageBoxResult.Yes)
-            DalTest.Initialization.Reset();
-    }
-
     private void Manager_Click(object sender, RoutedEventArgs e)
     {
         new ManagerWinow().ShowDialog();
