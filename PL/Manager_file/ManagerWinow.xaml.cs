@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Chef;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,46 @@ namespace PL.Manager_file
         public ManagerWinow()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Implementing a data clear button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void reset_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+                DalTest.Initialization.Reset();
+        }
+
+        /// <summary>
+        /// Data initialization button implementation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DataInitialization_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+                DalTest.Initialization.Do();
+
+            //Factory.Get().InitializeDB();
+
+        }
+
+        /// <summary>
+        /// Button implementation: treatment of chefs, displaying the list of chefs.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+    
+        private void BottonChef_Click(object sender, RoutedEventArgs e)
+        {
+            new ChefListWindow().ShowDialog();
         }
     }
 }

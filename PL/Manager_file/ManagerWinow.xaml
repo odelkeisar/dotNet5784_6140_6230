@@ -6,7 +6,35 @@
         xmlns:local="clr-namespace:PL.Manager_file"
         mc:Ignorable="d"
         Title="ManagerWinow" Height="450" Width="800">
+
+    <Window.Resources>
+        <!-- הגדרת סגנון לכפתורים -->
+        <Style x:Key="MyButtonStyle1" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Width" Value="194"/>
+            <Setter Property="BorderBrush" Value="#FFB95AD6"/>
+            <Setter Property="Background" Value="#ADD8E6"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontFamily" Value="Bahnschrift SemiBold"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Button Content="ניקוי נתונים"  Style="{StaticResource MyButtonStyle1}"  Margin="558,360,0,0"  Height="48" Width="194" HorizontalAlignment="Left" Click="reset_Click" />
+        <Button Content="אתחול נתונים"   Style="{StaticResource MyButtonStyle1}"  Margin="46,360,0,0"  Height="48" Width="194" HorizontalAlignment="Left" Click="DataInitialization_Click" RenderTransformOrigin="0.5,0.5" >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.504"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button Content="טיפול בשפים"  Style="{StaticResource MyButtonStyle1}"  Margin="0,33,0,0"  Height="92" Width="242" Click="BottonChef_Click"  />
+        <Button Content="טיפול במשימות"   Style="{StaticResource MyButtonStyle1}"  Margin="0,150,0,0"  Height="92" Width="242"  />
+        <Button Content="תרשים גאנט"   Style="{StaticResource MyButtonStyle1}"  Margin="0,267,0,0"  Height="92" Width="242"  />
     </Grid>
 </Window>

@@ -51,10 +51,12 @@
                      Height="25" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" SelectedValue="{Binding Path=Level, Mode=TwoWay}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top"
-                     Width="120" Height="25" Text="{Binding task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+                 IsEnabled= "{Binding Id, Mode=OneTime, Converter={StaticResource ConverTtaskAssignmentToBoolKey}}" Width="120" Height="25"
+                 Text="{Binding task.Id, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,015,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" 
-                     Width="120" Height="25" Text="{Binding task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            IsEnabled= "{Binding Id, Mode=OneTime, Converter={StaticResource ConverTtaskAssignmentToBoolKey}}" Width="120" Height="25"
+                 Text="{Binding task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
 
         <Button  HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="7"  VerticalAlignment="Center"
                     Width="120" Height="30" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Grid.ColumnSpan="2" Click="ButtonAddUpdate_Click" />

@@ -39,8 +39,8 @@ public class Task1
     public TimeSpan? RequiredEffortTime { get; set; } //משך זמן המשימה
     public string? Dellverables { get; set; } //תוצר
     public string? Remarks { get; set; }//הערות
-    public ChefInTask? chef { get; set; }
-    public ChefExperience? Copmlexity { get; set; } //רמת קושי
+    public ChefInTask? chef { get; set; } 
+    public  ChefExperience? Copmlexity { get; set; } //רמת קושי
     public override string ToString() => ToString_();
     public string ToString_() => $@"
 Id= {Id}, Alias= {Alias}
