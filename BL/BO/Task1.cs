@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using System.Xml.Linq;
+
+namespace BO;
 
 /// <summary>
 /// The task that the engineer performs, opening date, last date to finish it, level of difficulty, etc.
@@ -22,23 +24,37 @@ public class Task1
     public string? Alias { get; set; } //כינוי
     public string? Description { get; set; }//תיאור
     public Status status { get; set; }
-   
-    public List<TaskInList>? dependeencies { get; set;}
-   
+
+    public List<TaskInList>? dependeencies { get; set; }
+
     public DateTime? CreatedAtDate { get; set; } //תאריך יצירת המשימה
     public DateTime? ScheduledDate { get; set; } //תאריך מתוכנן להתחלה
     public DateTime? StartDate { get; set; }//התחלה בפועל
-    public DateTime? ForecastDate 
+    public DateTime? ForecastDate
     {
-        get; set;
-        //get { return ScheduledDate == null ? null : (StartDate==null)?null:(ScheduledDate < StartDate ? StartDate + RequiredEffortTime : ScheduledDate + RequiredEffortTime); }
+        get { return ScheduledDate == null ? null : (ScheduledDate < StartDate ? StartDate + RequiredEffortTime : ScheduledDate + RequiredEffortTime); }
     }
     public DateTime? DeadlineDate { get; set; }//תאריך סיום
     public DateTime? CompleteDate { get; set; } //סיום בפועל
     public TimeSpan? RequiredEffortTime { get; set; } //משך זמן המשימה
     public string? Dellverables { get; set; } //תוצר
     public string? Remarks { get; set; }//הערות
-    public ChefInTask? chef { get; set; } 
-    public  ChefExperience? Copmlexity { get; set; } //רמת קושי
-    //public override string ToString() => this.ToString();
+    public ChefInTask? chef { get; set; }
+    public ChefExperience? Copmlexity { get; set; } //רמת קושי
+    public override string ToString() => ToString_();
+    public string ToString_() => $@"
+Id= {Id}, Alias= {Alias}
+Description= {Description}
+status= {status}
+Created at date= {CreatedAtDate}
+Scheduled date= {ScheduledDate}
+Start date= {StartDate}
+Forecast date= {ForecastDate}
+Complete date= {CompleteDate}
+Required effort time= {RequiredEffortTime}
+Dellverables= {Dellverables}
+Remarks= {Remarks}
+Copmlexity= {Copmlexity}
+chef: {chef}
+dependeencies: {dependeencies}";
 }

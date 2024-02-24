@@ -38,8 +38,7 @@ public partial class ActChefWindow : Window
 
         if (chef.task != null)
         {
-            int? id = chef.task.Id;
-            task = s_bl.Task1.Read(id??0)!;
+            task = s_bl.Task1.Read((int)chef.task.Id);
         }
 
         else
@@ -48,7 +47,6 @@ public partial class ActChefWindow : Window
         }
 
         InitializeComponent();
-
     }
 
 

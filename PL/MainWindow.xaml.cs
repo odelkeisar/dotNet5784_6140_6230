@@ -22,7 +22,6 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
-    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     public DateTime clock
     {
         get { return (DateTime)GetValue(clockProparty); }
@@ -32,7 +31,7 @@ public partial class MainWindow : Window
     public static readonly DependencyProperty clockProparty =
         DependencyProperty.Register("clock", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(null));
 
-    
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     public MainWindow()
     {
@@ -75,7 +74,6 @@ public partial class MainWindow : Window
     private void Reset_Click(object sender, RoutedEventArgs e)
     {
         MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo);
-    
 
         if (result == MessageBoxResult.Yes)
             DalTest.Initialization.Reset();
@@ -88,7 +86,7 @@ public partial class MainWindow : Window
 
     private void Chef_Click(object sender, RoutedEventArgs e)
     {
-        BO.Chef ?chef = new BO.Chef();
+        BO.Chef chef = new BO.Chef();
         string idNumber = Microsoft.VisualBasic.Interaction.InputBox("אנא הזן מספר זהות:", "הזנת מספר זהות", "");
 
         // בדיקה אם המספר זהות שהוזן אינו ריק
@@ -96,7 +94,7 @@ public partial class MainWindow : Window
         {
             try
             {
-                chef = s_bl.Chef.Read(int.Parse(idNumber));
+                chef = s_bl.Chef.Read(int.Parse(idNumber))!;
                 new ActChefWindow(int.Parse(idNumber)).ShowDialog();
             }
             catch (Exception ex)
@@ -108,12 +106,13 @@ public partial class MainWindow : Window
         else
         {
             MessageBox.Show("לא הוזן מספר זהות.");
+
         }
     }
 
     private void plusTime_Click(object sender, RoutedEventArgs e)
     {
-        TimeSpan time = new (0, 1, 0, 0);
+        TimeSpan time = new(0, 1, 0, 0);
         s_bl.Task1.UpdateClockProject(time);
         clock = s_bl.Task1.ReadClockProject();
     }
