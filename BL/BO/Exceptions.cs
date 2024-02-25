@@ -156,4 +156,9 @@ public class BlScheduledStartDateMayNotBeChangedException : Exception //לא נ�
 public class BlProblemAboutRequiredEffortTimeException : Exception //שגיאה משך זמן המשימה
 {
     public BlProblemAboutRequiredEffortTimeException(string? message) : base(message) { }
-} 
+}
+[Serializable]
+public class BlUnableToStartTaskException : Exception //לא ניתן להתחיל משימה
+{
+    public BlUnableToStartTaskException(string? message) : base(message) { }
+}

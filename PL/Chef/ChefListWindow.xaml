@@ -25,8 +25,8 @@
             </Grid.ColumnDefinitions>
             <Label Content="Professional level" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <ComboBox HorizontalAlignment="Stretch" 
-                      SelectedValue="{Binding Path=level, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
-                      SelectionChanged="ChangeSelect" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
+                  SelectedValue="{Binding Path=level, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
+                  SelectionChanged="ChangeSelect" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -34,24 +34,30 @@
                     </LinearGradientBrush>
                 </ComboBox.Background>
             </ComboBox>
-
-
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=ChefList}"  MouseDoubleClick="ListView_UpdateChef_Click">
+
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=ChefList}"  MouseDoubleClick="ListView_UpdateChef_Click" MouseLeftButtonUp="ListView_MouseLeftButtonUp" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <!--<Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click"/>-->
 
-        <Button Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="/image/chef.jpg" Width="50" Height="30"/>
-                <TextBlock Text="Add"/>
-            </StackPanel>
-        </Button>
-
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Height="50" Width="100" Click="ButtonAdd_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/image/chef.jpg" Width="50" Height="30"/>
+                    <TextBlock Text="חדש"/>
+                </StackPanel>
+            </Button>
+            <Button Height="50" Width="100"  Margin="10,0,0,0" Click="ButtonDelete_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/image/chef.jpg" Width="50" Height="30"/>
+                    <TextBlock Text="מחק"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
+
 </Window>

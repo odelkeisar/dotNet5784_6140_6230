@@ -17,7 +17,7 @@ static public class Tools
         if (task.CompleteDate != null)
             return Status.Done;
 
-        if (task.ChefId != 0)
+        if (task.StartDate != null)
             return Status.OnTrack;
 
         if (task.ScheduledDate != null)

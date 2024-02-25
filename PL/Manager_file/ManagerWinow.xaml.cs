@@ -1,4 +1,5 @@
 ﻿using PL.Chef;
+using PL.Task1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,30 @@ namespace PL.Manager_file
     /// </summary>
     public partial class ManagerWinow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public DateTime? startDateProject
+        {
+            get { return (DateTime?)GetValue(startDateProjectProparty); }
+            set { SetValue(startDateProjectProparty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty startDateProjectProparty =
+            DependencyProperty.Register("startDateProject", typeof(DateTime?), typeof(ManagerWinow), new PropertyMetadata(null));
+        public DateTime? endDateProject
+        {
+            get { return (DateTime?)GetValue(endDateProjectProparty); }
+            set { SetValue(endDateProjectProparty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty endDateProjectProparty =
+            DependencyProperty.Register("endDateProject", typeof(DateTime?), typeof(ManagerWinow), new PropertyMetadata(null));
         public ManagerWinow()
         {
             InitializeComponent();
+            startDateProject = s_bl.Task1.ReadStartProject();
+            endDateProject=s_bl.Task1.ReadEndProject();
         }
 
         /// <summary>
@@ -35,7 +57,12 @@ namespace PL.Manager_file
             MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
-                DalTest.Initialization.Reset();
+            {
+
+                s_bl.InitializeResetB();
+            }
+            startDateProject=s_bl.Task1.ReadStartProject(); 
+            endDateProject= s_bl.Task1.ReadEndProject();
         }
 
         /// <summary>
@@ -48,7 +75,9 @@ namespace PL.Manager_file
             MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
-                DalTest.Initialization.Do();
+                s_bl.InitializeDB();
+            startDateProject = s_bl.Task1.ReadStartProject();
+            endDateProject = s_bl.Task1.ReadEndProject();
 
             //Factory.Get().InitializeDB();
 
@@ -63,6 +92,41 @@ namespace PL.Manager_file
         private void BottonChef_Click(object sender, RoutedEventArgs e)
         {
             new ChefListWindow().ShowDialog();
+        }
+
+        private void ButtonUpdateStartProject_Click(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+               s_bl.Task1.CreateStartProject((DateTime)startDateProject!);
+                startDateProject=s_bl.Task1.ReadStartProject();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+                startDateProject = s_bl.Task1.ReadStartProject();
+            }
+        }
+
+        private void ButtonUpdateEndProject_Click(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                s_bl.Task1.CreateEndProject((DateTime)endDateProject!);
+                endDateProject = s_bl.Task1.ReadEndProject();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+                endDateProject = s_bl.Task1.ReadEndProject();
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new TaskListWindow().ShowDialog();
         }
     }
 }

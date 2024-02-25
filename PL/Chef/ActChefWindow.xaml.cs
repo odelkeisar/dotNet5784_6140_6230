@@ -35,7 +35,7 @@ public partial class ActChefWindow : Window
     public ActChefWindow(int idNumber)
     {
         chef = s_bl.Chef.Read(idNumber)!;
-        task = s_bl.Task1.Read((int)chef.task.Id);
+        task = s_bl.Task1.Read((int)chef.task!.Id!)!;
      
         InitializeComponent();
     }

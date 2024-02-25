@@ -59,7 +59,14 @@ public partial class MainWindow : Window
     }
     private void Manager_Click(object sender, RoutedEventArgs e)
     {
-        new ManagerWinow().ShowDialog();
+        ManagerWinow managerWinow = new ManagerWinow();
+        managerWinow.Closed += (s, args) =>
+        {
+            startDate = s_bl.Task1.ReadStartProject();
+            endDate = s_bl.Task1.ReadEndProject();
+            clock = s_bl.Task1.ReadClockProject();
+        };
+        managerWinow.ShowDialog();
     }
 
     private void Chef_Click(object sender, RoutedEventArgs e)
@@ -115,3 +122,4 @@ public partial class MainWindow : Window
         clock = s_bl.Task1.ReadClockProject();
     }
 }
+

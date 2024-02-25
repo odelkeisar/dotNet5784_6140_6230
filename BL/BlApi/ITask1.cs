@@ -10,8 +10,8 @@ public interface ITask1
     public DateTime? ReadStartProject();
 
     public DateTime? ReadEndProject();
-    public void CreateStartProject(DateTime starProject);
-    public void CreateEndProject(DateTime endProject);
+    public void CreateStartProject(DateTime? starProject);
+    public void CreateEndProject(DateTime? endProject);
     public int Create(BO.Task1 item);
     public void Delete(int id);
     public BO.Task1? Read(int id);

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Chef"
         mc:Ignorable="d"
         Title="SelectTaskOfChefWindow" Height="450" Width="800"
-    DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
 
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}"  SelectionChanged="PosibbleTask_SelectionChanged" MouseDoubleClick="ListView_MouseDoubleClick">

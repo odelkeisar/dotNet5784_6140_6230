@@ -4,6 +4,7 @@ using System.Linq;
 using DO;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace BlImplementation;
 internal class TaskImplementation : ITask1
@@ -20,6 +21,7 @@ internal class TaskImplementation : ITask1
     /// <exception cref="BlEmptyStringException">if have empty string</exception>
     /// <exception cref="BO.BlAlreadyExistsException"></exception>
 
+
     public DateTime? ReadStartProject()
     {
         return _dal.Task1.ReadStartProject();
@@ -29,18 +31,23 @@ internal class TaskImplementation : ITask1
     {
         return _dal.Task1.ReadEndProject();
     }
-    public void CreateStartProject(DateTime starProject)
+    public void CreateStartProject(DateTime ?starProject)
     {
+        if(starProject == null) 
+            throw new BlNullPropertyException("Please enter a full date");
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
 
         if (tasks!.Any(task => task!.ScheduledDate < starProject))
             throw new BlWrongDateException("An earlier date must be entered for the project");
 
-        _dal.Task1.UpdateStartProject(starProject);
+        _dal.Task1.UpdateStartProject((DateTime)starProject);
     }
 
-    public void CreateEndProject(DateTime endProject)
+    public void CreateEndProject(DateTime ?endProject)
     {
+        if (endProject == null)
+            throw new BlNullPropertyException("Please enter a full date");
+
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
         if (tasks!.Any(task => task!.ScheduledDate == null))
             throw new BlScheduledStartDateNoUpdatedException("Not all missions have an updated scheduled start date yet.");
@@ -48,7 +55,7 @@ internal class TaskImplementation : ITask1
         if (tasks!.Any(task => (task!.ScheduledDate + task.RequiredEffortTime) > endProject))
             throw new BlWrongDateException("A later end date must be entered for the project");
 
-        _dal.Task1.UpdateEndProject(endProject);
+        _dal.Task1.UpdateEndProject((DateTime)endProject);
     }
 
 
@@ -286,7 +293,7 @@ internal class TaskImplementation : ITask1
 
                 if (botask.chef == null || botask.chef.Id != item.chef.Id)
                 {
-                    DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id); //חיפוש המשימה שהשף כבר מוקצה לה
+                    DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id &&  task.CompleteDate==null); //חיפוש המשימה שהשף כבר מוקצה לה
                     if (dotask != null && dotask.Id != item.Id && dotask.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
                         throw new BlNoChangeChefAssignmentException($"The chef with {item.Id} is already assigned to an unfinished task");
 
@@ -506,6 +513,17 @@ internal class TaskImplementation : ITask1
         if(task1 == null)
         {
             throw new BlDoesNotExistException($"No task with ID: {item.Id} exists");
+        }
+
+        IEnumerable<BO.TaskInList>? listDependeencies = Read(item.Id)!.dependeencies;  //יצירת רשימת תלויות של כל המשימות שהמשימה תלויה בהם  
+        if (listDependeencies != null)
+        {
+            foreach (var taskinlist in listDependeencies)     //מעבר על כל משימה קודמת ובדיקה שתאריך ההתחלה המתוכנן קיים וגם שהתאריך שהתקבל כפרמטר אינו מוקדם מתאריך הסיום המשוער של כל משימה שקודמת לה 
+            {
+                BO.Task1 task_ = Read(taskinlist.Id)!;
+                if (task_.CompleteDate == null)
+                    throw new BlUnableToStartTaskException($"A task cannot be started before the previous tasks have been completed");
+            }
         }
 
         _dal.Task1.Update(new DO.Task1(item.Id, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate,

@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:PL.Manager_file"
         mc:Ignorable="d"
-        Title="ManagerWinow" Height="450" Width="800">
+        Title="ManagerWinow" Height="450" Width="600"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Window.Resources>
         <!-- הגדרת סגנון לכפתורים -->
@@ -22,19 +24,37 @@
     </Window.Resources>
 
     <Grid>
-        <Button Content="ניקוי נתונים"  Style="{StaticResource MyButtonStyle1}"  Margin="558,360,0,0"  Height="48" Width="194" HorizontalAlignment="Left" Click="reset_Click" />
-        <Button Content="אתחול נתונים"   Style="{StaticResource MyButtonStyle1}"  Margin="46,360,0,0"  Height="48" Width="194" HorizontalAlignment="Left" Click="DataInitialization_Click" RenderTransformOrigin="0.5,0.5" >
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-0.504"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+
+        <Button Content="ניקוי נתונים"  Style="{StaticResource MyButtonStyle1}"  Margin="0,20,0,0"  Height="48" Width="160" HorizontalAlignment="Center" Click="reset_Click" Grid.Row="2" />
+        <Button Content="אתחול נתונים"   Style="{StaticResource MyButtonStyle1}"  Margin="0,80,0,0"  Height="48" Width="160" Click="DataInitialization_Click" Grid.Row="2" >
+
         </Button>
-        <Button Content="טיפול בשפים"  Style="{StaticResource MyButtonStyle1}"  Margin="0,33,0,0"  Height="92" Width="242" Click="BottonChef_Click"  />
-        <Button Content="טיפול במשימות"   Style="{StaticResource MyButtonStyle1}"  Margin="0,150,0,0"  Height="92" Width="242"  />
-        <Button Content="תרשים גאנט"   Style="{StaticResource MyButtonStyle1}"  Margin="0,267,0,0"  Height="92" Width="242"  />
+        <Button Content="טיפול בשפים"  Style="{StaticResource MyButtonStyle1}"   Height="92" Width="242" Click="BottonChef_Click" Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Button Content="טיפול במשימות" Style="{StaticResource MyButtonStyle1}"    Height="92" Width="242" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
+        <Button Content="תרשים גאנט" Style="{StaticResource MyButtonStyle1}" Height="92" Width="242" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" />
+        <Label Content="תאריך תחילת פרויקט" HorizontalAlignment="Center" Margin="0,25,0,85"  Grid.Column="0" Grid.Row="0" />
+        <Label Content="תאריך סיום פרויקט" HorizontalAlignment="Center" Margin="0,25,0,85" Grid.Column="0" Grid.Row="1"/>
+        <TextBox TextAlignment="Center" TextWrapping="Wrap" Text="{Binding startDateProject, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="160" Grid.Column="0" Grid.Row="0"/>
+        <TextBox TextAlignment="Center" TextWrapping="Wrap" Text="{Binding endDateProject, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="160" Grid.Column="0" Grid.Row="1" />
+
+        <Button Grid.Column="0" Grid.Row="0" Margin="0,70,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDoubleClick="ButtonUpdateStartProject_Click" >
+            <Image Source="/image/update.jpg" Height="30" Width="50"/>
+        </Button>
+        <Button Grid.Column="0" Grid.Row="1" Margin="0,70,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDoubleClick="ButtonUpdateEndProject_Click"  >
+            <Image Source="/image/update.jpg" Height="30" Width="50"/>
+        </Button>
+        <!--<DatePicker SelectedDate="{Binding endDateProject, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Grid.Row="1" Margin="0,55,0,0" />-->
+        <!--<DatePicker SelectedDate="{Binding startDateProject, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Grid.Row="0" Margin="0,55,0,0" />-->
+
     </Grid>
 </Window>

@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows;
 
 
-﻿using BO;
+using BO;
 
 
 namespace PL.Chef;
@@ -95,6 +95,34 @@ public partial class ChefListWindow : Window
             chefWindow.ShowDialog();
         }
     }
+  
+    private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (chef_ != null)
+            {
+                MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק שף?", "אישור מחיקת נתוני שף", MessageBoxButton.YesNo);
 
+                if (result == MessageBoxResult.Yes)
+                {
+                    s_bl.Chef.Delete(chef_.Id);
+                    ChefList = new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!);
+                    chef_ = null;
+                }
+            }
+            else
+            {
+                MessageBox.Show($"יש לבחור שף למחיקה");
+            }
+        }
+        catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
+    }
 
+    BO.Chef? chef_ = null;
+    private void ListView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        chef_ = (sender as ListView)?.SelectedItem as BO.Chef;
+
+    }
 }

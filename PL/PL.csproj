@@ -19,6 +19,9 @@
     <None Remove="image\back.jpg" />
     <None Remove="image\chef.jpg" />
     <None Remove="image\chefs.jpg" />
+    <None Remove="image\task.jpg" />
+    <None Remove="image\update.jpg" />
+    <None Remove="image\עידכון.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +31,8 @@
   <ItemGroup>
     <Resource Include="image\back.jpg" />
     <Resource Include="image\chef.jpg" />
+    <Resource Include="image\task.jpg" />
+    <Resource Include="image\update.jpg" />
   </ItemGroup>
 
 </Project>

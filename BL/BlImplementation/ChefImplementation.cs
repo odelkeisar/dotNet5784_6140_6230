@@ -83,8 +83,17 @@ internal class ChefImplementation : IChef
         DO.Chef? chef1 = _dal.Chef.Read(id);
         if (chef1 == null)
             throw new BO.BlDoesNotExistException($"Chef with ID={id} does not exists");
-
-        DO.Task1? task = _dal.Task1.Read(t => t.ChefId == id);
+        DO.Task1? task = new DO.Task1();    
+        IEnumerable< DO.Task1?>?listTask= _dal.Task1.ReadAll(t => t.ChefId == id && t.CompleteDate == null);
+        if (listTask != null)
+        {
+            task= listTask.FirstOrDefault();
+            foreach (var task_ in listTask)
+            {
+                if (task_!.ScheduledDate < task!.ScheduledDate)
+                    task = task_;
+            }
+        }
 
         TaskInChef? taskInChef;
 
@@ -107,16 +116,16 @@ internal class ChefImplementation : IChef
     public IEnumerable<BO.Chef> ReadAll()
     {
         return (from DO.Chef chef in _dal.Chef.ReadAll()!
-                let task = _dal.Task1.Read(t => t.ChefId == chef.Id)
+                let chef_ = Read(chef.Id)
                 select new BO.Chef
                 {
-                    Id = chef.Id,
-                    deleted = chef.deleted,
-                    Email = chef.Email,
-                    Cost = chef.Cost,
-                    Name = chef.Name,
-                    Level = (BO.ChefExperience)chef.Level!,
-                    task = task != null ? new TaskInChef() { Id = task.Id, Alias = task.Alias } : null
+                    Id = chef_.Id,
+                    deleted = chef_.deleted,
+                    Email = chef_.Email,
+                    Cost = chef_.Cost,
+                    Name = chef_.Name,
+                    Level = (BO.ChefExperience)chef_.Level!,
+                    task = chef_.task != null ? new TaskInChef() { Id = chef_.task.Id, Alias = chef_.task.Alias } : null
                 }
         );
     }
@@ -203,7 +212,7 @@ internal class ChefImplementation : IChef
        
         if (item.task != null)
         {
-            DO.Task1? task1 = _dal.Task1.Read(task => task.ChefId == item.Id); //חיפוש המשימה שהשף כבר מוקצה לה
+            DO.Task1? task1 = _dal.Task1.Read(task => task.ChefId == item.Id&& task.CompleteDate==null); //חיפוש המשימה שהשף כבר מוקצה לה
             if (task1 != null && item.task.Id != task1.Id && task1.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
                 throw new BlNoChangeChefAssignmentException($"The chef with ID: {item.Id} is already assigned to an unfinished task");
 
@@ -213,6 +222,12 @@ internal class ChefImplementation : IChef
 
             if (task2.ChefId != 0 && task2.ChefId != item.Id)    //אם המשימה כבר מוקצית לשף אחר
                 throw new BlTaskAlreadyAssignedException($"The task with the ID{item.task.Id} is already assigned to the chef with the ID {task2.ChefId}");
+
+
+
+
+
+
 
             if (_dal.Task1.ReadEndProject() == null) //אם לפרויקט אין תאריך סיום מתוכנן
                 throw new BlScheduledStartDateNoUpdatedException("A chef cannot be assigned to a task when there is no scheduled end date for the project");

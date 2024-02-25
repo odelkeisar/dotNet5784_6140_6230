@@ -11,5 +11,9 @@ internal class Bl : IBl
     public IChef Chef => new ChefImplementation();
 
     public void InitializeDB() => DalTest.Initialization.Do();
+    public void InitializeResetB() => DalTest.Initialization.Reset();
+ 
+
+
 
 }
