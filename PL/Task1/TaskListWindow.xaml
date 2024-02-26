@@ -49,7 +49,7 @@
                 <TextBlock Text="משימה חדשה"/>
             </StackPanel>
         </Button>
-        <CheckBox Content="הצג משימות לא מוקצות" HorizontalAlignment="Left" Margin="21,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+        <CheckBox Content="הצג משימות לא מוקצות" HorizontalAlignment="Left" Margin="21,0,0,0" Grid.Row="2" VerticalAlignment="Center" Checked="Unassigned_Checked"/>
 
 
 

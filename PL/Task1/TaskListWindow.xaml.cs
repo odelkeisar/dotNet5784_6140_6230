@@ -44,12 +44,12 @@ namespace PL.Task1
         }
         public static readonly DependencyProperty TaskListProparty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
-        
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// constractor
         /// </summary>
-        public TaskListWindow() 
+        public TaskListWindow()
         {
             TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll());
             InitializeComponent();
@@ -63,12 +63,18 @@ namespace PL.Task1
         {
             try
             {
-                TaskList= StatusTask_==BO.Status.None? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!): new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
+                TaskList = StatusTask_ == BO.Status.None ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
             }
             catch (Exception ex)
             {
-                TaskList= new ObservableCollection<BO.TaskInList>();
+                TaskList = new ObservableCollection<BO.TaskInList>();
             }
         }
+
+        private void Unassigned_Checked(object sender, RoutedEventArgs e)
+        {
+            return;
+        }
+
     }
 }
