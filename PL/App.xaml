@@ -9,6 +9,7 @@
         <local:StatusTask x:Key="StatusTaskkey"/>
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:ConvertIdToBool x:Key="ConvertIdToBoolKey"/>
-        <local:ConverTtaskAssignmentToBool x:Key="ConverTtaskAssignmentToBoolKey"/> 
-    </Application.Resources>
+        <local:ConverTtaskAssignmentToBool x:Key="ConverTtaskAssignmentToBoolKey"/>
+        <local:ConverTaskListCheckBoxToBool x:Key="ConverTaskListCheckBoxToBoolKey"/>
+        </Application.Resources>
 </Application>

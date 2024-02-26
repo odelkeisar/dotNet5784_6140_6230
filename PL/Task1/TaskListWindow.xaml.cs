@@ -71,10 +71,67 @@ namespace PL.Task1
             }
         }
 
+        /// <summary>
+        /// Filter by unassigned tasks 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Unassigned_Checked(object sender, RoutedEventArgs e)
         {
-            return;
+            try
+            {
+                TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllNoChefWasAssigned().Where(task => task.status == StatusTask_));
+            }
+            catch (Exception ex)
+            {
+                TaskList = new ObservableCollection<BO.TaskInList>();
+            }
+        }
+        /// <summary>
+        /// Canceling the filtering of the unassigned tasks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Unassigned_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TaskList = StatusTask_ == BO.Status.None ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
+            }
+            catch (Exception ex)
+            {
+                TaskList = new ObservableCollection<BO.TaskInList>();
+            }
         }
 
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (task_ != null)
+                {
+                    MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק משימה?", "אישור מחיקת נתוני משימה", MessageBoxButton.YesNo);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        s_bl.Task1.Delete(task_.Id);
+                        TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!);
+                       task_ = null;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"יש לבחור משימה למחיקה");
+                }
+            }
+            catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
+        }
+
+        BO.Task1? task_ = null;
+
+        private void DeleteMarker(object sender, MouseButtonEventArgs e)
+        {
+            task_ = (sender as ListView)?.SelectedItem as BO.Task1;
+        }
     }
 }

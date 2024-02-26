@@ -34,24 +34,35 @@
 
 
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" >
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" MouseLeftButtonUp="DeleteMarker"  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <!--<Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click"/>-->
+       
 
-        <Button Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="120">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="/image/task.jpg" Width="40" Height="30"/>
-                <TextBlock Text="משימה חדשה"/>
-            </StackPanel>
-        </Button>
-        <CheckBox Content="הצג משימות לא מוקצות" HorizontalAlignment="Left" Margin="21,0,0,0" Grid.Row="2" VerticalAlignment="Center" Checked="Unassigned_Checked"/>
+        
+        <CheckBox Content="הצג משימות לא מוקצות" HorizontalAlignment="Left" Margin="21,0,0,0" Grid.Row="2" VerticalAlignment="Center" Checked="Unassigned_Checked"
+                  Unchecked="Unassigned_Unchecked"  IsEnabled="{Binding StatusTask_, Mode=TwoWay, Converter={StaticResource ConverTaskListCheckBoxToBoolKey}}"/>
 
-
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
+            <!--<Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click"/>-->
+            <Button Height="50" Width="100" Click="ButtonDelete_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/image/delete.jpg" Width="50" Height="30"/>
+                    <TextBlock Text="מחק"/>
+                </StackPanel>
+            </Button>
+            <Button Height="50" Width="130"  Margin="10,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/image/task.jpg" Width="50" Height="30"/>
+                    <TextBlock Text="משימה חדשה"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="-397,508,0,0" Grid.Row="1" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

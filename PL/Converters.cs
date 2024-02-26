@@ -75,3 +75,19 @@ class ConverTtaskAssignmentToBool : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+/// <summary>
+/// checkBox for show thsk without chef
+/// </summary>
+class ConverTaskListCheckBoxToBool : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (BO.Status)value == BO.Status.Scheduled ? true : false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
