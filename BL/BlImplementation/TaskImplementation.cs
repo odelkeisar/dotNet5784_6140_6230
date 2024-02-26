@@ -13,6 +13,65 @@ internal class TaskImplementation : ITask1
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     /// <summary>
+    /// the function return date to start project
+    /// </summary>
+    /// <returns></returns>
+
+    public DateTime? ReadStartProject()
+    {
+        return _dal.Task1.ReadStartProject();
+    }
+
+    /// <summary>
+    /// the function return date to end project
+    /// </summary>
+    /// <returns></returns>
+    public DateTime? ReadEndProject()
+    {
+        return _dal.Task1.ReadEndProject();
+    }
+
+    /// <summary>
+    /// the function put date to start project
+    /// </summary>
+    /// <param name="starProject"></param>
+    /// <exception cref="BlNullPropertyException"></exception>
+    /// <exception cref="BlWrongDateException"></exception>
+    public void CreateStartProject(DateTime ?starProject)
+    {
+        if(starProject == null) 
+            throw new BlNullPropertyException("נא להכניס תאריך");
+        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
+
+        if (tasks!.Any(task => task!.ScheduledDate < starProject))
+            throw new BlWrongDateException("יש להזין תאריך מוקדם יותר מהתאריך המתוכנן להתחלה של המשימה הראשונה");
+
+        _dal.Task1.UpdateStartProject((DateTime)starProject);
+    }
+
+    /// <summary>
+    ///  the function put date to end project
+    /// </summary>
+    /// <param name="endProject"></param>
+    /// <exception cref="BlNullPropertyException"></exception>
+    /// <exception cref="BlScheduledStartDateNoUpdatedException"></exception>
+    /// <exception cref="BlWrongDateException"></exception>
+    public void CreateEndProject(DateTime ?endProject)
+    {
+        if (endProject == null)
+            throw new BlNullPropertyException("נא להכניס תאריך");
+
+        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
+        if (tasks!.Any(task => task!.ScheduledDate == null))
+            throw new BlScheduledStartDateNoUpdatedException("יש להזין קודם את כל התאריכים המתוכננים להתחלה של כל המשימות");
+
+        if (tasks!.Any(task => (task!.ScheduledDate + task.RequiredEffortTime) > endProject))
+            throw new BlWrongDateException("יש להזין תאריך מאוחר יותר מהתאריך המתוכנן לסיום של המשימה האחרונה");
+
+        _dal.Task1.UpdateEndProject((DateTime)endProject);
+    }
+
+    /// <summary>
     /// create a new task
     /// </summary>
     /// <param name="item"></param>
@@ -21,56 +80,28 @@ internal class TaskImplementation : ITask1
     /// <exception cref="BlEmptyStringException">if have empty string</exception>
     /// <exception cref="BO.BlAlreadyExistsException"></exception>
 
-
-    public DateTime? ReadStartProject()
-    {
-        return _dal.Task1.ReadStartProject();
-    }
-
-    public DateTime? ReadEndProject()
-    {
-        return _dal.Task1.ReadEndProject();
-    }
-    public void CreateStartProject(DateTime ?starProject)
-    {
-        if(starProject == null) 
-            throw new BlNullPropertyException("Please enter a full date");
-        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
-
-        if (tasks!.Any(task => task!.ScheduledDate < starProject))
-            throw new BlWrongDateException("An earlier date must be entered for the project");
-
-        _dal.Task1.UpdateStartProject((DateTime)starProject);
-    }
-
-    public void CreateEndProject(DateTime ?endProject)
-    {
-        if (endProject == null)
-            throw new BlNullPropertyException("Please enter a full date");
-
-        IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
-        if (tasks!.Any(task => task!.ScheduledDate == null))
-            throw new BlScheduledStartDateNoUpdatedException("Not all missions have an updated scheduled start date yet.");
-
-        if (tasks!.Any(task => (task!.ScheduledDate + task.RequiredEffortTime) > endProject))
-            throw new BlWrongDateException("A later end date must be entered for the project");
-
-        _dal.Task1.UpdateEndProject((DateTime)endProject);
-    }
-
-
     public int Create(BO.Task1 item)
     {
         if (_dal.Task1.ReadEndProject() != null)
-            throw new BlInappropriateStepException("It is not possible to add a task after the schedule has been set");
+            throw new BlInappropriateStepException("לא ניתן להוסיף משימה לאחר קביעת הלוז");
         if (item.Id < 0)
-            throw new BlWrongNegativeIdException("Task with negative ID");
+            throw new BlWrongNegativeIdException("המשימה עם מספר תעודת זהות שלילית");
         if (item.Alias == "")
-            throw new BlEmptyStringException("The string is empty");
+            throw new BlEmptyStringException("המחרוזת ריקה");
         if (item.chef != null)
-            throw new BlInappropriateStepException("A chef cannot be assigned before the schedule is set");
+            throw new BlInappropriateStepException("לא ניתן להקצות שף לפני קביעת הלוז");
         if (item.RequiredEffortTime == null)
-            throw new BlProblemAboutRequiredEffortTimeException("The duration of the task must be entered");
+            throw new BlProblemAboutRequiredEffortTimeException("יש להזין משך זמן משימה");
+        if(item.ScheduledDate!=null)
+        {
+            foreach(var task in item.dependeencies!)
+            {
+                BO.Task1 _task = s_bl.Task1.Read(task.Id)!;
+
+                if (_task.ForecastDate > item.ScheduledDate)
+                    throw new BlWrongDateException("אי אפשר לקבוע תאריך מתוכנן להתחלה מוקדם יותר מהתאריך המשואר לסיום של משימות קודמות ");
+            }
+        }
 
         DO.Task1 doTask = new DO.Task1
        (0, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate, item.RequiredEffortTime,
@@ -94,7 +125,7 @@ internal class TaskImplementation : ITask1
 
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Task with ID={item.Id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"המשימה עם התעודת זהות{item.Id} כבר קיימת", ex);
         }
     }
 
@@ -109,16 +140,16 @@ internal class TaskImplementation : ITask1
     public void Delete(int id)
     {
         if (_dal.Task1.ReadEndProject() != null)
-            throw new BlInappropriateStepException("It is not possible to delete a task after the schedule has been set");
+            throw new BlInappropriateStepException("לא ניתן למחוק משימה לאחר קביעת הלוז");
 
         BO.Task1? task = Read(id);
 
         if (task == null)
-            throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
+            throw new BO.BlDoesNotExistException($"המשימה עם התעודת זהות{id} לא קיימת");
         if ((_dal.Dependeency.ReadAll(x => x.DependsOnTask == id)!.Count() != 0))
-            throw new BlATaskCannotBeDeletedException($"The task cannot be deleted:{id} The task has tasks that depend on it");
+            throw new BlATaskCannotBeDeletedException($"לא ניתן למחוק את המשימה:{id} למשימה יש משימות התלויות בה");
         if (task.StartDate != null)
-            throw new BlATaskCannotBeDeletedException($"The task:{id} already in the process of execution and cannot be deleted");
+            throw new BlATaskCannotBeDeletedException($"המשימה:{id} כבר באמצע הביצוע ולכן לא ניתן למחוק אותה");
 
         try
         {
@@ -131,7 +162,7 @@ internal class TaskImplementation : ITask1
 
             _dal.Task1.Delete(id);
         }
-        catch (DalDoesNotExistException ex) { throw new BlDoesNotExistException($"Task with ID={id} does not exist", ex); };
+        catch (DalDoesNotExistException ex) { throw new BlDoesNotExistException($"המשימה עם התעודת זהות {id} לא קיימת", ex); };
     }
 
     /// <summary>
@@ -145,16 +176,16 @@ internal class TaskImplementation : ITask1
         DO.Task1? doTask = _dal.Task1.Read(id);
 
         if (doTask == null)
-            throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
+            throw new BO.BlDoesNotExistException($"המשימה עם התעודת זהות{id} לא קיימת");
 
         BO.Task1? boTask = convert(doTask!);
         return boTask;
     }
+    
     /// <summary>
     /// Returning all task details.
     /// </summary>
     /// <returns></returns>
-
     public IEnumerable<BO.TaskInList> ReadAll()
     {
         return (from DO.Task1 doTask in _dal.Task1.ReadAll()!
@@ -188,7 +219,7 @@ internal class TaskImplementation : ITask1
         }
 
         if (possibleTasks.Count() == 0)
-            throw new BlNoTasksToCompleteException($"There are no possible tasks to perform for the chef:{chef.Id}");
+            throw new BlNoTasksToCompleteException($"אין משימות אפשריות לביצוע עבור השף:{chef.Id}");
         return (possibleTasks.Select(boTask => new BO.TaskInList() { Id = boTask.Id, Description = boTask.Description, Alias = boTask.Alias, status = boTask.status }));
     }
 
@@ -205,19 +236,19 @@ internal class TaskImplementation : ITask1
         BO.Task1? botask = Read(item.Id); //בדיקה שהמשימה קיימת
 
         if (botask == null)
-            throw new BlDoesNotExistException($"Task with ID={item.Id} does not exists");
+            throw new BlDoesNotExistException($"המסימה עם המספר זהות{item.Id} לא קיימת");
 
         if (item.Alias == "")
-            throw new BlEmptyStringException("The string is empty");
+            throw new BlEmptyStringException("מחרוזת ריקה");
 
         if (ReadEndProject() == null)
         {
             if (item.chef != null)
-                throw new BlInappropriateStepException("A chef cannot be assigned to a task before the date end of project is set");
+                throw new BlInappropriateStepException("לא ניתן להקצות שף למשימה לפני קביעת תאריך סיום הפרויקט");
             if (item.StartDate != null)
-                throw new BlInappropriateStepException("It is not possible to update an actual start date before the date end of project is set");
+                throw new BlInappropriateStepException("לא ניתן לעדכן תאריך התחלה בפועל לפני קביעת תאריך סיום הפרויקט");
             if (item.CompleteDate != null)
-                throw new BlInappropriateStepException("It is not possible to update an actual complete date before date end of project is set");
+                throw new BlInappropriateStepException("לא ניתן לעדכן תאריך סיום בפועל לפני קביעת תאריך סיום הפרויקט");
 
             if (item.RequiredEffortTime != botask.RequiredEffortTime)
             {

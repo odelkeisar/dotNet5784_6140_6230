@@ -1,0 +1,73 @@
+﻿<Window x:Class="PL.Task1.TaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Task1"
+        mc:Ignorable="d"
+        Title="TaskWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!-- הוספת פצלות עבור שתי העמודות -->
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <!-- הוספת שורות שמקבלות כל אחת 1/10 מהגובה של העמודה הימנית -->
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <!-- הוספת פצלות עבור שתי העמודות -->
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Grid.Row="0" Content="מספר זהות" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="1" Content="כינוי" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="2" Content="תיאור" HorizontalAlignment="center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="3" Content="תאריך יצירת משימה" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="4" Content="תאריך מתוכנן להתחלה" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="5" Content="תאריך התחלה בפועל" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="6" Content="תאריך סיום בפועל" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="7" Content="משך זמן משימה" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="8" Content="תוצר" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="9" Content="הערות" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="10" Content="רמת קושי" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="11" Content="מספר זהות שף" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="12" Content="שם שף" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+
+            <TextBox Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="2"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="4"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="5"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="6"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="7"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="8"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="9"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="11"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <TextBox Grid.Column="0" Grid.Row="12"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <ComboBox HorizontalAlignment="center" Height="15"  Grid.Row="10" VerticalAlignment="center" Width="120"/>
+        </Grid>
+
+
+
+    </Grid>
+</Window>

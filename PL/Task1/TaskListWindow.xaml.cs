@@ -127,11 +127,17 @@ namespace PL.Task1
             catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
         }
 
-        BO.Task1? task_ = null;
+        BO.TaskInList? task_ = null;
 
         private void DeleteMarker(object sender, MouseButtonEventArgs e)
         {
-            task_ = (sender as ListView)?.SelectedItem as BO.Task1;
+            task_ = (sender as ListView)?.SelectedItem as BO.TaskInList;
+        }
+
+        private void ButtonAddTaskWindow_Click(object sender, RoutedEventArgs e)
+        {
+           int id = 0;
+           new TaskWindow(id).ShowDialog();
         }
     }
 }

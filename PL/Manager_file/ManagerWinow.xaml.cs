@@ -79,8 +79,6 @@ namespace PL.Manager_file
             startDateProject = s_bl.Task1.ReadStartProject();
             endDateProject = s_bl.Task1.ReadEndProject();
 
-            //Factory.Get().InitializeDB();
-
         }
 
         /// <summary>

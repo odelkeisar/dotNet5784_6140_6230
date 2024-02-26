@@ -53,8 +53,5 @@
         <Button Grid.Column="0" Grid.Row="1" Margin="0,70,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDoubleClick="ButtonUpdateEndProject_Click"  >
             <Image Source="/image/update.jpg" Height="30" Width="50"/>
         </Button>
-        <!--<DatePicker SelectedDate="{Binding endDateProject, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Grid.Row="1" Margin="0,55,0,0" />-->
-        <!--<DatePicker SelectedDate="{Binding startDateProject, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="160" Grid.Row="0" Margin="0,55,0,0" />-->
-
     </Grid>
 </Window>
