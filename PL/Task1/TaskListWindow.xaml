@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task1"
         mc:Ignorable="d"
-        Title="TaskListWindow" Height="450" Width="800"
+        Title="TaskListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,8 +22,8 @@
             </Grid.ColumnDefinitions>
             <Label Content="בחר משימה לעדכון" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <ComboBox HorizontalAlignment="Stretch" 
-                      SelectedValue="{Binding Path=FilterList, Mode=TwoWay, TargetNullValue='None'}" VerticalAlignment="Stretch"  Grid.Column="1" 
-                      SelectionChanged="ChangeSelect" ItemsSource="{Binding Path=FilterArray}"  BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
+                      SelectedValue="{Binding Path=StatusTask_, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
+                      SelectionChanged="ChangeSelect" ItemsSource="{Binding Source= {StaticResource StatusTaskkey}}"  BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -49,6 +49,9 @@
                 <TextBlock Text="משימה חדשה"/>
             </StackPanel>
         </Button>
+        <CheckBox Content="הצג משימות לא מוקצות" HorizontalAlignment="Left" Margin="21,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+
+
 
     </Grid>
 </Window>

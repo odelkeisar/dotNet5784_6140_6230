@@ -3,11 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
-
-
 using BO;
-
-
 namespace PL.Chef;
 
 
@@ -17,8 +13,6 @@ namespace PL.Chef;
 public partial class ChefListWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-    ////public BO.ChefExperience level { get; set; } = BO.ChefExperience.None; /*BO.ChefExperience.None;*/
-
 
     public BO.ChefExperience level
     {

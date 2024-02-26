@@ -72,7 +72,7 @@ public static class Initialization
             int _id = s_rand.Next(100000000, 900000000);
             string _email = EngineertMail[x++];
             double _cost = s_rand.Next(50, 300);
-            DO.ChefExperience _Level = (DO.ChefExperience)s_rand.Next(0, 4);
+            DO.ChefExperience _Level = (DO.ChefExperience)s_rand.Next(1, 5);
 
             Chef newChef = new(_id, false, _email, _cost, _name, _Level);
 

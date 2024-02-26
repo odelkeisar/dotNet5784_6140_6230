@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Professional level" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
+            <Label Content="רשימת השפים לפי רמה מקצועית" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <ComboBox HorizontalAlignment="Stretch" 
                   SelectedValue="{Binding Path=level, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
                   SelectionChanged="ChangeSelect" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
@@ -45,16 +45,16 @@
         </ListView>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Height="50" Width="100" Click="ButtonAdd_Click">
+            <Button Height="50" Width="100" Click="ButtonDelete_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/image/delete.jpg" Width="50" Height="30"/>
+                    <TextBlock Text="מחק"/>
+                </StackPanel>
+            </Button>
+            <Button Height="50" Width="100"  Margin="10,0,0,0" Click="ButtonAdd_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/image/chef.jpg" Width="50" Height="30"/>
                     <TextBlock Text="חדש"/>
-                </StackPanel>
-            </Button>
-            <Button Height="50" Width="100"  Margin="10,0,0,0" Click="ButtonDelete_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/image/chef.jpg" Width="50" Height="30"/>
-                    <TextBlock Text="מחק"/>
                 </StackPanel>
             </Button>
         </StackPanel>

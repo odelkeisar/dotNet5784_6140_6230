@@ -19,6 +19,8 @@ public interface ITask1
     public IEnumerable<BO.TaskInList> ReadAllPossibleTasks(BO.Chef chef);
 
     public IEnumerable<BO.TaskInList> ReadAllPerLevelOfChef(BO.Chef chef);
+    public IEnumerable<BO.TaskInList> ReadAllPerStatus(BO.Status status_);
+
 
     public IEnumerable<BO.TaskInList> ReadAllPerLevel(BO.ChefExperience _level);
     public IEnumerable<BO.TaskInList> ReadAllCompleted();

@@ -445,7 +445,13 @@ internal class TaskImplementation : ITask1
             throw new BlDoesNotExistException("All tasks have a scheduled start date");
         return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
-
+    public IEnumerable<BO.TaskInList> ReadAllPerStatus(BO.Status status_)
+    {
+        IEnumerable<BO.TaskInList>? tasks = ReadAll().Where(task => task.status == status_);
+        if (tasks!.Count() == 0)
+            throw new BlDoesNotExistException($"{status_} :לא קיימות משימות בסטטוס:");
+        return tasks;
+    }
     /// <summary>
     /// Returning the list of all tasks that the current task depends on and converting them to an object of type:TaskInList.
     /// </summary>

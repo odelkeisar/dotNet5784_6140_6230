@@ -6,6 +6,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:LevelChef x:Key="LevelChefKey"/>
+        <local:StatusTask x:Key="StatusTaskkey"/>
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
         <local:ConvertIdToBool x:Key="ConvertIdToBoolKey"/>
         <local:ConverTtaskAssignmentToBool x:Key="ConverTtaskAssignmentToBoolKey"/> 

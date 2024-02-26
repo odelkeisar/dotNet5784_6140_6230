@@ -24,58 +24,51 @@ namespace PL.Task1
     public partial class TaskListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        string[] arr = { "None", "Completed tasks", "Tasks in care", "Unassigned tasks", "Tasks without a scheduled date" };
-
-        public string FilterList
+        /// <summary>
+        /// A property of a task status.
+        /// </summary>
+        public BO.Status StatusTask_
         {
-            get { return (string)GetValue(FilterListProparty); }
-            set { SetValue(FilterListProparty, value); }
+            get { return (BO.Status)GetValue(StatusTask_Property); }
+            set { SetValue(StatusTask_Property, value); }
         }
-
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FilterListProparty =
-            DependencyProperty.Register("FilterList", typeof(string), typeof(TaskListWindow), new PropertyMetadata(null));
-
-
+        public static readonly DependencyProperty StatusTask_Property =
+            DependencyProperty.Register("StatusTask_", typeof(BO.Status), typeof(TaskListWindow), new PropertyMetadata(BO.Status.None));
+        /// <summary>
+        ///  Gets or sets the collection of tasks displayed in the window.
+        /// 
         public ObservableCollection<BO.TaskInList> TaskList
         {
             get { return (ObservableCollection<BO.TaskInList>)GetValue(TaskListProparty); }
             set { SetValue(TaskListProparty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TaskListProparty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
-        public TaskListWindow()
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// constractor
+        /// </summary>
+        public TaskListWindow() 
         {
-            TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll() ?? Enumerable.Empty<BO.TaskInList>());
+            TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll());
             InitializeComponent();
         }
+        /// <summary>
+        /// Handles the event when the selection changes in a control.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChangeSelect(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                if (FilterList == "None")
-                    TaskList = new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!);
-                if (FilterList == "Completed tasks")
-                    TaskList = new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllCompleted()!);
-                if (FilterList == "Tasks in care")
-                    TaskList = new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllTasksInCare()!);
-                if (FilterList == "Unassigned tasks")
-                    TaskList = new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllNoChefWasAssigned()!);
-                if (FilterList == "Tasks without a scheduled date")
-                    TaskList = new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllNoScheduledDate()!);
+                TaskList= StatusTask_==BO.Status.None? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!): new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
             }
             catch (Exception ex)
             {
                 TaskList= new ObservableCollection<BO.TaskInList>();
             }
         }
-
-        public ObservableCollection<string> FilterArray
-        {
-            get { return new ObservableCollection<string>(arr); }
-        }
-
     }
 }
