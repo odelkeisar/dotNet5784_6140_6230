@@ -93,6 +93,11 @@ public partial class TaskWindow : Window
 
     private void ButtonDeleteDependence_Click(object sender, RoutedEventArgs e)
     {
+        if (s_bl.Task1.ReadEndProject() != null)
+        {
+            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט");
+            return;
+        }
         if (taskMarker == null)
             MessageBox.Show($"יש לבחור משימה תלות למחיקה");
         else
@@ -111,6 +116,11 @@ public partial class TaskWindow : Window
 
     private void ButtonAddDependence_Click(object sender, RoutedEventArgs e)
     {
+        if (s_bl.Task1.ReadEndProject() != null)
+        {
+            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט");
+            return;
+        }
         ListTaskForDependenceWindow listTaskForDependenceWindow = new ListTaskForDependenceWindow(task);
         listTaskForDependenceWindow.Closed += (s, args) =>
         {
