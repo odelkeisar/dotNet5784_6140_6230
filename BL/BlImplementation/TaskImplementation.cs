@@ -246,6 +246,8 @@ internal class TaskImplementation : ITask1
 
         if (item.Alias == "")
             throw new BlEmptyStringException("מחרוזת ריקה");
+        if (item.RequiredEffortTime == null)
+            throw new BlProblemAboutRequiredEffortTimeException("לא ניתן למחוק משך זמן משימה , יש למלא ערך מתאים");
 
         if (ReadEndProject() == null)
         {
@@ -265,6 +267,8 @@ internal class TaskImplementation : ITask1
                         throw new BlProblemAboutRequiredEffortTimeException("A task duration must not be changed when dependencies have a scheduled start date");
                 }
             }
+            if(item.ScheduledDate == null && botask.ScheduledDate!=null)
+                throw new BlScheduledStartDateNoUpdatedException("לא ניתן למחוק תאריך תחילה מתוכנן, יש להזין תאריך מתאים");
 
             if (item.ScheduledDate != null && item.ScheduledDate != botask.ScheduledDate)
             {
@@ -311,21 +315,12 @@ internal class TaskImplementation : ITask1
 
             if (item.chef != null)
             {
-                if (ReadAllPossibleTasks(s_bl.Chef.Read(item.chef.Id)!).Any(x => x.Id == item.Id) == false && item.StartDate != null)
-                {
-                    item.status = Status.Scheduled;
-                    throw new BlWrongDateException("A start date cannot be entered when the task is not available");
-                }
-            }
-
-            if (item.chef != null)
-            {
-                if (item.Copmlexity == null)
+                if (item.Copmlexity == null) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
                     throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
 
                 DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
 
-                if (_chef == null)
+                if (_chef == null) //בדיקה שקיים שף מבוקש
                     throw new BlDoesNotExistException($"Chef with ID= {item.Id} does not exists");
 
                 if (botask.chef == null || botask.chef.Id != item.chef.Id)

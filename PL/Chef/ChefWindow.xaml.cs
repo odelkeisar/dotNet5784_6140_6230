@@ -99,6 +99,7 @@ namespace PL.Chef
                 {
                     MessageBox.Show($"Error: {ex.Message}");
 
+                    Chef = s_bl.Chef.Read(Chef.Id);//רענון החלון לנתונים הקודמים
                     if (Chef!.task == null)
                     {
                         Chef.task = new BO.TaskInChef();

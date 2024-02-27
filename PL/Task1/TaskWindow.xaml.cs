@@ -1,4 +1,5 @@
-﻿using PL.Chef;
+﻿using BO;
+using PL.Chef;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,9 +63,7 @@ public partial class TaskWindow : Window
     private void ButtonAssignmentChef_Click(object sender, RoutedEventArgs e)
     {
         if (task.Id == 0)
-        {
             MessageBox.Show($"לא ניתן להקצות שף בשלב יצירת המשימה");
-        }
         else
         {
             try
@@ -159,11 +158,10 @@ public partial class TaskWindow : Window
         catch (Exception ex)
         {
             MessageBox.Show($"Error: {ex.Message}");
+            task = s_bl.Task1.Read(task.Id)!;
+            if (task.chef == null) { task.chef = new BO.ChefInTask(); }
+            if (task.dependeencies == null) { task.dependeencies = new List<BO.TaskInList>(); }
 
-            if (task.chef == null)
-            {
-                task.chef = new BO.ChefInTask();
-            }
         }
     }
 }
