@@ -31,12 +31,14 @@ namespace PL.Chef
             Chef.task = new BO.TaskInChef();
             InitializeComponent();
         }
+        int id_ = 0;
         /// <summary>
         /// A parameter builder that receives an ID and displays details of an existing chef for updating details.
         /// </summary>
         /// <param name="Id"></param>
         public ChefWindow(int Id)
         {
+            id_= Id;
             try
             {
                 Chef = s_bl.Chef.Read(Id);
@@ -82,11 +84,11 @@ namespace PL.Chef
                     Chef.task = null;
                 try
                 {
-                    if ((string)clickedButton.Content == "Update")
+                    if ((string)clickedButton.Content == "עדכן")
                     {
                         s_bl.Chef.Update(Chef!);
                     }
-                    if ((string)clickedButton.Content == "Add")
+                    if ((string)clickedButton.Content == "הוסף")
                     {
                         s_bl.Chef.Create(Chef!);
                     }
@@ -104,6 +106,37 @@ namespace PL.Chef
                 }
 
             }
+        }
+
+        private void ButtonSelectTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (id_ == 0)
+                MessageBox.Show($" לא ניתן להקצות משימה בשלב הוספת שף חדש");
+            else
+            {
+                try
+                {
+                    SelectTaskOfChefWindow selectTaskOfChefWindow = new SelectTaskOfChefWindow(Chef);
+                    selectTaskOfChefWindow.Closed += (s, args) =>
+                    {
+
+                        BO.TaskInList? task = selectTaskOfChefWindow.taskSelected;
+                        if (task != null)
+                        {
+                            Chef.task = new BO.TaskInChef() { Id = task.Id, Alias = task.Alias };
+                            BO.Chef temp = Chef;
+                            Chef = new BO.Chef(); ;
+                            Chef = temp;
+                        }
+                    };
+                    selectTaskOfChefWindow.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
+
         }
     }
 }

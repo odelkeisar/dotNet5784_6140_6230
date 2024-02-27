@@ -224,11 +224,6 @@ internal class ChefImplementation : IChef
                 throw new BlTaskAlreadyAssignedException($"The task with the ID{item.task.Id} is already assigned to the chef with the ID {task2.ChefId}");
 
 
-
-
-
-
-
             if (_dal.Task1.ReadEndProject() == null) //אם לפרויקט אין תאריך סיום מתוכנן
                 throw new BlScheduledStartDateNoUpdatedException("A chef cannot be assigned to a task when there is no scheduled end date for the project");
 

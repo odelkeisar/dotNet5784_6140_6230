@@ -7,7 +7,7 @@
         mc:Ignorable="d"
        Title="ChefWindow" Height="500" Width="400" 
         DataContext="{Binding Chef, RelativeSource={RelativeSource Self }, Mode=TwoWay}">
- 
+
 
 
 
@@ -27,13 +27,13 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="תעודת זהות" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Background="{x:Null}" Foreground="#FFBF2BC6"/>
-        <Label Content="שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Foreground="#FFBF2BC6" Background="Transparent"/>
-        <Label Content="מחיר לשעה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Foreground="#FF131E64"/>
-        <Label Content="דואר אלקטרוני" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Top"/>
-        <Label Content="רמת השף" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Top"/>
-        <Label Content="מספר מזהה של משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top"/>
-        <Label Content="שם של המשימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" VerticalAlignment="Top"/>
+        <Label Content="תעודת זהות" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Background="{x:Null}" Foreground="#FFBF2BC6"/>
+        <Label Content="שם" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Foreground="#FFBF2BC6" Background="Transparent"/>
+        <Label Content="מחיר לשעה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Foreground="#FF131E64"/>
+        <Label Content="דואר אלקטרוני" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"/>
+        <Label Content="רמת השף" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
+        <Label Content="מספר מזהה של משימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"/>
+        <Label Content="שם של המשימה" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"/>
 
         <TextBox HorizontalAlignment="Center" Margin="0,15,0,0" TextWrapping="Wrap"  VerticalAlignment="Top"
                  IsEnabled= "{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToBoolKey}}" Width="120" Height="25" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
@@ -60,6 +60,7 @@
 
         <Button  HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="7"  VerticalAlignment="Center"
                     Width="120" Height="30" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Grid.ColumnSpan="2" Click="ButtonAddUpdate_Click" />
+        <Button Content="בחר" Height="25" Width="30" HorizontalAlignment="Left" Margin="5,16,0,0" Grid.Row="5" VerticalAlignment="Top" RenderTransformOrigin="0.447,0.437" Click="ButtonSelectTask_Click"/>
 
     </Grid>
 </Window>

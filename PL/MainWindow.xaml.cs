@@ -13,6 +13,7 @@ using BlApi;
 using BO;
 using PL.Manager_file;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 
 namespace PL;
@@ -83,23 +84,31 @@ public partial class MainWindow : Window
 
                 if (chef.task == null)
                 {
-                    new SelectTaskOfChefWindow(chef).ShowDialog();
+                    SelectTaskOfChefWindow selectTaskOfChefWindownew = new SelectTaskOfChefWindow(chef);
+
+                    selectTaskOfChefWindownew.Closed += (s, args) =>
+                    {
+                        BO.TaskInList? selectedTask = selectTaskOfChefWindownew.taskSelected;
+                        if (selectedTask != null)
+                        {
+                            try
+                            {
+                                chef.task = new BO.TaskInChef { Id = selectedTask.Id, Alias = selectedTask.Alias };
+                                s_bl.Chef.Update(chef);
+                                MessageBox.Show($"משימה {selectedTask.Id} הוקצתה בהצלחה");
+                                this.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Error: {ex.Message}");
+                            }
+                        }
+                    };
+                    selectTaskOfChefWindownew.ShowDialog();
                 }
 
                 else
-                {
-                    var _task = s_bl.Task1.Read((int)chef.task.Id!);
-
-                    if (_task!.status != Status.Done)
-                    {
-                        new ActChefWindow(int.Parse(idNumber)).ShowDialog();
-                    }
-
-                    else
-                    {
-                        new SelectTaskOfChefWindow(chef).ShowDialog();
-                    }
-                }
+                    new ActChefWindow(int.Parse(idNumber)).ShowDialog();
             }
 
             catch (Exception ex)
@@ -111,7 +120,6 @@ public partial class MainWindow : Window
         else
         {
             MessageBox.Show("לא הוזן מספר זהות.");
-
         }
     }
 

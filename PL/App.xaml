@@ -11,5 +11,7 @@
         <local:ConvertIdToBool x:Key="ConvertIdToBoolKey"/>
         <local:ConverTtaskAssignmentToBool x:Key="ConverTtaskAssignmentToBoolKey"/>
         <local:ConverTaskListCheckBoxToBool x:Key="ConverTaskListCheckBoxToBoolKey"/>
+        <local:ConvertAssigningTaskToChef_ToBool x:Key="ConvertAssigningTaskToChef_ToBoolkey"/>
+        
         </Application.Resources>
 </Application>

@@ -20,6 +20,8 @@ public interface ITask1
 
     public IEnumerable<BO.TaskInList> ReadAllPerLevelOfChef(BO.Chef chef);
     public IEnumerable<BO.TaskInList> ReadAllPerStatus(BO.Status status_);
+    public IEnumerable<BO.TaskInList> ReadAllNondependenceTask(BO.Task1 task);
+
 
 
     public IEnumerable<BO.TaskInList> ReadAllPerLevel(BO.ChefExperience _level);

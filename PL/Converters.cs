@@ -15,7 +15,7 @@ class ConvertIdToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value == 0 ? "Add" : "Update";
+        return (int)value == 0 ? "הוסף" : "עדכן";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -29,6 +29,19 @@ class ConvertIdToBool : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return (int)value != 0 ? false:true;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertAssigningTaskToChef_ToBool : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (int)value == 0 ? false : true;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -91,3 +104,4 @@ class ConverTaskListCheckBoxToBool : IValueConverter
         throw new NotImplementedException();
     }
 }
+

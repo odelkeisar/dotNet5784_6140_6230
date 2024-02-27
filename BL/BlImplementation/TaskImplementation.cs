@@ -5,6 +5,7 @@ using DO;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Data;
+using System.Collections.Generic;
 
 namespace BlImplementation;
 internal class TaskImplementation : ITask1
@@ -94,7 +95,10 @@ internal class TaskImplementation : ITask1
             throw new BlProblemAboutRequiredEffortTimeException("יש להזין משך זמן משימה");
         if(item.ScheduledDate!=null)
         {
-            foreach(var task in item.dependeencies!)
+            if(item.ScheduledDate<ReadStartProject())
+                throw new BlWrongDateException("אי אפשר לקבוע תאריך מתוכנן להתחלה מוקדם יותר מתאריך תחילת הפרויקט ");
+           
+            foreach (var task in item.dependeencies!)
             {
                 BO.Task1 _task = s_bl.Task1.Read(task.Id)!;
 
@@ -191,6 +195,8 @@ internal class TaskImplementation : ITask1
         return (from DO.Task1 doTask in _dal.Task1.ReadAll()!
                 select new BO.TaskInList() { Id = doTask.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
+
+
 
     /// <summary>
     /// Returning all the tasks that match the chef that was passed as a parameter.
@@ -423,6 +429,19 @@ internal class TaskImplementation : ITask1
 
         return (tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) }));
     }
+
+    public IEnumerable<BO.TaskInList> ReadAllNondependenceTask(BO.Task1 task)
+    {
+        if(task.dependeencies==null)
+            return ReadAll();
+        IEnumerable<BO.TaskInList> tasksList_ = ReadAll();
+
+        foreach (var task_ in task.dependeencies)
+        {
+            tasksList_ = tasksList_.Where(x => x.Id != task_.Id);
+        }
+        return tasksList_;
+    }
     /// <summary>
     /// Returning all tasks that have already been completed.
     /// </summary>
@@ -476,6 +495,9 @@ internal class TaskImplementation : ITask1
             throw new BlDoesNotExistException("All tasks have a scheduled start date");
         return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
+
+ 
+
     public IEnumerable<BO.TaskInList> ReadAllPerStatus(BO.Status status_)
     {
         IEnumerable<BO.TaskInList>? tasks = ReadAll().Where(task => task.status == status_);

@@ -137,7 +137,24 @@ namespace PL.Task1
         private void ButtonAddTaskWindow_Click(object sender, RoutedEventArgs e)
         {
            int id = 0;
-           new TaskWindow(id).ShowDialog();
+            if (s_bl.Task1.ReadEndProject()!=null)
+                MessageBox.Show($"לא ניתן ליצור משימה חדשה לאחר שנקבע לוח הזמנים לפרויקט");
+            else
+              new TaskWindow(id).ShowDialog();
+        }
+
+        private void ListView_Update_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.TaskInList? _task = (sender as ListView)?.SelectedItem as BO.TaskInList;
+            if (_task != null)
+            {
+                TaskWindow taskWindow = new TaskWindow(_task.Id);
+                taskWindow.Closed += (s, args) =>
+                {
+                   TaskList = (StatusTask_ == BO.Status.None) ? new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPerStatus(StatusTask_)!);
+                };
+                taskWindow.ShowDialog();
+            }
         }
     }
 }

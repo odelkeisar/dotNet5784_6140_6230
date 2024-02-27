@@ -126,5 +126,25 @@ namespace PL.Manager_file
         {
             new TaskListWindow().ShowDialog();
         }
+
+        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                s_bl.Task1.CreateEndProject((DateTime)endDateProject!);
+                endDateProject = s_bl.Task1.ReadEndProject();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+                endDateProject = s_bl.Task1.ReadEndProject();
+            }
+        }
+
+        //private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+
+        //}
     }
 }

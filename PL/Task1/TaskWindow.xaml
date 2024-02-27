@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task1"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="450" Width="800">
+        Title="TaskWindow" Height="500" Width="800"
+        DataContext="{Binding task, RelativeSource={RelativeSource Self }, Mode=TwoWay}">
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- הוספת פצלות עבור שתי העמודות -->
@@ -38,7 +39,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="1" Grid.Row="0" Content="מספר זהות" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="1" Grid.Row="0" Content="מספר משימה" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
             <Label Grid.Column="1" Grid.Row="1" Content="כינוי" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
             <Label Grid.Column="1" Grid.Row="2" Content="תיאור" HorizontalAlignment="center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
             <Label Grid.Column="1" Grid.Row="3" Content="תאריך יצירת משימה" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
@@ -52,22 +53,44 @@
             <Label Grid.Column="1" Grid.Row="11" Content="מספר זהות שף" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
             <Label Grid.Column="1" Grid.Row="12" Content="שם שף" HorizontalAlignment="Center"  VerticalAlignment="center" Width="132" HorizontalContentAlignment="Right"/>
 
-            <TextBox Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="2"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="4"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="5"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="6"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="7"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="8"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="9"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="11"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <TextBox Grid.Column="0" Grid.Row="12"  HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
-            <ComboBox HorizontalAlignment="center" Height="15"  Grid.Row="10" VerticalAlignment="center" Width="120"/>
+            <TextBox Text="{Binding Id}" IsEnabled="False" Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding Alias}" Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding Description}" Grid.Column="0" Grid.Row="2"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding CreatedAtDate}" IsEnabled="False" Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding ScheduledDate}" Grid.Column="0" Grid.Row="4"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding StartDate}" IsEnabled="False" Grid.Column="0" Grid.Row="5"  HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding CompleteDate}" IsEnabled="False"  Grid.Column="0" Grid.Row="6"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding RequiredEffortTime}" Grid.Column="0" Grid.Row="7"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding Dellverables}" Grid.Column="0" Grid.Row="8"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding Remarks}" Grid.Column="0" Grid.Row="9"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding chef.Id}" IsEnabled="False" Grid.Column="0" Grid.Row="11"  HorizontalAlignment="Right"  TextWrapping="Wrap"  VerticalAlignment="center" Width="120" HorizontalContentAlignment="Right"/>
+            <Button Content="בחר שף" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" HorizontalContentAlignment="Right" Margin="14,0,0,0" Click="ButtonAssignmentChef_Click"/>
+            <TextBox Text="{Binding chef.Name, Mode=TwoWay}" IsEnabled="False" Grid.Column="0" Grid.Row="12"  HorizontalAlignment="Center"  TextWrapping="Wrap"  VerticalAlignment="center" Width="190" HorizontalContentAlignment="Right"/>
+            <ComboBox HorizontalAlignment="center" Height="25"  Grid.Row="10" VerticalAlignment="center"  Width="190" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" SelectedValue="{Binding Path=Copmlexity, Mode=TwoWay}"/>
+        </Grid>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Label Content="משימות תלויות" Grid.Row="0"  HorizontalAlignment="Center"  VerticalAlignment="center" Width="200" HorizontalContentAlignment="Center"/>
+
+            <Button Content="-" Width="30"   Grid.Row="2" HorizontalAlignment="Left" Margin="160,0,0,0" Grid.RowSpan="2" Height="20" VerticalAlignment="Center" Click="ButtonDeleteDependence_Click"/>
+            <Button Content="+" Width="30"   Grid.Row="2" HorizontalAlignment="Left" Margin="200,0,0,0" Grid.RowSpan="2" Height="20" VerticalAlignment="Center" Click="ButtonAddDependence_Click"/>
+            <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Row="1" ItemsSource="{Binding Path=dependeencies}" MouseLeftButtonUp="ListView_MouseLeftButtonUp" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
 
 
+        <Button  HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="1"  VerticalAlignment="Center"
+   Width="160" Height="30" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Grid.ColumnSpan="2" Click="Button_AddOrUpdate_Click"  />
 
     </Grid>
 </Window>
