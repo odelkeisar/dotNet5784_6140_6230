@@ -162,19 +162,28 @@ internal class ChefImplementation : IChef
     /// </summary>
     /// <returns></returns>
     /// <exception cref="BlNoUnassignedChefsException"></exception>
+    //public IEnumerable<BO.Chef> ReadAllNotAssigned()
+    //{
+    //    var ChefList = _dal.Chef.ReadAll()!.Select(chef => new BO.Chef
+    //    {
+    //        Id = chef!.Id,
+    //        deleted = chef.deleted,
+    //        Email = chef.Email,
+    //        Cost = chef.Cost,
+    //        Name = chef.Name,
+    //        Level = (BO.ChefExperience)chef.Level!,
+    //        task = Read(chef.Id)!.task
+
+    //    }).Where(chef => chef.task == null);
+
+    //    if (ChefList == null)
+    //        throw new BlNoUnassignedChefsException("There are no chefs that are not assigned to a task");
+    //    return ChefList;
+    //}
+
     public IEnumerable<BO.Chef> ReadAllNotAssigned()
     {
-        var ChefList = _dal.Chef.ReadAll()!.Select(chef => new BO.Chef
-        {
-            Id = chef!.Id,
-            deleted = chef.deleted,
-            Email = chef.Email,
-            Cost = chef.Cost,
-            Name = chef.Name,
-            Level = (BO.ChefExperience)chef.Level!,
-            task = Read(chef.Id)!.task
-
-        }).Where(chef => chef.task == null);
+        var ChefList = ReadAll()!.Where(chef => chef.task == null);
 
         if (ChefList == null)
             throw new BlNoUnassignedChefsException("There are no chefs that are not assigned to a task");

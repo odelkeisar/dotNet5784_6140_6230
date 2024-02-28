@@ -71,12 +71,16 @@ public partial class TaskWindow : Window
                 ListChefToAssignment_Window listChefToAssignment_Window = new ListChefToAssignment_Window(task.Id);
                 listChefToAssignment_Window.Closed += (s, args) =>
                 {
-                    BO.Chef? _chef = listChefToAssignment_Window.selectedchef;
-                    task.chef!.Id = _chef.Id;
-                    task.chef.Name = _chef.Name;
-                    BO.Task1 task2 = task;
-                    task = new BO.Task1();
-                    task = task2;
+                    if (listChefToAssignment_Window.selectedchef != null)
+                    {
+                        BO.Chef? _chef = listChefToAssignment_Window.selectedchef;
+                        task.chef!.Id = _chef.Id;
+                        task.chef.Name = _chef.Name;
+                        BO.Task1 task2 = task;
+                        task = new BO.Task1();
+                        task = task2;
+                        listChefToAssignment_Window.selectedchef = null;
+                    }
                 };
                 listChefToAssignment_Window.ShowDialog();
             }
@@ -105,7 +109,6 @@ public partial class TaskWindow : Window
             if (result == MessageBoxResult.Yes)
             {
                 task.dependeencies = task.dependeencies!.Where(x => x.Id != taskMarker.Id).ToList();
-
                 BO.Task1 task2 = task;
                 task = new BO.Task1();
                 task = task2;
