@@ -38,9 +38,9 @@ internal class TaskImplementation : ITask1
     /// <param name="starProject"></param>
     /// <exception cref="BlNullPropertyException"></exception>
     /// <exception cref="BlWrongDateException"></exception>
-    public void CreateStartProject(DateTime ?starProject)
+    public void CreateStartProject(DateTime? starProject)
     {
-        if(starProject == null) 
+        if (starProject == null)
             throw new BlNullPropertyException("נא להכניס תאריך");
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll();
 
@@ -57,7 +57,7 @@ internal class TaskImplementation : ITask1
     /// <exception cref="BlNullPropertyException"></exception>
     /// <exception cref="BlScheduledStartDateNoUpdatedException"></exception>
     /// <exception cref="BlWrongDateException"></exception>
-    public void CreateEndProject(DateTime ?endProject)
+    public void CreateEndProject(DateTime? endProject)
     {
         if (endProject == null)
             throw new BlNullPropertyException("נא להכניס תאריך");
@@ -93,11 +93,11 @@ internal class TaskImplementation : ITask1
             throw new BlInappropriateStepException("לא ניתן להקצות שף לפני קביעת הלוז");
         if (item.RequiredEffortTime == null)
             throw new BlProblemAboutRequiredEffortTimeException("יש להזין משך זמן משימה");
-        if(item.ScheduledDate!=null)
+        if (item.ScheduledDate != null)
         {
-            if(item.ScheduledDate<ReadStartProject())
+            if (item.ScheduledDate < ReadStartProject())
                 throw new BlWrongDateException("אי אפשר לקבוע תאריך מתוכנן להתחלה מוקדם יותר מתאריך תחילת הפרויקט ");
-           
+
             foreach (var task in item.dependeencies!)
             {
                 BO.Task1 _task = s_bl.Task1.Read(task.Id)!;
@@ -185,7 +185,7 @@ internal class TaskImplementation : ITask1
         BO.Task1? boTask = convert(doTask!);
         return boTask;
     }
-    
+
     /// <summary>
     /// Returning all task details.
     /// </summary>
@@ -246,6 +246,8 @@ internal class TaskImplementation : ITask1
 
         if (item.Alias == "")
             throw new BlEmptyStringException("מחרוזת ריקה");
+        if (item.RequiredEffortTime == null)
+            throw new BlProblemAboutRequiredEffortTimeException("לא ניתן למחוק משך זמן משימה , יש למלא ערך מתאים");
 
         if (ReadEndProject() == null)
         {
@@ -265,6 +267,8 @@ internal class TaskImplementation : ITask1
                         throw new BlProblemAboutRequiredEffortTimeException("A task duration must not be changed when dependencies have a scheduled start date");
                 }
             }
+            if (item.ScheduledDate == null && botask.ScheduledDate != null)
+                throw new BlScheduledStartDateNoUpdatedException("לא ניתן למחוק תאריך תחילה מתוכנן, יש להזין תאריך מתאים");
 
             if (item.ScheduledDate != null && item.ScheduledDate != botask.ScheduledDate)
             {
@@ -311,26 +315,24 @@ internal class TaskImplementation : ITask1
 
             if (item.chef != null)
             {
-                if (ReadAllPossibleTasks(s_bl.Chef.Read(item.chef.Id)!).Any(x => x.Id == item.Id) == false && item.StartDate != null)
-                {
-                    item.status = Status.Scheduled;
-                    throw new BlWrongDateException("A start date cannot be entered when the task is not available");
-                }
-            }
-
-            if (item.chef != null)
-            {
-                if (item.Copmlexity == null)
+                if (item.Copmlexity == null) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
                     throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
 
                 DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
 
-                if (_chef == null)
+                if (_chef == null) //בדיקה שקיים שף מבוקש
                     throw new BlDoesNotExistException($"Chef with ID= {item.Id} does not exists");
+                if (botask.chef == null && botask.dependeencies != null)
+                    foreach (var task in botask.dependeencies)
+                    {
+                        var taskBO = Read(task.Id);
+                        if (taskBO!.CompleteDate == null)
+                            throw new BlNoChangeChefAssignmentException("לא ניתן להקצות שף למשימה בטרם הסתיימו המשימות הקודמות ");
+                    }
 
                 if (botask.chef == null || botask.chef.Id != item.chef.Id)
                 {
-                    DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id &&  task.CompleteDate==null); //חיפוש המשימה שהשף כבר מוקצה לה
+                    DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id && task.CompleteDate == null); //חיפוש המשימה שהשף כבר מוקצה לה
                     if (dotask != null && dotask.Id != item.Id && dotask.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
                         throw new BlNoChangeChefAssignmentException($"The chef with {item.Id} is already assigned to an unfinished task");
 
@@ -432,7 +434,7 @@ internal class TaskImplementation : ITask1
 
     public IEnumerable<BO.TaskInList> ReadAllNondependenceTask(BO.Task1 task)
     {
-        if(task.dependeencies==null)
+        if (task.dependeencies == null)
             return ReadAll();
         IEnumerable<BO.TaskInList> tasksList_ = ReadAll();
 
@@ -496,7 +498,7 @@ internal class TaskImplementation : ITask1
         return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
- 
+
 
     public IEnumerable<BO.TaskInList> ReadAllPerStatus(BO.Status status_)
     {
@@ -568,8 +570,8 @@ internal class TaskImplementation : ITask1
     public void UpdateStartDate(BO.Task1 item)
     {
         DO.Task1? task1 = _dal.Task1.Read(item.Id);
-       
-        if(task1 == null)
+
+        if (task1 == null)
         {
             throw new BlDoesNotExistException($"No task with ID: {item.Id} exists");
         }
@@ -601,7 +603,7 @@ internal class TaskImplementation : ITask1
             throw new BlDoesNotExistException($"No task with ID: {item.Id} exists");
         }
 
-        if(task1.CompleteDate!=null)
+        if (task1.CompleteDate != null)
         {
             throw new BlAlreadyExistsException("Actual end date has already been updated");
         }

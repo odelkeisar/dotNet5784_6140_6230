@@ -24,6 +24,7 @@
     </Window.Resources>
 
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
@@ -33,7 +34,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-
+      
 
         <Button Content="ניקוי נתונים"  Style="{StaticResource MyButtonStyle1}"  Margin="0,20,0,0"  Height="48" Width="160" HorizontalAlignment="Center" Click="reset_Click" Grid.Row="2" />
         <Button Content="אתחול נתונים"   Style="{StaticResource MyButtonStyle1}"  Margin="0,80,0,0"  Height="48" Width="160" Click="DataInitialization_Click" Grid.Row="2" >

@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="image\123.jpg" />
     <None Remove="image\back.jpg" />
+    <None Remove="image\back2.jpg" />
     <None Remove="image\chef.jpg" />
     <None Remove="image\chefs.jpg" />
     <None Remove="image\delete.jpg" />
@@ -30,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="image\back2.jpg" />
     <Resource Include="image\back.jpg" />
     <Resource Include="image\chef.jpg" />
     <Resource Include="image\delete.jpg" />

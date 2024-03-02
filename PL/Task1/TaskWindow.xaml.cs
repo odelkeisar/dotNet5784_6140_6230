@@ -1,4 +1,5 @@
-﻿using PL.Chef;
+﻿using BO;
+using PL.Chef;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,9 +63,7 @@ public partial class TaskWindow : Window
     private void ButtonAssignmentChef_Click(object sender, RoutedEventArgs e)
     {
         if (task.Id == 0)
-        {
             MessageBox.Show($"לא ניתן להקצות שף בשלב יצירת המשימה");
-        }
         else
         {
             try
@@ -72,12 +71,16 @@ public partial class TaskWindow : Window
                 ListChefToAssignment_Window listChefToAssignment_Window = new ListChefToAssignment_Window(task.Id);
                 listChefToAssignment_Window.Closed += (s, args) =>
                 {
-                    BO.Chef? _chef = listChefToAssignment_Window.selectedchef;
-                    task.chef!.Id = _chef.Id;
-                    task.chef.Name = _chef.Name;
-                    BO.Task1 task2 = task;
-                    task = new BO.Task1();
-                    task = task2;
+                    if (listChefToAssignment_Window.selectedchef != null)
+                    {
+                        BO.Chef? _chef = listChefToAssignment_Window.selectedchef;
+                        task.chef!.Id = _chef.Id;
+                        task.chef.Name = _chef.Name;
+                        BO.Task1 task2 = task;
+                        task = new BO.Task1();
+                        task = task2;
+                        listChefToAssignment_Window.selectedchef = null;
+                    }
                 };
                 listChefToAssignment_Window.ShowDialog();
             }
@@ -93,6 +96,11 @@ public partial class TaskWindow : Window
 
     private void ButtonDeleteDependence_Click(object sender, RoutedEventArgs e)
     {
+        if (s_bl.Task1.ReadEndProject() != null)
+        {
+            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט");
+            return;
+        }
         if (taskMarker == null)
             MessageBox.Show($"יש לבחור משימה תלות למחיקה");
         else
@@ -101,7 +109,6 @@ public partial class TaskWindow : Window
             if (result == MessageBoxResult.Yes)
             {
                 task.dependeencies = task.dependeencies!.Where(x => x.Id != taskMarker.Id).ToList();
-
                 BO.Task1 task2 = task;
                 task = new BO.Task1();
                 task = task2;
@@ -111,6 +118,11 @@ public partial class TaskWindow : Window
 
     private void ButtonAddDependence_Click(object sender, RoutedEventArgs e)
     {
+        if (s_bl.Task1.ReadEndProject() != null)
+        {
+            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט");
+            return;
+        }
         ListTaskForDependenceWindow listTaskForDependenceWindow = new ListTaskForDependenceWindow(task);
         listTaskForDependenceWindow.Closed += (s, args) =>
         {
@@ -149,11 +161,10 @@ public partial class TaskWindow : Window
         catch (Exception ex)
         {
             MessageBox.Show($"Error: {ex.Message}");
+            task = s_bl.Task1.Read(task.Id)!;
+            if (task.chef == null) { task.chef = new BO.ChefInTask(); }
+            if (task.dependeencies == null) { task.dependeencies = new List<BO.TaskInList>(); }
 
-            if (task.chef == null)
-            {
-                task.chef = new BO.ChefInTask();
-            }
         }
     }
 }

@@ -22,7 +22,6 @@ namespace PL.Chef
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-
         public ObservableCollection<BO.Chef> ChefList
         {
             get { return (ObservableCollection<BO.Chef>)GetValue(ChefListProparty); }

@@ -23,7 +23,7 @@ namespace PL.Task1
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-       public BO.TaskInList? selectesTask = null;
+        public BO.TaskInList? selectesTask;
 
         public ObservableCollection<BO.TaskInList> TaskList
         {
@@ -34,12 +34,13 @@ namespace PL.Task1
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TaskListProparty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(ListTaskForDependenceWindow), new PropertyMetadata(null));
-     
-     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public ListTaskForDependenceWindow(BO.Task1 task_)
         {
-            TaskList=new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllNondependenceTask(task_));
+            selectesTask = null;
+            TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllNondependenceTask(task_));
             InitializeComponent();
         }
 
