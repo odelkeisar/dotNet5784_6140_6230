@@ -146,7 +146,7 @@ namespace PL.Task1
                 {
                     TaskList = (StatusTask_ == BO.Status.None) ? new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPerStatus(StatusTask_)!);
                 };
-                new TaskWindow(id).ShowDialog();
+                taskWindow.ShowDialog();
             }
         }
 

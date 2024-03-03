@@ -31,7 +31,7 @@ public interface ITask1
     public IEnumerable<BO.TaskInList> ReadAllNoChefWasAssigned();
     public IEnumerable<BO.TaskInList> ReadAllNoScheduledDate();
     public void Update(BO.Task1 item);
-    public void UpdateScheduledDate(int id, DateTime scheduledDate);
+    public bool UpdateScheduledDate(int id, DateTime scheduledDate);
     public void UpdateClockProject(TimeSpan timeProject);
     public DateTime ReadClockProject();
     public void UpdateStartDate(BO.Task1 item);
