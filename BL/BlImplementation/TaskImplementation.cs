@@ -6,6 +6,7 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Data;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace BlImplementation;
 internal class TaskImplementation : ITask1
@@ -294,7 +295,7 @@ internal class TaskImplementation : ITask1
             else
                 item.ScheduledDate = botask.ScheduledDate;
 
-            if (item.dependeencies != null)
+            if (item.dependeencies.Count > 0) 
             {
                 foreach (var dependee in item.dependeencies)
                 {
@@ -306,7 +307,7 @@ internal class TaskImplementation : ITask1
                 }
             }
 
-            if (botask.dependeencies != null)
+            if (botask.dependeencies.Count > 0 )
             {
                 foreach (var dependee in botask.dependeencies)
                 {
@@ -324,7 +325,7 @@ internal class TaskImplementation : ITask1
                 }
             }
 
-            if (item.dependeencies != null)
+            if (item.dependeencies.Count > 0)
             {
                 foreach (var dependee in item.dependeencies)
                 {
@@ -336,7 +337,16 @@ internal class TaskImplementation : ITask1
 
         else
         {
-            if (item.dependeencies != null)
+            int x = 0;
+            
+            foreach(var depend in item.dependeencies) 
+            {
+                if ((botask.dependeencies.Any(X => (X.Id == depend.Id))) == null) //אם קיימת תלות כלשה עכשיו שלא נמצאת ברשימת תלויות הקודמת
+                    throw new BlWrongDateException("לא ניתן לשנות תלויות של משימה לאחר שיש תאריך סיום לפרויקט");
+                x++;
+            }
+
+            if (x!=item.dependeencies.Count) //אם אין אותו מספר של תלויות בקודם ועכשיו
                 throw new BlWrongDateException("לא ניתן לשנות תלויות של משימה לאחר שיש תאריך סיום לפרויקט");
 
             if (item.RequiredEffortTime != botask.RequiredEffortTime)

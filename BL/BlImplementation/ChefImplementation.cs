@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
 namespace BlImplementation;
@@ -33,7 +34,7 @@ internal class ChefImplementation : IChef
             throw new BO.BlEmptyStringException($"The chef's mail field with the ID:{item.Id} is empty");
         if (!item.Email!.Contains("@"))
             throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
-        if (item.Level == null)
+        if (item.Level == null || item.Level == ChefExperience.None)
             throw new BlChefLevelNoEnteredException($"Chef ID:{item.Id} lacks a field of level of experience");
         if (item.task != null)
             throw new BlUnablToAssociateException("A task cannot be assigned to a chef while he is being added to the list");
