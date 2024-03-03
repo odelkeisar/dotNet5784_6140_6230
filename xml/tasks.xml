@@ -15,6 +15,20 @@
     <isMileStone>false</isMileStone>
   </Task1>
   <Task1>
+    <Id>2</Id>
+    <Alias>T2</Alias>
+    <Description>Making dough</Description>
+    <CreatedAtDate>2024-03-03T13:15:00</CreatedAtDate>
+    <ScheduledDate>2024-03-03T15:15:00</ScheduledDate>
+    <RequiredEffortTime>PT1H</RequiredEffortTime>
+    <DeadlineDate>2024-03-03T16:15:00</DeadlineDate>
+    <ChefId>0</ChefId>
+    <StartDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Copmlexity>Beginner</Copmlexity>
+    <isMileStone xsi:nil="true" />
+  </Task1>
+  <Task1>
     <Id>3</Id>
     <Alias>T3</Alias>
     <Description>Washing and peeling vegetables</Description>
@@ -26,7 +40,7 @@
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
     <Copmlexity>Beginner</Copmlexity>
-    <isMileStone>false</isMileStone>
+    <isMileStone xsi:nil="true" />
   </Task1>
   <Task1>
     <Id>4</Id>
@@ -45,7 +59,7 @@
   <Task1>
     <Id>5</Id>
     <Alias>T5</Alias>
-    <Description>Cutting vegetables</Description>
+    <Description>Cutting vegetabl.es</Description>
     <CreatedAtDate>2024-03-03T13:15:00</CreatedAtDate>
     <ScheduledDate>2024-03-03T16:15:00</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
@@ -54,7 +68,7 @@
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
     <Copmlexity>Beginner</Copmlexity>
-    <isMileStone>false</isMileStone>
+    <isMileStone xsi:nil="true" />
   </Task1>
   <Task1>
     <Id>6</Id>
@@ -265,19 +279,5 @@
     <CompleteDate xsi:nil="true" />
     <Copmlexity>Beginner</Copmlexity>
     <isMileStone>false</isMileStone>
-  </Task1>
-  <Task1>
-    <Id>2</Id>
-    <Alias>T2</Alias>
-    <Description>Making dough</Description>
-    <CreatedAtDate>2024-03-03T13:15:00</CreatedAtDate>
-    <ScheduledDate>2024-03-03T15:15:00</ScheduledDate>
-    <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-03-03T16:15:00</DeadlineDate>
-    <ChefId>0</ChefId>
-    <StartDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
-    <Copmlexity>Beginner</Copmlexity>
-    <isMileStone xsi:nil="true" />
   </Task1>
 </ArrayOfTask1>

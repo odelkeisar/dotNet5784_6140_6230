@@ -25,6 +25,7 @@ internal class ChefImplementation : IChef
         if (listChef.Exists(chef => chef?.Id == item.Id))
             throw new DalAlreadyExistsException($"An object of type Chef with {item.Id} already exists ");
         listChef.Add(item);
+        listChef = listChef.OrderBy(chef => chef.Name).ToList();
         XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);
         return item.Id;
     }
@@ -102,6 +103,7 @@ internal class ChefImplementation : IChef
 
         listChef!.Remove(item1); //remove item1 from the list
         listChef!.Add(item); //add item to the list
+        listChef = listChef.OrderBy(chef => chef.Name).ToList();
         XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);
     }
 

@@ -31,6 +31,8 @@ internal class TaskImplementation : ITask1
         int newId = Config.NextTask1Id;
         Task1 item1 = item with { Id = newId };
         listTask!.Add(item1);    //add item to the list
+        listTask = listTask.OrderBy(task => task.Id).ToList();
+
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
         return newId;
     }
@@ -106,6 +108,7 @@ internal class TaskImplementation : ITask1
         listTask!.Remove(item1); //remove item1 from the list
 
         listTask.Add(item); //add item to the list
+        listTask = listTask.OrderBy(task => task.Id).ToList();
 
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
     }
