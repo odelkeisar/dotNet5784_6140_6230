@@ -99,7 +99,7 @@ public class BlScheduledStartDateNoUpdatedException : Exception //למשימות
 
 
   [Serializable]
-    public class BlEarlyFinishDateFromPreviousTaskException : Exception //תאריך סיום לעידכון אינו יכול להיות מוקדם יותר ממשימה שקודמת לו
+public class BlEarlyFinishDateFromPreviousTaskException : Exception //תאריך סיום לעידכון אינו יכול להיות מוקדם יותר ממשימה שקודמת לו
 {
     public BlEarlyFinishDateFromPreviousTaskException(string? message) : base(message) { }
 }
@@ -161,4 +161,9 @@ public class BlProblemAboutRequiredEffortTimeException : Exception //שגיאה 
 public class BlUnableToStartTaskException : Exception //לא ניתן להתחיל משימה
 {
     public BlUnableToStartTaskException(string? message) : base(message) { }
+}
+[Serializable]
+public class BlCannotaAddDependenciesException : Exception //לא ניתן להוסיף תלות
+{
+    public BlCannotaAddDependenciesException(string? message) : base(message) { }
 }

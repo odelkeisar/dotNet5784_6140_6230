@@ -6,6 +6,8 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Data;
 using System.Collections.Generic;
+using System.Numerics;
+
 
 namespace BlImplementation;
 internal class TaskImplementation : ITask1
@@ -93,6 +95,8 @@ internal class TaskImplementation : ITask1
             throw new BlInappropriateStepException("לא ניתן להקצות שף לפני קביעת הלוז");
         if (item.RequiredEffortTime == null)
             throw new BlProblemAboutRequiredEffortTimeException("יש להזין משך זמן משימה");
+        if (item.Copmlexity == BO.ChefExperience.None || item.Copmlexity == null)
+            throw new BlChefLevelNoEnteredException("יש להזין רמת קושי");
         if (item.ScheduledDate != null)
         {
             if (item.ScheduledDate < ReadStartProject())
@@ -243,7 +247,8 @@ internal class TaskImplementation : ITask1
 
         if (botask == null)
             throw new BlDoesNotExistException($"המסימה עם המספר זהות{item.Id} לא קיימת");
-
+        if (item.Copmlexity == BO.ChefExperience.None || item.Copmlexity == null)
+            throw new BlChefLevelNoEnteredException("יש להזין רמת קושי");
         if (item.Alias == "")
             throw new BlEmptyStringException("מחרוזת ריקה");
         if (item.RequiredEffortTime == null)
@@ -263,8 +268,8 @@ internal class TaskImplementation : ITask1
                 IEnumerable<DO.Dependeency?>? listDependeenciseOfTask = _dal.Dependeency.ReadAll(X => X.DependsOnTask == item.Id);
                 foreach (var depend in listDependeenciseOfTask!)
                 {
-                    if (_dal.Task1.Read(depend!.DependentTask)!.ScheduledDate != null)
-                        throw new BlProblemAboutRequiredEffortTimeException("A task duration must not be changed when dependencies have a scheduled start date");
+                    if (_dal.Task1.Read(depend!.DependentTask)!.ScheduledDate != null && _dal.Task1.Read(depend!.DependentTask)!.ScheduledDate < item.ForecastDate)
+                        throw new BlProblemAboutRequiredEffortTimeException("לא ניתן משך זמן מתוכנן כך שהמשימה תוכל להיגמר אחרי התאריך המתוכנן של המשימה הבאה אחריה");
                 }
             }
             if (item.ScheduledDate == null && botask.ScheduledDate != null)
@@ -294,10 +299,62 @@ internal class TaskImplementation : ITask1
             else
                 item.ScheduledDate = botask.ScheduledDate;
 
+            if (item.dependeencies.Count > 0) 
+            {
+                foreach (var dependee in item.dependeencies)
+                {
+                    if (s_bl.Task1.Read(dependee.Id)!.ForecastDate == null)
+                        throw new BlCannotaAddDependenciesException("לא ניתן להוסיף לרשימת תלויות משימה בלי תאריך מתוכנן לסיום");
+
+                    if (s_bl.Task1.Read(dependee.Id)!.ForecastDate > item.ScheduledDate)
+                        throw new BlEarlyFinishDateFromPreviousTaskException("לא ניתן להכניס משימה שהמשימה הנוכחית תהיה תלויה בה, אם תאריך התחלה המתוכנן של המשימה הנוכחית הוא לפני התאריך סיום המתוכנן של המשימה שרוצים להוסיף");
+                }
+            }
+
+            if (botask.dependeencies.Count > 0 )
+            {
+                foreach (var dependee in botask.dependeencies)
+                {
+                    int idDelete = _dal.Dependeency.Read(X => (X.DependentTask == item.Id && X.DependsOnTask == dependee.Id))!.Id; //מציאת המספר זהות של התלות
+
+                    try
+                    {
+                        _dal.Dependeency.Delete(idDelete); //נמחוק את כל התלויות שהיו עד עכשיו
+                    }
+
+                    catch (DalDoesNotExistException ex)
+                    {
+                        throw new BlATaskCannotBeDeletedException($"{idDelete}:לא ניתן למחוק את תלות");
+                    }
+                }
+            }
+
+            if (item.dependeencies.Count > 0)
+            {
+                foreach (var dependee in item.dependeencies)
+                {
+                    _dal.Dependeency.Create(new DO.Dependeency(0, item.Id, dependee.Id)); //יצירת כל התלויות החדשות
+                }
+            }
+
         }
 
         else
         {
+            //int x = 0;
+            //if (item.dependeencies.Count > 0)
+            //{
+            //    foreach (var depend in item.dependeencies)
+            //    {
+            //        if ((botask.dependeencies!.Any(X => (X.Id == depend.Id))) == false) //אם קיימת תלות כלשה עכשיו שלא נמצאת ברשימת תלויות הקודמת
+            //            throw new BlWrongDateException("לא ניתן לשנות תלויות של משימה לאחר שיש תאריך סיום לפרויקט");
+            //        x++;
+            //    }
+
+            //    if (x != item.dependeencies.Count)  //אם אין אותו מספר של תלויות בקודם ועכשיו
+            //        throw new BlWrongDateException("לא ניתן לשנות תלויות של משימה לאחר שיש תאריך סיום לפרויקט");
+            //}
+
             if (item.RequiredEffortTime != botask.RequiredEffortTime)
                 throw new BlProblemAboutRequiredEffortTimeException("Once the project has an end date, the duration of the task must not be changed");
 
@@ -315,7 +372,7 @@ internal class TaskImplementation : ITask1
 
             if (item.chef != null)
             {
-                if (item.Copmlexity == null) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
+                if (item.Copmlexity == null || item.Copmlexity==BO.ChefExperience.None) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
                     throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
 
                 DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
@@ -365,14 +422,14 @@ internal class TaskImplementation : ITask1
     /// <param name="scheduledDate"></param>
     /// <exception cref="BlDoesNotExistException"></exception>
     /// <exception cref="BlScheduledStartDateNoUpdatedException"></exception>
-    public void UpdateScheduledDate(int id, DateTime scheduledDate)
+    public bool UpdateScheduledDate(int id, DateTime scheduledDate)
     {
         if (_dal.Task1.ReadEndProject() != null)
-            throw new BlInappropriateStepException("It is not possible to change a planned start date after the schedule has been set");
+            throw new BlInappropriateStepException("לא ניתן לשנות תאריך התחלה מתוכנן למשימה אם יש תריך סיום לפרויקט");
 
         DO.Task1? task = _dal.Task1.Read(id);
         if (task == null)
-            throw new BlDoesNotExistException($"Task with ID={id} does not exists");  //איתור המשימה הנדרשת
+            throw new BlDoesNotExistException($"המשימה עם התעודת מספר הזהות={id} לא קיימת");  //איתור המשימה הנדרשת
 
         IEnumerable<BO.TaskInList>? listDependeencies = Read(id)!.dependeencies;  //יצירת רשימת תלויות של כל המשימות שהמשימה תלויה בהם  
         if (listDependeencies != null)
@@ -381,24 +438,21 @@ internal class TaskImplementation : ITask1
             {
                 BO.Task1 task_ = Read(taskinlist.Id)!;
                 if (task_.ScheduledDate == null)
-                    throw new BlScheduledStartDateNoUpdatedException($"Scheduled start date of previous mission: {taskinlist.Id}, not updated");
+                    throw new BlScheduledStartDateNoUpdatedException($"התאריך התחלה של המשימה הקודמת: {taskinlist.Id}, לא מתוכנן");
                 if (task_.ForecastDate > scheduledDate)
-                    throw new BlEarlyFinishDateFromPreviousTaskException($"It is not possible to update an end date for task ID:{id} earlier than the end date of a previous task ID:{task_.Id}");
+                    throw new BlEarlyFinishDateFromPreviousTaskException($"לא ניתן לעדכן תאריך מתוכנן להתחלה עבור משימה:{id} מוקדם יותר מתאריך הסיום של משימה קודמת:{task_.Id}");
             }
         }
 
         IEnumerable<DO.Dependeency?>? listDependeenciseOfTask = _dal.Dependeency.ReadAll(X => X.DependsOnTask == id);
 
-        if (listDependeenciseOfTask!.Count() != 0)
-            throw new BlScheduledStartDateMayNotBeChangedException($"The task ID: {id} has dependencies so it is not possible to change the scheduled start date");
-
-
-        //שליחת תאריך 
-        try
-        { _dal.Task1.Update(new DO.Task1(task.Id, task.Alias, task.Description, task.CreatedAtDate, scheduledDate, task.RequiredEffortTime, task.DeadlineDate, task.ChefId, task.StartDate, task.CompleteDate, task.Copmlexity, task.Dellverables, task.Remarks, task.isMileStone)); }
-
-        catch (DalDoesNotExistException ex)
-        { throw new BlDoesNotExistException($"Task with ID={id} does not exists", ex); }
+        foreach (var depend in listDependeenciseOfTask!)
+        {
+            if (_dal.Task1.Read(depend!.DependentTask)!.ScheduledDate != null && _dal.Task1.Read(depend!.DependentTask)!.ScheduledDate < scheduledDate + _dal.Task1.Read(id)!.RequiredEffortTime)
+                throw new BlProblemAboutRequiredEffortTimeException("לא ניתן לשנות תאריך מתוכנן להתחלה כך שהמשימה תוכל להסתיים אחרי תאריך התחלה של משימה התלויה בה");
+        }
+ 
+        return true;
 
     }
 
@@ -442,6 +496,7 @@ internal class TaskImplementation : ITask1
         {
             tasksList_ = tasksList_.Where(x => x.Id != task_.Id);
         }
+
         tasksList_ = tasksList_.Where(x => x.Id != task.Id);
         return tasksList_;
     }

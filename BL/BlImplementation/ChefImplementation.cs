@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
 namespace BlImplementation;
@@ -33,7 +34,7 @@ internal class ChefImplementation : IChef
             throw new BO.BlEmptyStringException($"The chef's mail field with the ID:{item.Id} is empty");
         if (!item.Email!.Contains("@"))
             throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
-        if (item.Level == null)
+        if (item.Level == null || item.Level == ChefExperience.None)
             throw new BlChefLevelNoEnteredException($"Chef ID:{item.Id} lacks a field of level of experience");
         if (item.task != null)
             throw new BlUnablToAssociateException("A task cannot be assigned to a chef while he is being added to the list");
@@ -162,28 +163,19 @@ internal class ChefImplementation : IChef
     /// </summary>
     /// <returns></returns>
     /// <exception cref="BlNoUnassignedChefsException"></exception>
-    //public IEnumerable<BO.Chef> ReadAllNotAssigned()
-    //{
-    //    var ChefList = _dal.Chef.ReadAll()!.Select(chef => new BO.Chef
-    //    {
-    //        Id = chef!.Id,
-    //        deleted = chef.deleted,
-    //        Email = chef.Email,
-    //        Cost = chef.Cost,
-    //        Name = chef.Name,
-    //        Level = (BO.ChefExperience)chef.Level!,
-    //        task = Read(chef.Id)!.task
-
-    //    }).Where(chef => chef.task == null);
-
-    //    if (ChefList == null)
-    //        throw new BlNoUnassignedChefsException("There are no chefs that are not assigned to a task");
-    //    return ChefList;
-    //}
-
     public IEnumerable<BO.Chef> ReadAllNotAssigned()
     {
-        var ChefList = ReadAll()!.Where(chef => chef.task == null);
+        var ChefList = _dal.Chef.ReadAll()!.Select(chef => new BO.Chef
+        {
+            Id = chef!.Id,
+            deleted = chef.deleted,
+            Email = chef.Email,
+            Cost = chef.Cost,
+            Name = chef.Name,
+            Level = (BO.ChefExperience)chef.Level!,
+            task = Read(chef.Id)!.task
+
+        }).Where(chef => chef.task == null);
 
         if (ChefList == null)
             throw new BlNoUnassignedChefsException("There are no chefs that are not assigned to a task");
