@@ -142,6 +142,11 @@ namespace PL.Manager_file
             }
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new GantWindow().ShowDialog();
+        }
+
         //private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         //{
 

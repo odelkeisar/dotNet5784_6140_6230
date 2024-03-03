@@ -442,6 +442,7 @@ internal class TaskImplementation : ITask1
         {
             tasksList_ = tasksList_.Where(x => x.Id != task_.Id);
         }
+        tasksList_ = tasksList_.Where(x => x.Id != task.Id);
         return tasksList_;
     }
     /// <summary>

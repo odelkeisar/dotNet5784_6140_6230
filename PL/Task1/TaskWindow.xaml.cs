@@ -34,6 +34,7 @@ public partial class TaskWindow : Window
         DependencyProperty.Register("task", typeof(BO.Task1), typeof(TaskWindow), new PropertyMetadata(null));
     public TaskWindow(int id)
     {
+        taskMarker = new BO.TaskInList();
         try
         {
             if (id != 0)

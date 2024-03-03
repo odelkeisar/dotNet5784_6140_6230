@@ -142,11 +142,11 @@ namespace PL.Task1
             else
             {
                 TaskWindow taskWindow = new TaskWindow(id);
-                taskWindow.Closed += (s, args) =>
+                taskWindow.Closed +=(s, args) =>
                 {
                     TaskList = (StatusTask_ == BO.Status.None) ? new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPerStatus(StatusTask_)!);
                 };
-                new TaskWindow(id).ShowDialog();
+                taskWindow.ShowDialog();
             }
         }
 
