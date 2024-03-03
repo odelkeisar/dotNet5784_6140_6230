@@ -8,8 +8,8 @@
 public record Dependeency
 (
     int Id,
-    int DependentTask,
-    int DependsOnTask
+    int DependentTask, //משימה תלויה
+    int DependsOnTask //תלויה במשימה
  )
 {
     public Dependeency() : this(0,0,0) { }
