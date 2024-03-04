@@ -30,15 +30,14 @@ public static class Initialization
         int y = 0;
        
         DateTime date= s_dal.Task1.ReadClockProject();
-        TimeSpan time =new TimeSpan(0,1,0,0);
-
+       
         foreach (var _name in TaskNames)
         {
             string alias = TaskNum[y++];
 
             DateTime createDate = date;
 
-            DateTime scheduledDate = date + time;
+            DateTime scheduledDate = date;
             scheduledDate = scheduledDate.AddHours(x);
 
             TimeSpan taskTime = new TimeSpan(0, 1, 0, 0);

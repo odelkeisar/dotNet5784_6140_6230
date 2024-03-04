@@ -64,6 +64,12 @@ public class BlNoChefsAccordingLevelException : Exception //חסר מהנדסי�
     public BlNoChefsAccordingLevelException(string? message) : base(message) { }
 }
 
+[Serializable]
+public class BlNoChefsDeletedException : Exception //אין מהנדסים מחוקים
+{
+    public BlNoChefsDeletedException(string? message) : base(message) { }
+}
+
 
 [Serializable]
 public class BlNoUnassignedChefsException : Exception //חסר מהנדסים לפי רמה מסוימת

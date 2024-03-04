@@ -81,6 +81,12 @@ internal class ChefImplementation : IChef
             return DataSource.Chefs!.Where(item => item.deleted==false).Where(filter).ToList();
     }
 
+    public IEnumerable<Chef> ReadAll_deleted()
+    {
+        
+        return DataSource.Chefs!.Where(chef => chef.deleted == true).ToList(); //retun the list
+    }
+
     /// <summary>
     /// The method edits an element from the list according to the user's request
     /// </summary>
@@ -103,5 +109,20 @@ internal class ChefImplementation : IChef
            return DataSource.Chefs!.Where(item => item.deleted == true).ToList(); //retun the list
         
     }
+
+    public void Recovery(Chef item)
+    {
+        
+        Chef? chef = DataSource.Chefs!.Where(chef => chef.Id == item.Id).FirstOrDefault();
+
+        if (chef == null)
+            throw new DalDoesNotExistException($"Dependeency with ID={item.Id} does not exist");
+
+        DataSource.Chefs!.Remove(chef); //remove item1 from the list
+        DataSource.Chefs!.Add(item); //add item to the list
+         DataSource.Chefs.OrderBy(chef => chef.Name).ToList();
+        
+    }
+
 
 }
