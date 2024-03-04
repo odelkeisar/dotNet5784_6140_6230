@@ -119,4 +119,21 @@ public partial class ChefListWindow : Window
         chef_ = (sender as ListView)?.SelectedItem as BO.Chef;
 
     }
+
+    private void ButtonOld_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            OldChefWindow oldchefWindow = new OldChefWindow();
+            oldchefWindow.Closed += (s, args) =>
+            {
+                ChefList = (level == BO.ChefExperience.None) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
+            };
+            oldchefWindow.ShowDialog();
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show($"Error: {ex.Message}");
+        }
+    }
 }

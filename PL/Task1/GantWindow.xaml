@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task1"
         mc:Ignorable="d"
-        Title="GantWindow" Height="450" Width="800"
+        Title="GantWindow" Height="600" Width="1500"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid>
+            <DataGrid Name="dataGridSched" AutoGenerateColumns="False">
 
-    <Grid>
-        <DataGrid ItemsSource="{Binding TaskList}" AutoGenerateColumns="True" />
+            </DataGrid>
+        </Grid>
+    </ScrollViewer>
 
-
-
-    </Grid>
 </Window>
+

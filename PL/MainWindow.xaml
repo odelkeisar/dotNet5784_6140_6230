@@ -40,8 +40,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Content="מנהל"  Style="{StaticResource MyButtonStyle1}" Click="Manager_Click" Height="48" Width="194" Grid.Row="1" VerticalAlignment="Center" />
-        <Button Content="שף"   Style="{StaticResource MyButtonStyle1}" Click="Chef_Click" Height="48" Width="194" Grid.Row="2" VerticalAlignment="Center"/>
+        <Button Content="מנהל"  Style="{StaticResource MyButtonStyle1}" Click="Manager_Click" Height="65" Width="194" Grid.Row="1" VerticalAlignment="Center" />
+        <Button Content="שף"   Style="{StaticResource MyButtonStyle1}" Click="Chef_Click" Height="65" Width="194" Grid.Row="2" VerticalAlignment="Center"/>
 
         <Button Content="+" Click="plusTime_Click" Margin="157,0,291,0" Background="#ADD8E6" Grid.Row="6" VerticalAlignment="Center" Height="25" />
         <Label Content="{Binding clock}" Background="#ADD8E6"  VerticalAlignment="Center" Height="25"

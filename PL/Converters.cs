@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PL;
 
@@ -104,4 +106,32 @@ class ConverTaskListCheckBoxToBool : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+
+public class StatusToColorConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is BO.Status status)
+        {
+            return statusColors[status];
+        }
+
+        return Colors.Transparent; // צבע ברירת מחדל (שקוף)
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException(); // לא נדרש עבור צרכים אלו
+    }
+
+    private Dictionary<BO.Status, Color> statusColors = new Dictionary<BO.Status, Color>()
+    {
+        { BO.Status.None, Colors.Transparent }, // צבע ריק
+        { BO.Status.Scheduled, Colors.Blue }, // צבע משימה מתוזמנת
+        { BO.Status.OnTrack, Colors.Green }, // צבע משימה שבוצעה
+        { BO.Status.Done, Colors.Yellow }, // צבע משימה מאוחרת
+    };
+}
+
 

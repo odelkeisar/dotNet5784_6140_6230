@@ -87,6 +87,13 @@ internal class ChefImplementation : IChef
             return listChef!.Where(chef => chef.deleted == false).Where(filter).ToList();
     }
 
+    public IEnumerable<Chef> ReadAll_deleted()
+    {
+        var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
+       
+        return listChef!.Where(chef => chef.deleted == true).ToList(); //retun the list
+    }
+
     /// <summary>
     /// The method edits an element from the list according to the user's request
     /// </summary>
@@ -102,6 +109,20 @@ internal class ChefImplementation : IChef
 
 
         listChef!.Remove(item1); //remove item1 from the list
+        listChef!.Add(item); //add item to the list
+        listChef = listChef.OrderBy(chef => chef.Name).ToList();
+        XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);
+    }
+
+    public void Recovery(Chef item)
+    {
+        var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
+        Chef ? chef = listChef.Where(chef=>chef.Id==item.Id).FirstOrDefault();
+
+        if (chef == null)
+            throw new DalDoesNotExistException($"Dependeency with ID={item.Id} does not exist");
+
+        listChef!.Remove(chef); //remove item1 from the list
         listChef!.Add(item); //add item to the list
         listChef = listChef.OrderBy(chef => chef.Name).ToList();
         XMLTools.SaveListToXMLSerializer(listChef, s_chefs_xml);

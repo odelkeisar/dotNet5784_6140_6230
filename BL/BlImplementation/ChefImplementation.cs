@@ -72,6 +72,19 @@ internal class ChefImplementation : IChef
             throw new BO.BlDoesNotExistException($"Chef with ID={id} does not exists", ex);
         }
     }
+    
+     public void RecoveryChef(BO.Chef chef)
+    {
+        try
+        {
+            DO.Chef chef1=new DO.Chef() { deleted = false, Id =chef.Id, Cost=chef.Cost, Email=chef.Email,Level= chef.Level!=null?(DO.ChefExperience)chef.Level:DO.ChefExperience.None, Name=chef.Name};
+            _dal.Chef.Recovery(chef1);
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            throw new BO.BlDoesNotExistException($"Chef with ID={chef.Id} does not exists", ex);
+        }
+    }
 
     /// <summary>
     /// Search and read object of BO.Chef
@@ -129,6 +142,26 @@ internal class ChefImplementation : IChef
                     task = chef_.task != null ? new TaskInChef() { Id = chef_.task.Id, Alias = chef_.task.Alias } : null
                 }
         );
+    }
+
+    public IEnumerable<BO.Chef> ReadAllDeleted ()
+    {
+        var listChefs= (from DO.Chef chef in _dal.Chef.ReadAll_deleted()!
+              
+                select new BO.Chef
+                {
+                    Id = chef.Id,
+                    deleted = chef.deleted,
+                    Email = chef.Email,
+                    Cost = chef.Cost,
+                    Name = chef.Name,
+                    Level = (BO.ChefExperience)chef.Level!,
+                    task = null
+                }
+        );
+        if( listChefs.Count()==0 )
+            throw new BlNoChefsDeletedException("אין שפים בארכיון");
+        return listChefs;   
     }
 
     /// <summary>

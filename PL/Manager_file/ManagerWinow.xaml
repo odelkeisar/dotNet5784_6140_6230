@@ -45,7 +45,7 @@
         </Button>
         <Button Content="טיפול בשפים"  Style="{StaticResource MyButtonStyle1}"   Height="92" Width="242" Click="BottonChef_Click" Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Button Content="טיפול במשימות" Style="{StaticResource MyButtonStyle1}"    Height="92" Width="242" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
-        <Button Content="תרשים גאנט" Style="{StaticResource MyButtonStyle1}" Height="92" Width="242" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Click="Button_Click_1" />
+        <Button Content="תרשים גאנט" Style="{StaticResource MyButtonStyle1}" Height="92" Width="242" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Click="ButtonGant_Click_1" />
         <Label Content="תאריך תחילת פרויקט" HorizontalAlignment="Center" Margin="0,25,0,73" Grid.Row="0"  Height="35" FontSize="15" />
         <Label Content="תאריך סיום פרויקט" HorizontalAlignment="Center" Margin="0,25,0,64" Grid.Row="1" FontSize="15"/>
         <TextBox TextAlignment="Center" TextWrapping="Wrap" Text="{Binding startDateProject, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="160" Grid.Column="0" Grid.Row="0"/>

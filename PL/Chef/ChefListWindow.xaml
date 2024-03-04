@@ -45,19 +45,28 @@
         </ListView>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Height="50" Width="100" Click="ButtonDelete_Click">
+            <Button Height="50" Width="100" Margin="0,0,10,0" Click="ButtonOld_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/image/old.jpg" Width="50" Height="30"/>
+                    <TextBlock Text="ארכיון"/>
+                </StackPanel>
+            </Button>
+            <Button Height="50" Width="100" Margin="0,0,10,0" Click="ButtonDelete_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/image/delete.jpg" Width="50" Height="30"/>
                     <TextBlock Text="מחק"/>
                 </StackPanel>
             </Button>
-            <Button Height="50" Width="100"  Margin="10,0,0,0" Click="ButtonAdd_Click">
+            <Button Height="50" Width="100" Margin="0,0,0,0" Click="ButtonAdd_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/image/chef.jpg" Width="50" Height="30"/>
                     <TextBlock Text="חדש"/>
                 </StackPanel>
             </Button>
         </StackPanel>
+
+
+        
     </Grid>
 
 </Window>

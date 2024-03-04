@@ -142,14 +142,13 @@ namespace PL.Manager_file
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void ButtonGant_Click_1(object sender, RoutedEventArgs e)
         {
+            if(s_bl.Task1.ReadEndProject() != null) 
             new GantWindow().ShowDialog();
+            else
+                MessageBox.Show("התרשים זמין לאחר שיקבע לוח הזמנים לפרויקט");
         }
 
-        //private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        //{
-
-        //}
     }
 }
