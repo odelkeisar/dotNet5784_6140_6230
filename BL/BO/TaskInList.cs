@@ -10,7 +10,8 @@ public class TaskInList
     public string ToString_()
     {
         return $@"
-Id= {Id},  Alias= {Alias}
+ID={Id}  
+Alias= {Alias}
 Description= {Description}
 status= {status}"
 ;

@@ -63,7 +63,7 @@ public static class Initialization
     /// </summary>
     private static void createChef()
     {
-        string[] EngineertNames = { "Dani Levi", "Eli Amar", "Meir Cohen", "Ariel Levin", "David Klein" };
+        string[] EngineertNames = { "דני לוי", "Eli Amar", "Meir Cohen", "Ariel Levin", "David Klein" };
         string[] EngineertMail = { "Dani@gmail.com", "Eli@gmail.com", "Meir@gmail.com", "Ariel@gmail.com", "David@gmail.com" };
         int x = 0;
         foreach (var _name in EngineertNames)

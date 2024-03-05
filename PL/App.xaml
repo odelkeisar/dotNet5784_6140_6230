@@ -12,7 +12,6 @@
         <local:ConverTtaskAssignmentToBool x:Key="ConverTtaskAssignmentToBoolKey"/>
         <local:ConverTaskListCheckBoxToBool x:Key="ConverTaskListCheckBoxToBoolKey"/>
         <local:ConvertAssigningTaskToChef_ToBool x:Key="ConvertAssigningTaskToChef_ToBoolkey"/>
-        <!--<local:StatusToColorConverter x:Key="StatusToColorConverterkey"/>-->
 
         
         
