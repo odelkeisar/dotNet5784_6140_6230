@@ -165,9 +165,8 @@ public partial class TaskWindow : Window
 
             if ((string)clickedButton.Content == "הוסף")//איתחול מחדש של המשימה להיות ריקה
             {
-                task = new BO.Task1();
+                task = new BO.Task1() { CreatedAtDate = s_bl.Task1.ReadClockProject() };
                 task.chef = new BO.ChefInTask();
-                task.CreatedAtDate = s_bl.Task1.ReadClockProject();
                 task.Copmlexity = BO.ChefExperience.Beginner;
                 task.dependeencies = new List<BO.TaskInList>();
             }
