@@ -30,12 +30,13 @@ namespace PL.Chef
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ChefListProparty =
-            DependencyProperty.Register("ChefList", typeof(ObservableCollection<BO.Chef>), typeof(ChefListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("ChefList", typeof(ObservableCollection<BO.Chef>), typeof(ListChefToAssignment_Window), new PropertyMetadata(null));
 
         int id = 0;
         public BO.Chef? selectedchef = null;
         public ListChefToAssignment_Window(int id_)
         {
+            selectedchef = null;
             id = id_;
             ChefList = new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllNotAssigned()!);
             InitializeComponent();
