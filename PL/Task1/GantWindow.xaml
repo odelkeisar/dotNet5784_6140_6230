@@ -8,13 +8,40 @@
         Title="GantWindow" Height="600" Width="1500"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
+    <!-- Define the dynamic style for yellow cells -->
+    <Window.Resources>
+        <Style TargetType="DataGridCell" x:Key="CellStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Unscheduled">
+                    <Setter Property="Background" Value="DeepSkyBlue"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Scheduled">
+                    <Setter Property="Background" Value="Yellow"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="OnTrack">
+                    <Setter Property="Background" Value="LawnGreen"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Done">
+                    <Setter Property="Background" Value="Red"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="None">
+                    <Setter Property="Background" Value="LightGray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Grid>
+            <!-- Apply the dynamic style to the DataGrid cells -->
             <DataGrid Name="dataGridSched" AutoGenerateColumns="False">
+                <!-- Apply the style to the cells -->
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell" BasedOn="{StaticResource CellStyle}"/>
+                </DataGrid.CellStyle>
 
             </DataGrid>
         </Grid>
     </ScrollViewer>
-
 </Window>
-

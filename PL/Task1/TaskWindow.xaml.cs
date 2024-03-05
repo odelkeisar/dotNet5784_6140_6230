@@ -162,9 +162,20 @@ public partial class TaskWindow : Window
         catch (Exception ex)
         {
             MessageBox.Show($"Error: {ex.Message}");
-            task = s_bl.Task1.Read(task.Id)!;
-            if (task.chef == null) { task.chef = new BO.ChefInTask(); }
-            if (task.dependeencies == null) { task.dependeencies = new List<BO.TaskInList>(); }
+
+            if ((string)clickedButton.Content == "הוסף")//איתחול מחדש של המשימה להיות ריקה
+            {
+                task = new BO.Task1() { CreatedAtDate = s_bl.Task1.ReadClockProject() };
+                task.chef = new BO.ChefInTask();
+                task.Copmlexity = BO.ChefExperience.Beginner;
+                task.dependeencies = new List<BO.TaskInList>();
+            }
+            else
+            {
+                task = s_bl.Task1.Read(task.Id)!;        //איתחול מחדש של המשימה להיות עם הערכים המקוריים לפני השינוים השגויים
+                if (task.chef == null) { task.chef = new BO.ChefInTask(); }
+                if (task.dependeencies == null) { task.dependeencies = new List<BO.TaskInList>(); }
+            }
 
         }
     }

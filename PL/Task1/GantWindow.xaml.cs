@@ -6,11 +6,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using BO;
 
 namespace PL.Task1;
 
 public partial class GantWindow : Window
 {
+   
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
@@ -33,7 +35,9 @@ public partial class GantWindow : Window
         InitializeComponent();
         InitializeDataGrid(); // הוסף פעולת טעינה כאשר החלון נטען
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     private void InitializeDataGrid()
     {
         // קריאת המשימות מהמקור הנתון (במקרה שלך, זה נראה כי המימוש שלך עושה זאת כבר)
@@ -73,7 +77,7 @@ public partial class GantWindow : Window
                 Binding = new Binding($"[{col}]")
             };
             dataGridSched.Columns.Add(dateColumn);
-            dataTable.Columns.Add(strDay, typeof(BO.Status));// typeof(System.Windows.Media.Color));
+            dataTable.Columns.Add(strDay, typeof(string));// typeof(System.Windows.Media.Color));
             col++;
         }
 
@@ -92,16 +96,19 @@ public partial class GantWindow : Window
             {
                 string strDay = day.ToString(); //"21/2/2024"
 
-                if (day < task_!.ScheduledDate || day >= task_.ForecastDate)
-                    newRow[strDay] = BO.Status.None; //"EMPTY";
+                if (day < task_!.ScheduledDate && day.AddMinutes(30) <= task_.ScheduledDate || day >= task_.ForecastDate)
+                {
+                    newRow[strDay] ="None";
+                   
+                }//"EMPTY";
                 else
-                    newRow[strDay] = task.status; //BO.TaskStatus.TaskIsSchedualed; //"FULL";
+                    newRow[strDay] = task.status.ToString(); //BO.TaskStatus.TaskIsSchedualed; //"FULL";
 
             }
 
             dataTable.Rows.Add(newRow);
         }
-
+  
 
         // הצגת הנתונים בתרשים גאנט
         dataGridSched.ItemsSource = dataTable.DefaultView;
