@@ -25,19 +25,19 @@ internal class ChefImplementation : IChef
     public int Create(BO.Chef item)
     {
         if (item.Id < 100000000 || item.Id >999999999)
-            throw new BO.BlWrongNegativeIdException($"The ID={item.Id} Invalid");
+            throw new BO.BlWrongNegativeIdException($"מספר זהות לא חוקי");
         if (item.Name == " ")
-            throw new BO.BlEmptyStringException($"The chef's name field with the ID:{item.Id} is empty");
+            throw new BO.BlEmptyStringException($"נא להכניס מספר זהות");
         if (item.Cost < 0)
-            throw new BO.BlNegativeHourlyWageException($"The cost of ID={item.Id} is negative");
+            throw new BO.BlNegativeHourlyWageException($"משכורת לפי שעה צריך להיות חיובית");
         if (item.Email == " ")
-            throw new BO.BlEmptyStringException($"The chef's mail field with the ID:{item.Id} is empty");
+            throw new BO.BlEmptyStringException($"חייב להכניס כתובת דואר אלקטרוני");
         if (!item.Email!.Contains("@"))
-            throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
-        if (item.Level == null || item.Level == ChefExperience.None)
-            throw new BlChefLevelNoEnteredException($"Chef ID:{item.Id} lacks a field of level of experience");
+            throw new BO.BlWrongEmailException($"כתובת מייל שגויה");
+        if (item.Level == null || item.Level == ChefExperience.ללא_סינון)
+            throw new BlChefLevelNoEnteredException($"נא להכניס רמת שף");
         if (item.task != null)
-            throw new BlUnablToAssociateException("A task cannot be assigned to a chef while he is being added to the list");
+            throw new BlUnablToAssociateException("בזמן יצירת השף לא ניתן להוסיף לו משימה");
         DO.Chef chef = new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!);
 
         try
@@ -47,7 +47,7 @@ internal class ChefImplementation : IChef
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Chef with ID={item.Id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"כבר קיים שף עם מספר זהות זה", ex);
         }
     }
 
@@ -62,22 +62,27 @@ internal class ChefImplementation : IChef
     {
         DO.Task1? task = _dal.Task1.Read(t => t.ChefId == id);
         if (task != null)
-            throw new BlChefOnTaskException($"The chef with ID {id} has already finished performing a task or is actively performing a task");
+            throw new BlChefOnTaskException($"השף עם מספר הזהות {id} שויך למשימה ולכן לא ניתן למחוק אותו");
         try
         {
             _dal.Chef.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
-            throw new BO.BlDoesNotExistException($"Chef with ID={id} does not exists", ex);
+            throw new BO.BlDoesNotExistException($"לא קיים שף עם מספר מזהה{id} ", ex);
         }
     }
     
+    /// <summary>
+    /// הכנסה שלך שף לארכיון
+    /// </summary>
+    /// <param name="chef"></param>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
      public void RecoveryChef(BO.Chef chef)
     {
         try
         {
-            DO.Chef chef1=new DO.Chef() { deleted = false, Id =chef.Id, Cost=chef.Cost, Email=chef.Email,Level= chef.Level!=null?(DO.ChefExperience)chef.Level:DO.ChefExperience.None, Name=chef.Name};
+            DO.Chef chef1=new DO.Chef() { deleted = false, Id =chef.Id, Cost=chef.Cost, Email=chef.Email,Level= chef.Level!=null?(DO.ChefExperience)chef.Level:DO.ChefExperience.כולם, Name=chef.Name};
             _dal.Chef.Recovery(chef1);
         }
         catch (DO.DalDoesNotExistException ex)
@@ -96,7 +101,7 @@ internal class ChefImplementation : IChef
     {
         DO.Chef? chef1 = _dal.Chef.Read(id);
         if (chef1 == null)
-            throw new BO.BlDoesNotExistException($"Chef with ID={id} does not exists");
+            throw new BO.BlDoesNotExistException($"לא קיים שף עם מספר מזהה{id}");
         DO.Task1? task = new DO.Task1();    
         IEnumerable< DO.Task1?>?listTask= _dal.Task1.ReadAll(t => t.ChefId == id && t.CompleteDate == null);
         if (listTask != null)
@@ -175,7 +180,7 @@ internal class ChefImplementation : IChef
     {
         IEnumerable<DO.Chef>? listChef = _dal.Chef.ReadAll(x => (BO.ChefExperience)x.Level! == level)!;
         if (listChef == null)
-            throw new BlNoChefsAccordingLevelException($"There are no chefs at the level of:{level}");
+            throw new BlNoChefsAccordingLevelException($"אין שפים ברמת {level}");
 
         return (from DO.Chef chef in listChef!
                 let task = _dal.Task1.Read(t => t.ChefId == chef.Id)
@@ -211,7 +216,7 @@ internal class ChefImplementation : IChef
         }).Where(chef => chef.task == null);
 
         if (ChefList == null)
-            throw new BlNoUnassignedChefsException("There are no chefs that are not assigned to a task");
+            throw new BlNoUnassignedChefsException("אין שפים שלא מוקצים למשימה");
         return ChefList;
     }
 
@@ -231,49 +236,46 @@ internal class ChefImplementation : IChef
     {
         BO.Chef? chef = Read(item.Id);
         if (chef == null)
-            throw new BlDoesNotExistException($"Chef with ID={item.Id} does not exists");
+            throw new BlDoesNotExistException($"לא קיים שף עם מספר זהות {item.Id} ");
         if (item.Name == "")
-            throw new BO.BlEmptyStringException($"The chef's name field with the ID:{item.Id} is empty");
+            throw new BO.BlEmptyStringException($"חובה להכניס שם");
         if (item.Cost < 0)
-            throw new BO.BlNegativeHourlyWageException($"The cost of ID={item.Id} is negative");
+            throw new BO.BlNegativeHourlyWageException($"נא להכניס משכורת לפי שעה חיובית");
         if (item.Email == "")
-            throw new BO.BlEmptyStringException($"The chef's mail field with the ID:{item.Id} is empty");
+            throw new BO.BlEmptyStringException($"נא להכניס כתובת דואר אלקטרוני");
         if (!item.Email!.Contains("@"))
-            throw new BO.BlWrongEmailException($"The mail of ID={item.Id} is wrong");
+            throw new BO.BlWrongEmailException($"כתובת דואר אלקטרוני שגויה");
         if (chef.Level > (BO.ChefExperience)item.Level!)
-            throw new BlChefLevelTooLowException($"For the chef with the ID:{item.Id}, it is not possible to update a chef level lower than the existing one");
+            throw new BlChefLevelTooLowException($"לא ניתן לעדכן רמת שף נמוכה מהנוכחית");
         
        
         if (item.task != null)
         {
             DO.Task1? task1 = _dal.Task1.Read(task => task.ChefId == item.Id&& task.CompleteDate==null); //חיפוש המשימה שהשף כבר מוקצה לה
             if (task1 != null && item.task.Id != task1.Id && task1.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
-                throw new BlNoChangeChefAssignmentException($"The chef with ID: {item.Id} is already assigned to an unfinished task");
+                throw new BlNoChangeChefAssignmentException($"השף עדיין לא סיים את משימתו הקודמת");
 
             DO.Task1? task2 = _dal.Task1.Read(t => t.Id == item.task.Id); //חיפוש המשימה אותה השף מעוניין להקצות לעצמו
             if (task2 == null) //אם אין משימה כזו
-                throw new BlDoesNotExistException($"Task with ID={item.task.Id} does not exists"); //אם המשימה לא קיימת
+                throw new BlDoesNotExistException($"לא קיימת משימה עם מספר זהות {item.task.Id} "); //אם המשימה לא קיימת
 
             if (task2.ChefId != 0 && task2.ChefId != item.Id)    //אם המשימה כבר מוקצית לשף אחר
-                throw new BlTaskAlreadyAssignedException($"The task with the ID{item.task.Id} is already assigned to the chef with the ID {task2.ChefId}");
+                throw new BlTaskAlreadyAssignedException($"המשימה עם מספר הזהות {item.task.Id} הוקצתה כבר לשף עם מספר הזהות {task2.ChefId}");
 
 
             if (_dal.Task1.ReadEndProject() == null) //אם לפרויקט אין תאריך סיום מתוכנן
-                throw new BlScheduledStartDateNoUpdatedException("A chef cannot be assigned to a task when there is no scheduled end date for the project");
+                throw new BlScheduledStartDateNoUpdatedException("לא ניתן להקצות שף למשימה כאשר אין תאריך סיום מתוכנן לפרויקט");
 
             if (task2.Copmlexity == null)
-                throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
+                throw new BllackingInLevelException("על מנת לשייך שף יש להזין את מורכבות המשימה");
 
             if ((DO.ChefExperience)item.Level < task2.Copmlexity)
-                throw new BlChefLevelTooLowException($"The level of the chef ID:{item.Id} is lower than the complexity of the task");
+                throw new BlChefLevelTooLowException($"רמת המהנדס נמוכה ממורכבות המשימה");
 
             try { _dal.Task1.Update(task2 with { ChefId = item.Id }); }//עדכון הקצאת השף למשימה
-            catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException($"Chef with ID={item.Id} does not exists", ex); }
+            catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException($"השף עם המספר זהות{item.Id} לא קיים", ex); }
         }
 
         _dal.Chef.Update(new DO.Chef(item.Id, item.deleted, item.Email, item.Cost, item.Name, (DO.ChefExperience)item.Level!)); //עדכון פרטי שף.
     }
 }
-
-
-

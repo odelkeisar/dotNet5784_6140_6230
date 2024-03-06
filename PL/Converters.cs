@@ -98,7 +98,7 @@ class ConverTaskListCheckBoxToBool : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (BO.Status)value == BO.Status.Scheduled ? true : false;
+        return (BO.Status)value == BO.Status.מתוזמן ? true : false;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -2,12 +2,12 @@
 
 public enum ChefExperience
 {
-    None = 0,
-    Beginner,
-    AdvancedBeginner,
-    Intermediate,
-    Advanced,
-    Expert
+    ללא_סינון = 0,
+    מתחיל,
+    בינוני,
+    מתקדם,
+    מומחה,
+    מקצוען
     
 }
 
@@ -15,10 +15,10 @@ public enum ChefExperience
 
 public enum Status
 {
-    Unscheduled, //לא מתוכנן
-    Scheduled,  //מתוזמן
-    OnTrack,  //במעקב
-    Done,//בוצע
-    None
+    בלתי_מתוכנן, 
+    מתוזמן,  
+    בתהליך,  
+    בוצע,
+    ללא_סינון
 }
 

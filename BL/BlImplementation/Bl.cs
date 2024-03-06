@@ -12,8 +12,4 @@ internal class Bl : IBl
 
     public void InitializeDB() => DalTest.Initialization.Do();
     public void InitializeResetB() => DalTest.Initialization.Reset();
- 
-
-
-
 }

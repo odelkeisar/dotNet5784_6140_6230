@@ -15,15 +15,15 @@ static public class Tools
     static internal Status GetStatus(DO.Task1 task)
     {
         if (task.CompleteDate != null)
-            return Status.Done;
+            return Status.בוצע;
 
         if (task.StartDate != null)
-            return Status.OnTrack;
+            return Status.בתהליך;
 
         if (task.ScheduledDate != null)
-            return Status.Scheduled;
+            return Status.מתוזמן;
 
-        return Status.Unscheduled;
+        return Status.בלתי_מתוכנן;
     }
 
 

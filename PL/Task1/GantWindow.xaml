@@ -12,20 +12,25 @@
     <Window.Resources>
         <Style TargetType="DataGridCell" x:Key="CellStyle">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Unscheduled">
-                    <Setter Property="Background" Value="DeepSkyBlue"/>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="בלתי_מתוכנן">
+                    <Setter Property="Background" Value="DeepSkyBlue" />
+                    <Setter Property="Foreground" Value="DeepSkyBlue"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Scheduled">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="מתוזמן">
                     <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="Foreground" Value="Yellow"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="OnTrack">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="בתהליך">
                     <Setter Property="Background" Value="LawnGreen"/>
+                    <Setter Property="Foreground" Value="LawnGreen"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Done">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="בוצע">
                     <Setter Property="Background" Value="Red"/>
+                    <Setter Property="Foreground" Value="Red"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="None">
                     <Setter Property="Background" Value="LightGray"/>
+                    <Setter Property="Foreground" Value="LightGray"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>

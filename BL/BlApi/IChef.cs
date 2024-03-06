@@ -14,4 +14,6 @@ public interface IChef
     
     public void Delete(int id);
     public void Update(BO.Chef item);
+    public IEnumerable<BO.Chef> ReadAllDeleted();
+    public void RecoveryChef(BO.Chef chef);
 }

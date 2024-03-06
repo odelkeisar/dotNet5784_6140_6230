@@ -1,14 +1,12 @@
 ﻿namespace DO;
 public enum ChefExperience
 {
-    None=0,
-    Beginner,
-    AdvancedBeginner,
-    Intermediate,
-    Advanced,
-    Expert
-
-
+    כולם=0,
+    מתחיל,
+    בינוני,
+    מתקדם,
+    מומחה,
+    מקצוען
 }
 
 

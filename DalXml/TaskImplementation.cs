@@ -48,7 +48,7 @@ internal class TaskImplementation : ITask1
         Task1? item1 = Read(id);
 
         if (item1 == null)
-            throw new DalDoesNotExistException($"Task with ID={id} does not exist");
+            throw new DalDoesNotExistException($"לא קיימת משימה עם מספר זהות {id}");
         listTask!.Remove(item1);
 
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
@@ -103,7 +103,7 @@ internal class TaskImplementation : ITask1
         Task1? item1 = Read(item.Id);
 
         if (item1 == null)
-            throw new DalDoesNotExistException($"Task with ID={item.Id} does not exist");
+            throw new DalDoesNotExistException($"לא קיית משימה עם מספר זהות {item.Id}");
 
         listTask!.Remove(item1); //remove item1 from the list
 

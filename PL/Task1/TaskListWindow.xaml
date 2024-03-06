@@ -34,7 +34,7 @@
 
 
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" MouseLeftButtonUp="DeleteMarker" MouseDoubleClick="ListView_Update_DoubleClick"  >
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" MouseLeftButtonUp="DeleteMarker" MouseDoubleClick="ListView_Update_DoubleClick" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

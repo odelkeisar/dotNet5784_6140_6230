@@ -9,11 +9,10 @@ public class TaskInList
     public override string ToString() => this.ToString_();
     public string ToString_()
     {
-        return $@"
-ID={Id}  
-Alias= {Alias}
-Description= {Description}
-status= {status}"
-;
+        return ($@"
+{Id} =מספר זהות
+{Alias} =כינוי
+תיאור= {Description} 
+סטטוס= {status}") ;
     }
 }
