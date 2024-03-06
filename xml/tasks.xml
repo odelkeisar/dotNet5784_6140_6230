@@ -10,7 +10,7 @@
     <DeadlineDate>2024-03-06T01:52:50</DeadlineDate>
     <ChefId>294459333</ChefId>
     <StartDate>2024-03-06T00:52:50</StartDate>
-    <CompleteDate xsi:nil="true" />
+    <CompleteDate>2024-03-06T05:01:50</CompleteDate>
     <Copmlexity>מתחיל</Copmlexity>
     <isMileStone xsi:nil="true" />
   </Task1>
@@ -36,11 +36,11 @@
     <ScheduledDate>2024-03-06T01:52:50</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
     <DeadlineDate>2024-03-06T02:52:50</DeadlineDate>
-    <ChefId>0</ChefId>
-    <StartDate xsi:nil="true" />
-    <CompleteDate xsi:nil="true" />
+    <ChefId>294459333</ChefId>
+    <StartDate>2024-03-06T05:01:50</StartDate>
+    <CompleteDate>2024-03-06T05:01:50</CompleteDate>
     <Copmlexity>מתחיל</Copmlexity>
-    <isMileStone>false</isMileStone>
+    <isMileStone xsi:nil="true" />
   </Task1>
   <Task1>
     <Id>4</Id>
