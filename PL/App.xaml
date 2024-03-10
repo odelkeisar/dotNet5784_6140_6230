@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:PL"
 
              StartupUri="MainWindow.xaml">
+    <!-- הגדרת משאבים עבור האפליקציה -->
     <Application.Resources>
         <local:LevelChef x:Key="LevelChefKey"/>
         <local:StatusTask x:Key="StatusTaskkey"/>

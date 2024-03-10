@@ -11,7 +11,7 @@ using System.Windows.Media;
 namespace PL;
 
 /// <summary>
-/// class that convert int to string
+/// המרת המספר למחרוזת אם זה אפס צריך להוסיף עם זה אחר צריך לעדכן
 /// </summary>
 class ConvertIdToContent : IValueConverter
 {
@@ -26,6 +26,9 @@ class ConvertIdToContent : IValueConverter
     }
 }
 
+/// <summary>
+/// אם אפס מחזיר שקר כנראה בשלב שאי אפשר להוסיף נתונים
+/// </summary>
 class ConvertIdToBool : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -38,7 +41,9 @@ class ConvertIdToBool : IValueConverter
         throw new NotImplementedException();
     }
 }
-
+/// <summary>
+/// אם אפס מחזיר שקר כנראה בשלב שאי אפשר להוסיף נתונים
+/// </summary>
 class ConvertAssigningTaskToChef_ToBool : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -51,7 +56,9 @@ class ConvertAssigningTaskToChef_ToBool : IValueConverter
         throw new NotImplementedException();
     }
 }
-
+/// <summary>
+/// אם תאריך תחילת הפרויקט הוא לא נל הפונקציה מחזירה שקר
+/// </summary>
 class ConvertStartDateKey : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -64,7 +71,9 @@ class ConvertStartDateKey : IValueConverter
         throw new NotImplementedException();
     }
 }
-
+/// <summary>
+/// אם תאריך סיום הפרויקט הוא לא נל הפונקציה מחזירה שקר
+/// </summary>
 class ConvertFinalDateKey : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -77,7 +86,9 @@ class ConvertFinalDateKey : IValueConverter
         throw new NotImplementedException();
     }
 }
-
+/// <summary>
+/// אם הערך אפס הפונקציה מחזירה אמת
+/// </summary>
 class ConverTtaskAssignmentToBool : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

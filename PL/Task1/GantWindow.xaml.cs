@@ -98,7 +98,7 @@ public partial class GantWindow : Window
 
                 if (day < task_!.ScheduledDate && day.AddMinutes(30) <= task_.ScheduledDate || day >= task_.ForecastDate)
                 {
-                    newRow[strDay] ="None";
+                    newRow[strDay] ="";
                    
                 }//"EMPTY";
                 else

@@ -1,10 +1,12 @@
 ﻿namespace DalApi;
 using System.Xml.Linq;
-
+/// <summary>
+/// מחלקה סטטית המספקת תצורה לקוד בנוגע לפרטי הממשק הדינמי של הגדרת הדאל (Data Access Layer).
+/// </summary>
 static class Config
 {
     /// <summary>
-    /// internal PDS class
+    /// רשומה פנימית המספקת את המימוש הספציפי של הדאל (Data Access Layer).
     /// </summary>
     internal record DalImplementation
     (string Package,   // package/dll name

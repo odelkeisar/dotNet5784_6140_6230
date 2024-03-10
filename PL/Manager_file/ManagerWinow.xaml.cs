@@ -82,7 +82,7 @@ namespace PL.Manager_file
         }
 
         /// <summary>
-        /// Button implementation: treatment of chefs, displaying the list of chefs.
+        /// שלוחצים על טיפול בשפים נפתח החלון של כל הרשימה
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -91,7 +91,11 @@ namespace PL.Manager_file
         {
             new ChefListWindow().ShowDialog();
         }
-
+        /// <summary>
+        /// כפתור עדכון תחילת פרויקט
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonUpdateStartProject_Click(object sender, MouseButtonEventArgs e)
         {
             try
@@ -106,7 +110,11 @@ namespace PL.Manager_file
                 startDateProject = s_bl.Task1.ReadStartProject();
             }
         }
-
+        /// <summary>
+        /// כפתור עדכון סיום פרויקט
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonUpdateEndProject_Click(object sender, MouseButtonEventArgs e)
         {
             try
@@ -122,11 +130,20 @@ namespace PL.Manager_file
             }
         }
 
+        /// <summary>
+        /// שלוחצים על טיפול במשימות נפתח החלון של כל הרשימה
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new TaskListWindow().ShowDialog();
         }
-
+        /// <summary>
+        /// פונקציה הנפעלת כאשר המשתמש לוחץ על כפתור של סיום הפרויקט
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -141,11 +158,15 @@ namespace PL.Manager_file
                 endDateProject = s_bl.Task1.ReadEndProject();
             }
         }
-
+        /// <summary>
+        ///  פונקציה הנפעלת כאשר המשתמש לוחץ על כפתור של תרשים גאמט
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonGant_Click_1(object sender, RoutedEventArgs e)
         {
-            if(s_bl.Task1.ReadEndProject() != null) 
-            new GantWindow().ShowDialog();
+            if (s_bl.Task1.ReadEndProject() != null)
+                new GantWindow().ShowDialog();
             else
                 MessageBox.Show("התרשים זמין לאחר שיקבע לוח הזמנים לפרויקט");
         }

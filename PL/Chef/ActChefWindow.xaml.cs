@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace PL.Chef;
 
 /// <summary>
-/// Interaction logic for ActChefWindow.xaml
+/// מימוש לוגי של ActChefWindow.xaml
 /// </summary>
 public partial class ActChefWindow : Window
 {
@@ -27,19 +27,31 @@ public partial class ActChefWindow : Window
         set { SetValue(taskProparty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
+    //ActChefWindow הקוד הזה מגדיר מאפיין תלותי בתכנית, הקשור לתכנית מסוג BO.Task1, בתוך חלון מסוג 
+   /// <summary>
+   /// ישות מסוג תלות מאפשרת לקשר משתנים בקוד האחרורי למאפיינים בקופץ הזמל
+   /// </summary>
     public static readonly DependencyProperty taskProparty =
         DependencyProperty.Register("task", typeof(BO.Task1), typeof(ActChefWindow), new PropertyMetadata(null));
 
     BO.Chef chef;
+    /// <summary>
+    /// בנאי של החלון לפי המספר זהות של השף המתקבל
+    /// </summary>
+    /// <param name="idNumber"></param>
     public ActChefWindow(int idNumber)
     {
         chef = s_bl.Chef.Read(idNumber)!;
         task = s_bl.Task1.Read((int)chef.task!.Id!)!;
      
-        InitializeComponent();
+        InitializeComponent();  //פונקציה שמקשרת בין הקוד של הזמל עם אותו שם
     }
 
+    /// <summary>
+    /// כפתור מילוי תאריך התחלה
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void StartDate_Checked(object sender, RoutedEventArgs e)
     {
         task.StartDate = s_bl.Task1.ReadClockProject();
@@ -57,7 +69,11 @@ public partial class ActChefWindow : Window
             this.Close();
         }
     }
-
+    /// <summary>
+    /// כפתור עדכון תאריך סיום
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CompleteDate_Checked(object sender, RoutedEventArgs e)
     {
         task.CompleteDate = s_bl.Task1.ReadClockProject();

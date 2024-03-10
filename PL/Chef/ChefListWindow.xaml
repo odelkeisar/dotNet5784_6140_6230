@@ -24,7 +24,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="רשימת השפים לפי רמה מקצועית" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
-            <ComboBox HorizontalAlignment="Stretch" 
+            <!--בתיבת בחירה יש את כל הרמות של השף ה מקושר לאינם של הדרגות ויש גישה משני הכיוונים המקור של הרשימה הזאת הוא מה שכתוב בשורה השנייה-->
+            <ComboBox HorizontalAlignment="Stretch"        
                   SelectedValue="{Binding Path=level, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
                   SelectionChanged="ChangeSelect" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
                 <ComboBox.Background>
@@ -35,7 +36,7 @@
                 </ComboBox.Background>
             </ComboBox>
         </Grid>
-
+        <!--ברשימה שמים את כל השפים-->
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=ChefList}"  MouseDoubleClick="ListView_UpdateChef_Click" MouseLeftButtonUp="ListView_MouseLeftButtonUp" >
             <ListView.View>
                 <GridView>

@@ -1,13 +1,16 @@
-﻿<Window x:Class="PL.Chef.ActChefWindow"
+﻿<!-- הקובץ משתמש ב-WPF, שהוא פלטפורמה לבניית ממשקי משתמש באמצעות קוד XAML. -->
+    <Window x:Class="PL.Chef.ActChefWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
+        xmlns:local="clr-namespace:PL" 
         mc:Ignorable="d"
         Title="ActChefWindow" Height="750" Width="700"
         DataContext="{Binding task, RelativeSource={RelativeSource Self }, Mode=TwoWay}">
+    <!-- קביעת מקור הנתונים (DataContext) להקשר דינמי של משתנה בשם task -->
 
+    <!--שתי המשאבים הם מסוג לוקל (window) קוד זה מגדיר שני משאבים בחלון-->
     <Window.Resources>
         <local:ConvertStartDateKey x:Key="ConvertStartDateKey" />
         <local:ConvertFinalDateKey x:Key="ConvertFinalDateKey" />
