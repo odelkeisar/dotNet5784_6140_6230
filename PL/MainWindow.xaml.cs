@@ -48,6 +48,9 @@ public partial class MainWindow : Window
     public static readonly DependencyProperty endDateProparty =
         DependencyProperty.Register("endDate", typeof(DateTime?), typeof(MainWindow), new PropertyMetadata(null));
 
+    /// <summary>
+    /// בנאי
+    /// </summary>
     public MainWindow()
     {
         // יש להגדיר את המשתנה clock לפני הקריאה ל-InitializeComponent
@@ -58,6 +61,11 @@ public partial class MainWindow : Window
         // כאן המשתנה clock כבר הוא חלק מהמערכת הקשר
         InitializeComponent();
     }
+   /// <summary>
+   /// כניסה למסך המנהל
+   /// </summary>
+   /// <param name="sender"></param>
+   /// <param name="e"></param>
     private void Manager_Click(object sender, RoutedEventArgs e)
     {
         ManagerWinow managerWinow = new ManagerWinow();
@@ -70,6 +78,11 @@ public partial class MainWindow : Window
         managerWinow.ShowDialog();
     }
 
+    /// <summary>
+    /// כניסה למסך השף
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Chef_Click(object sender, RoutedEventArgs e)
     {
         BO.Chef chef = new BO.Chef();
@@ -122,10 +135,26 @@ public partial class MainWindow : Window
             MessageBox.Show("לא הוזן מספר זהות.");
         }
     }
-
-    private void plusTime_Click(object sender, RoutedEventArgs e)
+   /// <summary>
+   /// קידום הזמן בשעה
+   /// </summary>
+   /// <param name="sender"></param>
+   /// <param name="e"></param>
+    private void plusHour_Click(object sender, RoutedEventArgs e)
     {
         TimeSpan time = new(0, 1, 0, 0);
+        s_bl.Task1.UpdateClockProject(time);
+        clock = s_bl.Task1.ReadClockProject();
+    }
+
+    /// <summary>
+    /// קידום השעה בדקה
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void plusMinute_Click(object sender, RoutedEventArgs e)
+    {
+        TimeSpan time = new(0, 0, 1, 0);
         s_bl.Task1.UpdateClockProject(time);
         clock = s_bl.Task1.ReadClockProject();
     }

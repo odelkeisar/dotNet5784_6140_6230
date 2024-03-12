@@ -95,7 +95,7 @@ internal class TaskImplementation : ITask1
             throw new BlInappropriateStepException("לא ניתן להקצות שף לפני קביעת הלוז");
         if (item.RequiredEffortTime == null)
             throw new BlProblemAboutRequiredEffortTimeException("יש להזין משך זמן משימה");
-        if (item.Copmlexity == BO.ChefExperience.None || item.Copmlexity == null)
+        if (item.Copmlexity == BO.ChefExperience.ללא_סינון || item.Copmlexity == null)
             throw new BlChefLevelNoEnteredException("יש להזין רמת קושי");
         if (item.ScheduledDate != null)
         {
@@ -223,7 +223,7 @@ internal class TaskImplementation : ITask1
             if (group.Key <= chef.Level)
             {
                 // הוספת כל המשימות של רמת הקושי הנוכחית לרשימת המשימות האפשריות
-                possibleTasks.AddRange(group.Where(x => x.chef == null).Where(x => x.dependeencies == null ? true : x.dependeencies.All(dependency => dependency.status == Status.Done)));
+                possibleTasks.AddRange(group.Where(x => x.chef == null).Where(x => x.dependeencies == null ? true : x.dependeencies.All(dependency => dependency.status == Status.בוצע)));
 
             }
         }
@@ -247,7 +247,7 @@ internal class TaskImplementation : ITask1
 
         if (botask == null)
             throw new BlDoesNotExistException($"המסימה עם המספר זהות{item.Id} לא קיימת");
-        if (item.Copmlexity == BO.ChefExperience.None || item.Copmlexity == null)
+        if (item.Copmlexity == BO.ChefExperience.ללא_סינון || item.Copmlexity == null)
             throw new BlChefLevelNoEnteredException("יש להזין רמת קושי");
         if (item.Alias == "")
             throw new BlEmptyStringException("מחרוזת ריקה");
@@ -341,44 +341,30 @@ internal class TaskImplementation : ITask1
 
         else
         {
-            //int x = 0;
-            //if (item.dependeencies.Count > 0)
-            //{
-            //    foreach (var depend in item.dependeencies)
-            //    {
-            //        if ((botask.dependeencies!.Any(X => (X.Id == depend.Id))) == false) //אם קיימת תלות כלשה עכשיו שלא נמצאת ברשימת תלויות הקודמת
-            //            throw new BlWrongDateException("לא ניתן לשנות תלויות של משימה לאחר שיש תאריך סיום לפרויקט");
-            //        x++;
-            //    }
-
-            //    if (x != item.dependeencies.Count)  //אם אין אותו מספר של תלויות בקודם ועכשיו
-            //        throw new BlWrongDateException("לא ניתן לשנות תלויות של משימה לאחר שיש תאריך סיום לפרויקט");
-            //}
-
             if (item.RequiredEffortTime != botask.RequiredEffortTime)
-                throw new BlProblemAboutRequiredEffortTimeException("Once the project has an end date, the duration of the task must not be changed");
+                throw new BlProblemAboutRequiredEffortTimeException("לאחר שלפרויקט יש תאריך סיום, אין לשנות את משך זמן המשימה");
 
             if (item.ScheduledDate != botask.ScheduledDate)
-                throw new BlInappropriateStepException("It is not possible to change a planned start date after the schedule has been set");
+                throw new BlInappropriateStepException("לא ניתן לשנות תאריך התחלה מתוכנן לאחר קביעת לוח הזמנים");
 
             if (item.chef == null && botask.chef != null)
-                throw new BlTaskAlreadyAssignedException("It is not possible to cancel a chef that already exists in the mission");
+                throw new BlTaskAlreadyAssignedException("לא ניתן לבטל שף שכבר קיים במשימה");
 
             if (item.CompleteDate != null && item.StartDate == null)
-                throw new BlWrongDateException("You cannot enter an actual end date before an actual start date");
+                throw new BlWrongDateException("לא ניתן להזין תאריך סיום בפועל לפני תאריך התחלה בפועל");
 
             if (item.chef == null && item.StartDate != null)
-                throw new BlWrongDateException("You can't enter a start date for a task if it doesn't have an chef");
+                throw new BlWrongDateException("לא ניתן להזין תאריך התחלה למשימה אם אין לה שף");
 
             if (item.chef != null)
             {
-                if (item.Copmlexity == null || item.Copmlexity==BO.ChefExperience.None) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
-                    throw new BllackingInLevelException("In order to associate a chef, complexity must be entered");
+                if (item.Copmlexity == null || item.Copmlexity==BO.ChefExperience.ללא_סינון) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
+                    throw new BllackingInLevelException("על מנת לשייך שף יש להזין מורכבות את המשימה");
 
                 DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
 
                 if (_chef == null) //בדיקה שקיים שף מבוקש
-                    throw new BlDoesNotExistException($"Chef with ID= {item.Id} does not exists");
+                    throw new BlDoesNotExistException($"לא קיים שף עם המספר זהות  {item.Id} ");
                 if (botask.chef == null && botask.dependeencies != null)
                     foreach (var task in botask.dependeencies)
                     {
@@ -391,19 +377,19 @@ internal class TaskImplementation : ITask1
                 {
                     DO.Task1? dotask = _dal.Task1.Read(task => task.ChefId == item.chef.Id && task.CompleteDate == null); //חיפוש המשימה שהשף כבר מוקצה לה
                     if (dotask != null && dotask.Id != item.Id && dotask.CompleteDate == null)   // אם השף כבר מוקצה למשימה שאינה זהה למשימה החדשה המעודכנת וגם המשימה הקודמת טרם הושלמה
-                        throw new BlNoChangeChefAssignmentException($"The chef with {item.Id} is already assigned to an unfinished task");
+                        throw new BlNoChangeChefAssignmentException($"השף עם מספר הזהות {item.Id} כבר שויך למשימה שלא הסתיימה");
 
                     if (botask.chef != null && botask.chef.Id != item.chef.Id)   // לא ניתן להקצות משימה לשף אם המשימה כבר מוקצית לשף אחר
-                        throw new BlTaskAlreadyAssignedException($"The task with the ID {botask.Id} is already assigned to the chef with the ID {botask.chef.Id}");
+                        throw new BlTaskAlreadyAssignedException($"המשימה עם מספר הזהות {botask.Id} משויכת לשף עם מספר הזהות {botask.chef.Id}");
 
                     if (item.Copmlexity > (BO.ChefExperience)_chef.Level!) //בדיקה שרמת השף הנדרשת מתאימה לשף המתעדכן
-                        throw new BlChefLevelTooLowException("The level of the chef is lower than the complexity of the task");
+                        throw new BlChefLevelTooLowException("רמת השף נמוכה ממורכבות המשימה");
                 }
 
                 else
                 {
                     if (item.Copmlexity > (BO.ChefExperience)_chef.Level)
-                        throw new BlChefLevelTooLowException("The complexity is higher than the level of the chef");
+                        throw new BlChefLevelTooLowException("מורכבות המשימה גבוהה מרמת השף");
                 }
             }
 
@@ -467,7 +453,7 @@ internal class TaskImplementation : ITask1
       .Where(doTask => doTask!.Copmlexity == (DO.ChefExperience)chef.Level!)
       .Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
         if (listTasks.Count() == 0)
-            throw new BlNoTasksbyCriterionException("There are no tasks that correspond to the chef level");
+            throw new BlNoTasksbyCriterionException("אין משימות שמתאימות לרמת השף");
         return listTasks;
     }
 
@@ -481,7 +467,7 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(doTask => doTask!.Copmlexity == (DO.ChefExperience)_level);
         if (tasks!.Count() == 0)
-            throw new BlDoesNotExistException("No tasks per level");
+            throw new BlDoesNotExistException("אין משימות לרמה זאת");
 
         return (tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) }));
     }
@@ -509,7 +495,7 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.CompleteDate != null);
         if (tasks!.Count() == 0)
-            throw new BlDoesNotExistException("No tasks completed");
+            throw new BlDoesNotExistException("לא הושלמו משימות");
         return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
@@ -523,7 +509,7 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.StartDate != null && task.CompleteDate == null);
         if (tasks!.Count() == 0)
-            throw new BlDoesNotExistException("There are no tasks currently being handled by Chef");
+            throw new BlDoesNotExistException("אין משימות המטופלות כעת על ידי שף");
         return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
@@ -537,7 +523,7 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ChefId == 0);
         if (tasks!.Count() == 0)
-            throw new BlDoesNotExistException("All tasks are assigned to chefs");
+            throw new BlDoesNotExistException("כל המשימות מוקצות לשפים");
         return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
@@ -550,7 +536,7 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ScheduledDate == null);
         if (tasks!.Count() == 0)
-            throw new BlDoesNotExistException("All tasks have a scheduled start date");
+            throw new BlDoesNotExistException("לכל המשימות יש תאריך התחלה מתוזמן");
         return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
     }
 
@@ -560,7 +546,7 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<BO.TaskInList>? tasks = ReadAll().Where(task => task.status == status_);
         if (tasks!.Count() == 0)
-            throw new BlDoesNotExistException($"{status_} :לא קיימות משימות בסטטוס:");
+            throw new BlDoesNotExistException($"לא קיימות משימות בסטטוס: {status_}");
         return tasks;
     }
     /// <summary>
@@ -629,7 +615,7 @@ internal class TaskImplementation : ITask1
 
         if (task1 == null)
         {
-            throw new BlDoesNotExistException($"No task with ID: {item.Id} exists");
+            throw new BlDoesNotExistException($"לא קיימת משימה עם מספר זהות {item.Id}");
         }
 
         IEnumerable<BO.TaskInList>? listDependeencies = Read(item.Id)!.dependeencies;  //יצירת רשימת תלויות של כל המשימות שהמשימה תלויה בהם  
@@ -639,7 +625,7 @@ internal class TaskImplementation : ITask1
             {
                 BO.Task1 task_ = Read(taskinlist.Id)!;
                 if (task_.CompleteDate == null)
-                    throw new BlUnableToStartTaskException($"A task cannot be started before the previous tasks have been completed");
+                    throw new BlUnableToStartTaskException($"לא ניתן להתחיל משימה לפני שהמשימות הקודמות הושלמו");
             }
         }
 
@@ -650,18 +636,24 @@ internal class TaskImplementation : ITask1
 
     }
 
+    /// <summary>
+    /// עדכון תאריך סיום
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="BlDoesNotExistException"></exception>
+    /// <exception cref="BlAlreadyExistsException"></exception>
     public void UpdateFinalDate(BO.Task1 item)
     {
         DO.Task1? task1 = _dal.Task1.Read(item.Id);
 
         if (task1 == null)
         {
-            throw new BlDoesNotExistException($"No task with ID: {item.Id} exists");
+            throw new BlDoesNotExistException($"לא קיימת משימה עם מספר זהות {item.Id}");
         }
 
         if (task1.CompleteDate != null)
         {
-            throw new BlAlreadyExistsException("Actual end date has already been updated");
+            throw new BlAlreadyExistsException("תאריך הסיום בפועל כבר עודכן");
         }
 
         _dal.Task1.Update(new DO.Task1(item.Id, item.Alias, item.Description, item.CreatedAtDate, item.ScheduledDate,

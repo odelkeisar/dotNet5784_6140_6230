@@ -109,16 +109,21 @@ public partial class ChefWindow : Window
         }
     }
 
+    /// <summary>
+    /// כפתור הוספת משימה לשף
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ButtonSelectTask_Click(object sender, RoutedEventArgs e)
     {
-        if (id_ == 0)
+        if (id_ == 0)  //אם המספר זהות אפס זה אומר שאנחנו בהוספת שף ובשלב זה עדיין לא ניתן להוסיף משימה
             MessageBox.Show($" לא ניתן להקצות משימה בשלב הוספת שף חדש");
         else
         {
             try
             {
-                SelectTaskOfChefWindow selectTaskOfChefWindow = new SelectTaskOfChefWindow(Chef);
-                selectTaskOfChefWindow.Closed += (s, args) =>
+                SelectTaskOfChefWindow selectTaskOfChefWindow = new SelectTaskOfChefWindow(Chef); //יצירת חלון בחירת משימה
+                selectTaskOfChefWindow.Closed += (s, args) => //אירוע לאחר סגירת החלון
                 {
                     if(selectTaskOfChefWindow.taskSelected!=null)
                     {

@@ -21,8 +21,12 @@ namespace PL.Chef
     /// </summary>
     public partial class SelectTaskOfChefWindow : Window
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get(); //הגדרת משתנה סטטי שיכול להיכנס לשכבה הלוגית
         public BO.TaskInList? taskSelected = null;
+       /// <summary>
+       /// בנאי שמאתחל את המשימות האפשריות לשף שהוא קיבל
+       /// </summary>
+       /// <param name="chef"></param>
         public SelectTaskOfChefWindow(BO.Chef chef)
         {
             taskSelected = null;
@@ -41,10 +45,14 @@ namespace PL.Chef
         public static readonly DependencyProperty TaskListProparty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(SelectTaskOfChefWindow), new PropertyMetadata(null));
 
-
+        /// <summary>
+        ///listview פונקציה המתבצעת כאשר המשתמש עושה קליק כפול על אחד מהפריטים ב
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            taskSelected = ((ListView)sender).SelectedItem as BO.TaskInList;
+            taskSelected = ((ListView)sender).SelectedItem as BO.TaskInList; // השמת הפריט הנבחר במשתנה שמיועד לשמירת המשימה שנבחרה
             this.Close();
         }
 

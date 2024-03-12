@@ -124,7 +124,7 @@ internal class Program
                         }
 
                         Task1 newTask = new()
-                        { Id = 0, Alias = alias, Description = descripation, status = ScheduledDate == null ? Status.Unscheduled : Status.Scheduled, dependeencies = tasksInList, CreatedAtDate = createdAtDate, ScheduledDate = ScheduledDate, RequiredEffortTime = RequiredEffortTime, Dellverables = Dellverables, Remarks = Remarks, Copmlexity = Copmlexity };
+                        { Id = 0, Alias = alias, Description = descripation, status = ScheduledDate == null ? Status.בלתי_מתוכנן : Status.מתוזמן, dependeencies = tasksInList, CreatedAtDate = createdAtDate, ScheduledDate = ScheduledDate, RequiredEffortTime = RequiredEffortTime, Dellverables = Dellverables, Remarks = Remarks, Copmlexity = Copmlexity };
                         s_bl.Task1.Create(newTask);
                         break;
                     }
@@ -245,13 +245,13 @@ status= {x.status}
                         if (botask == null)
                             throw new BlDoesNotExistException($"Task with ID={id} does not exists");
                         
-                        Status _status = Status.Unscheduled;
+                        Status _status = Status.בלתי_מתוכנן;
                         if (CompleteDate != null)
-                            _status = Status.Done;
+                            _status = Status.בוצע;
                         else if (StartDate != null)
-                            _status = Status.OnTrack;
+                            _status = Status.בתהליך;
                         else if (ScheduledDate != null)
-                            _status = Status.Scheduled;
+                            _status = Status.מתוזמן;
 
 
                         Task1 newTask = new()

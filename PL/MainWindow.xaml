@@ -43,9 +43,10 @@
         <Button Content="מנהל"  Style="{StaticResource MyButtonStyle1}" Click="Manager_Click" Height="65" Width="194" Grid.Row="1" VerticalAlignment="Center" />
         <Button Content="שף"   Style="{StaticResource MyButtonStyle1}" Click="Chef_Click" Height="65" Width="194" Grid.Row="2" VerticalAlignment="Center"/>
 
-        <Button Content="+" Click="plusTime_Click" Margin="157,0,291,0" Background="#ADD8E6" Grid.Row="6" VerticalAlignment="Center" Height="25" />
-        <Label Content="{Binding clock}" Background="#ADD8E6"  VerticalAlignment="Center" Height="25"
-        BorderBrush="#FFB95AD6" Grid.Row="6" Margin="210,0,151,0"/>
+        <Button Content="קידום בשעה" Click="plusHour_Click" Margin="93,0,316,0" Background="#ADD8E6" Grid.Row="7" VerticalAlignment="Center" Height="28" />
+        <Button Content="קידום בדקה" HorizontalAlignment="Left" Margin="302,0,0,0" Grid.Row="7" VerticalAlignment="Center" Height="28" Width="84" Background="#ADD8E6" Click="plusMinute_Click"/>
+        <Label Content="{Binding clock}" Background="#ADD8E6"  VerticalAlignment="Top" Height="25"
+        BorderBrush="#FFB95AD6" Grid.Row="5" Margin="178,24,182,0" Grid.RowSpan="2"/>
         <Label Content=":תאריך תחילת פרויקט"  VerticalAlignment="Center" Grid.Row="3" Margin="250,0,0,0" HorizontalAlignment="Left"/>
         <Label Content=":תאריך סיום פרויקט"  Margin="262,0,0,0" VerticalAlignment="Center" Grid.Row="4" HorizontalAlignment="Left"/>
         <Label Content="{Binding startDate ,Mode=OneWay}"   Margin="118,3,250,0" VerticalAlignment="Top" Grid.Row="3" Height="26"/>

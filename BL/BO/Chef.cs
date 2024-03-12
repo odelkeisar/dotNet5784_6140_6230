@@ -23,12 +23,12 @@ public class Chef
     public string ToString_()
     {
         return ($@"
-Id={Id} 
-Name={Name} 
-Email={Email} 
-Level={Level} 
-Cost={Cost}
-task={task}
+{Id} =מספר זהות
+שם= {Name}  
+{Email} =דואר אלקטרוני   
+רמת שף= {Level}
+{Cost} =מחיר לשעה
+{task} =משימה
 ");
     }
 

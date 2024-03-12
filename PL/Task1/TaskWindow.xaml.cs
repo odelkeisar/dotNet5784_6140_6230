@@ -49,7 +49,7 @@ public partial class TaskWindow : Window
                 task = new BO.Task1();
                 task.chef = new BO.ChefInTask();
                 task.CreatedAtDate = s_bl.Task1.ReadClockProject();
-                task.Copmlexity = BO.ChefExperience.Beginner;
+                task.Copmlexity = BO.ChefExperience.מתחיל;
                 task.dependeencies = new List<BO.TaskInList>();
             }
         }
@@ -167,7 +167,7 @@ public partial class TaskWindow : Window
             {
                 task = new BO.Task1() { CreatedAtDate = s_bl.Task1.ReadClockProject() };
                 task.chef = new BO.ChefInTask();
-                task.Copmlexity = BO.ChefExperience.Beginner;
+                task.Copmlexity = BO.ChefExperience.מתחיל;
                 task.dependeencies = new List<BO.TaskInList>();
             }
             else

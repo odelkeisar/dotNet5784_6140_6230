@@ -22,7 +22,7 @@ public partial class ChefListWindow : Window
 
     // Using a DependencyProperty as the backing store for level.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty levelProperty =
-        DependencyProperty.Register("level", typeof(BO.ChefExperience), typeof(ChefListWindow), new PropertyMetadata(BO.ChefExperience.None));
+        DependencyProperty.Register("level", typeof(BO.ChefExperience), typeof(ChefListWindow), new PropertyMetadata(BO.ChefExperience.ללא_סינון));
 
     /// <summary>
     /// constructor
@@ -53,7 +53,7 @@ public partial class ChefListWindow : Window
     /// <param name="e"></param>
     private void ChangeSelect(object sender, SelectionChangedEventArgs e)
     {
-        ChefList = (level == BO.ChefExperience.None) ?
+        ChefList = (level == BO.ChefExperience.ללא_סינון) ?
             new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAllPerLevel(level)!);
     }
 
@@ -67,7 +67,7 @@ public partial class ChefListWindow : Window
         ChefWindow chefWindow = new ChefWindow();
         chefWindow.Closed += (s, args) =>
         {
-            ChefList = (level == BO.ChefExperience.None) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
+            ChefList = (level == BO.ChefExperience.ללא_סינון) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
         };
         chefWindow.ShowDialog();
     }
@@ -84,7 +84,7 @@ public partial class ChefListWindow : Window
             ChefWindow chefWindow = new ChefWindow(chef.Id);
             chefWindow.Closed += (s, args) =>
             {
-                ChefList = (level == BO.ChefExperience.None) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
+                ChefList = (level == BO.ChefExperience.ללא_סינון) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
             };
             chefWindow.ShowDialog();
         }
@@ -127,7 +127,7 @@ public partial class ChefListWindow : Window
             OldChefWindow oldchefWindow = new OldChefWindow();
             oldchefWindow.Closed += (s, args) =>
             {
-                ChefList = (level == BO.ChefExperience.None) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
+                ChefList = (level == BO.ChefExperience.ללא_סינון) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
             };
             oldchefWindow.ShowDialog();
         }

@@ -105,7 +105,7 @@ internal class ChefImplementation : IChef
         Chef? item1 = Read(item.Id);
 
         if (item1 == null)
-            throw new DalDoesNotExistException($"Dependeency with ID={item.Id} does not exist");
+            throw new DalDoesNotExistException($"לא קיימת תלות עם המספר המזהה {item.Id}");
 
 
         listChef!.Remove(item1); //remove item1 from the list
@@ -120,7 +120,7 @@ internal class ChefImplementation : IChef
         Chef ? chef = listChef.Where(chef=>chef.Id==item.Id).FirstOrDefault();
 
         if (chef == null)
-            throw new DalDoesNotExistException($"Dependeency with ID={item.Id} does not exist");
+            throw new DalDoesNotExistException($"לא קיימת תלות עם המספר המזהה{item.Id}");
 
         listChef!.Remove(chef); //remove item1 from the list
         listChef!.Add(item); //add item to the list

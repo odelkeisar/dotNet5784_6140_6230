@@ -33,7 +33,7 @@ namespace PL.Task1
             set { SetValue(StatusTask_Property, value); }
         }
         public static readonly DependencyProperty StatusTask_Property =
-            DependencyProperty.Register("StatusTask_", typeof(BO.Status), typeof(TaskListWindow), new PropertyMetadata(BO.Status.None));
+            DependencyProperty.Register("StatusTask_", typeof(BO.Status), typeof(TaskListWindow), new PropertyMetadata(BO.Status.ללא_סינון));
         /// <summary>
         ///  Gets or sets the collection of tasks displayed in the window.
         /// 
@@ -63,7 +63,7 @@ namespace PL.Task1
         {
             try
             {
-                TaskList = StatusTask_ == BO.Status.None ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
+                TaskList = StatusTask_ == BO.Status.ללא_סינון ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace PL.Task1
         {
             try
             {
-                TaskList = StatusTask_ == BO.Status.None ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
+                TaskList = StatusTask_ == BO.Status.ללא_סינון ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
             }
             catch (Exception ex)
             {
@@ -144,7 +144,7 @@ namespace PL.Task1
                 TaskWindow taskWindow = new TaskWindow(id);
                 taskWindow.Closed +=(s, args) =>
                 {
-                    TaskList = (StatusTask_ == BO.Status.None) ? new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPerStatus(StatusTask_)!);
+                    TaskList = (StatusTask_ == BO.Status.ללא_סינון) ? new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPerStatus(StatusTask_)!);
                 };
                 taskWindow.ShowDialog();
             }
@@ -158,7 +158,7 @@ namespace PL.Task1
                 TaskWindow taskWindow = new TaskWindow(_task.Id);
                 taskWindow.Closed += (s, args) =>
                 {
-                   TaskList = (StatusTask_ == BO.Status.None) ? new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPerStatus(StatusTask_)!);
+                   TaskList = (StatusTask_ == BO.Status.ללא_סינון) ? new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAllPerStatus(StatusTask_)!);
                 };
                 taskWindow.ShowDialog();
             }

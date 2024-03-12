@@ -17,10 +17,10 @@ public static class Initialization
     /// </summary>
     private static void createTask()
     {
-        string[] TaskNames = {"Buying food and disposable products", "Making dough", "Washing and peeling vegetables",
-            "Baking the dough for bread", "Cutting vegetables","Making salads", "Cooking soup", "Baking fish", "Preparing meat", "Preparing a side dish for meat",
-            "making dessert","kitchen cleaning","Designing serving dishes" ,"Dessert design", "table design","chair design", "Serving drinks", "Serving dishes",
-            "Order and cleanliness of the place", "Submitting an opinion on the meal"};
+        string[] TaskNames = {"קניית מזון ומוצרים חד פעמיים", "הכנת בצק", "שטיפה וקילוף ירקות",
+            "אפיית הבצק ללחם", "חיתוך ירקות","הכנת סלטים", "בישול מרק", "אפיית דגים", "הכנת בשר", "הכנת תוספת לבשר",
+            "הכנת קינוח","ניקוי מטבח","בחירת כלי הגשה" ,"עיצוב קינוח", "עיצוב שולחן","סידור הכסאות", "הגשת משקאות", "פינוי השולחן",
+            "סדר וניקיון המקום", "הגשת חוות דעת על הארוחה"};
     
 
         string[] TaskNum = {"T1","T2","T3","T4","T5","T6","T7","T8","T9","T10","T11","T12","T13","T14","T15","T16",
@@ -45,13 +45,13 @@ public static class Initialization
             DateTime deadLine = scheduledDate + taskTime;
 
 
-            Task1 newTask = new(0, alias, _name, createDate, scheduledDate, taskTime, deadLine, 0, null, null, DO.ChefExperience.Beginner);
+            Task1 newTask = new(0, alias, _name, createDate, scheduledDate, taskTime, deadLine, 0, null, null, DO.ChefExperience.מתחיל);
             s_dal!.Task1!.Create(newTask);
 
 
-            if (_name != "Making dough" && _name != "Baking the dough for bread" &&
-              _name != "Cooking soup" && _name != "Preparing meat" && _name != "table design"&&_name != "Designing serving dishes" &&
-              _name != "Serving drinks") //Tasks at the same level are worked on at the same time
+            if (_name != "הכנת בצק" && _name != "אפיית הבצק ללחם" &&
+              _name != "בישול מרק" && _name != "הכנת בשר" && _name != "עיצוב שולחן" && _name != "בחירת כלי הגשה" &&
+              _name != "הגשת משקאות") //Tasks at the same level are worked on at the same time
                 x++;
 
         }
@@ -63,7 +63,7 @@ public static class Initialization
     /// </summary>
     private static void createChef()
     {
-        string[] EngineertNames = { "דני לוי", "Eli Amar", "Meir Cohen", "Ariel Levin", "David Klein" };
+        string[] EngineertNames = { "דני לוי", "אלי עמר", "מאיר כהן", "אריאל לוין", "דוד קליין" };
         string[] EngineertMail = { "Dani@gmail.com", "Eli@gmail.com", "Meir@gmail.com", "Ariel@gmail.com", "David@gmail.com" };
         int x = 0;
         foreach (var _name in EngineertNames)

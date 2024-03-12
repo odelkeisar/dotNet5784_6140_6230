@@ -8,24 +8,29 @@
         Title="GantWindow" Height="600" Width="1500"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
-    <!-- Define the dynamic style for yellow cells -->
+    <!-- הגדרת טריגרים לפי ערכי התאים לכל ערך צבע שונה -->
     <Window.Resources>
         <Style TargetType="DataGridCell" x:Key="CellStyle">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Unscheduled">
-                    <Setter Property="Background" Value="DeepSkyBlue"/>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="בלתי_מתוכנן">
+                    <Setter Property="Background" Value="DeepSkyBlue" />
+                    <Setter Property="Foreground" Value="DeepSkyBlue"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Scheduled">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="מתוזמן">
                     <Setter Property="Background" Value="Yellow"/>
+                    <Setter Property="Foreground" Value="Yellow"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="OnTrack">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="בתהליך">
                     <Setter Property="Background" Value="LawnGreen"/>
+                    <Setter Property="Foreground" Value="LawnGreen"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="Done">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="בוצע">
                     <Setter Property="Background" Value="Red"/>
+                    <Setter Property="Foreground" Value="Red"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="">
                     <Setter Property="Background" Value="LightGray"/>
+                    <Setter Property="Foreground" Value="LightGray"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -34,14 +39,24 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Grid>
-            <!-- Apply the dynamic style to the DataGrid cells -->
-            <DataGrid Name="dataGridSched" AutoGenerateColumns="False">
-                <!-- Apply the style to the cells -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- DataGrid החל את הסגנון הדינמי על תאי -->
+            <DataGrid Name="dataGridSched" AutoGenerateColumns="False" Grid.Row="0">
+                <!-- החל את הסגנון על התאים -->
                 <DataGrid.CellStyle>
-                    <Style TargetType="DataGridCell" BasedOn="{StaticResource CellStyle}"/>
+                    <Style TargetType="DataGridCell" BasedOn="{StaticResource CellStyle}" />
                 </DataGrid.CellStyle>
 
             </DataGrid>
+
+            <Label Content="                      :מקרא&#xD;&#xA;תכלת= בלתי מתוכנן&#xA;          צהוב= מתוזמן&#xA;          ירוק= בתהליך&#xA;              אדום= בוצע   " HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Row="1"  Height="100" Foreground="#FFDF9FE5"/>
+
         </Grid>
+
+
     </ScrollViewer>
 </Window>
