@@ -10,9 +10,10 @@ public class TaskInList
     public string ToString_()
     {
         return ($@"
-{Id} =מספר זהות
-{Alias} =כינוי
+מספר זהות= {Id} 
+כינוי= {Alias} 
 תיאור= {Description} 
-סטטוס= {status}") ;
-    }
+סטטוס= {status} 
+");
+    }                  
 }

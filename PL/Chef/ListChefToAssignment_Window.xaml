@@ -9,7 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
-        <ListView Margin="5" ItemsSource="{Binding Path=ChefList}"  MouseDoubleClick="ListView_MouseDoubleClick"  >
+        <ListView Margin="5" ItemsSource="{Binding Path=ChefList}"  FlowDirection="RightToLeft" MouseDoubleClick="ListView_MouseDoubleClick"  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

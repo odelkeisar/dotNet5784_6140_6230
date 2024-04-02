@@ -1,4 +1,5 @@
 ﻿using DO;
+using System.Net.NetworkInformation;
 
 namespace BO;
 
@@ -23,12 +24,12 @@ public class Chef
     public string ToString_()
     {
         return ($@"
-{Id} =מספר זהות
-שם= {Name}  
-{Email} =דואר אלקטרוני   
-רמת שף= {Level}
-{Cost} =מחיר לשעה
-{task} =משימה
+מספר זהות= {Id} 
+שם= {Name} 
+דואר אלקטרוני= {Email} 
+רמת שף= {Level} 
+מחיר לשעה= {Cost} 
+משימה= {task} 
 ");
     }
 
