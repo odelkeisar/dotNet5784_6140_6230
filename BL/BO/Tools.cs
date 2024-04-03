@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using System.Reflection;
 
 namespace BO;
 /// <summary>
@@ -25,8 +26,16 @@ static public class Tools
 
         return Status.בלתי_מתוכנן;
     }
+    public static string ToStringProperty<T>(T t)
+    {
+        string str = "";
+        foreach (PropertyInfo item in t.GetType().GetProperties())
+            str += "\n" + item.Name
+    + ": " + item.GetValue(t, null);
+        return str;
+    }
 
 
 }
 
-    
+

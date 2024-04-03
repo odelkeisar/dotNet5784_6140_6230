@@ -8,7 +8,7 @@
         Title="משימות אפשריות לביצוע" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}"  MouseDoubleClick="ListView_MouseDoubleClick">
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskList}" FlowDirection="RightToLeft" MouseDoubleClick="ListView_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

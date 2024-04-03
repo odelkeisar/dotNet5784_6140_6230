@@ -32,7 +32,6 @@ internal class TaskImplementation : ITask1
         Task1 item1 = item with { Id = newId };
         listTask!.Add(item1);    //add item to the list
         listTask = listTask.OrderBy(task => task.Id).ToList();
-
         XMLTools.SaveListToXMLSerializer(listTask, s_tasks_xml);
         return newId;
     }
@@ -161,6 +160,8 @@ internal class TaskImplementation : ITask1
     {
         XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
         string clockProject = root.Element("clockProject")?.Value;
-        return DateTime.Parse(clockProject!);
+        return DateTime.Parse(clockProject);
     }
+
+
 }

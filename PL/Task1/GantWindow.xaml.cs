@@ -68,7 +68,7 @@ public partial class GantWindow : Window
 
         // ציור כל התאריכים בכותרות התאים של התרשים גאנט
         int col = 2;
-        for (DateTime day = (DateTime)StartDate!; day <= EndDate; day = day.AddMinutes(30))
+        for (DateTime day = (DateTime)StartDate!; day < EndDate; day = day.AddMinutes(30))
         {
             string strDay = day.ToString(); //"21/2/2024"
             DataGridTextColumn dateColumn = new DataGridTextColumn

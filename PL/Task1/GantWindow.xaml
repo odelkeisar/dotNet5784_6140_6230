@@ -28,7 +28,7 @@
                     <Setter Property="Background" Value="Red"/>
                     <Setter Property="Foreground" Value="Red"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="None">
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Content.Text}" Value="">
                     <Setter Property="Background" Value="LightGray"/>
                     <Setter Property="Foreground" Value="LightGray"/>
                 </DataTrigger>
