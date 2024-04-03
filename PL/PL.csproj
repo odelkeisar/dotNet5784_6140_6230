@@ -26,6 +26,7 @@
     <None Remove="image\task.jpg" />
     <None Remove="image\update.jpg" />
     <None Remove="image\עידכון.jpg" />
+    <None Remove="Task1\back2.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +46,7 @@
     <Resource Include="image\task.jpg" />
     <Resource Include="image\update.jpg" />
     <Resource Include="image\old.jpg" />
+    <Resource Include="Task1\back2.jpg" />
   </ItemGroup>
 
 </Project>
