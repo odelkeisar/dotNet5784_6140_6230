@@ -179,10 +179,5 @@ public partial class TaskWindow : Window
 
         }
     }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-
-    }
 }
 
