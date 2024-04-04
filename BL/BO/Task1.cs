@@ -41,7 +41,7 @@ public class Task1
     public string? Remarks { get; set; }//הערות
     public ChefInTask? chef { get; set; } 
     public  ChefExperience? Copmlexity { get; set; } //רמת קושי
-    public override string ToString() =>Tools.ToStringProperty(this) ;
+    //public override string ToString() =>Tools.ToStringProperty(this) ;
 
 
     //public override string ToString() => ToString_();
