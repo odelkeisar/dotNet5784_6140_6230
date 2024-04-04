@@ -159,8 +159,11 @@ internal class TaskImplementation : ITask1
     public DateTime ReadClockProject()
     {
         XElement root = XElement.Load($"{s_xml_dir + s_data_config_xml}.xml");
-        string clockProject = root.Element("clockProject")?.Value;
-        return DateTime.Parse(clockProject);
+        string ?clockProject = root.Element("clockProject")?.Value;
+        if (!string.IsNullOrEmpty(clockProject))
+            return DateTime.Parse(clockProject);
+        return new DateTime(0, 0, 0);
+       
     }
 
 

@@ -126,7 +126,7 @@ internal class DependeencyImplementation : IDependeency
                 DependentTask = Convert.ToInt32(x.Element("DependentTask")!.Value),
                 DependsOnTask = Convert.ToInt32(x.Element("DependsOnTask")!.Value)
             }) ;
-            dependeencies = dependeencies.Where(x => filter(x));
+            dependeencies = dependeencies.Where(filter);
         }
         catch { return null; }
         return dependeencies.ToList();

@@ -29,6 +29,7 @@ internal class DependeencyImplementation : IDependeency
     public void Delete(int id)
     {
         Dependeency? item = Read(id);
+
         if (item == null)
             throw new DalDoesNotExistException($"Dependeency with ID={id} does not exist");
         DataSource.Dependeencies!.Remove(item); //remove item from the list

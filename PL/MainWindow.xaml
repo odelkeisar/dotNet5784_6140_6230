@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="500"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
-
+        <!--הכרה בכל התכונות של המחלקה הנוכחית-->
 
     <Window.Resources>
         <!-- הגדרת סגנון לכפתורים -->
         <Style x:Key="MyButtonStyle1" TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Height" Value="48"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="65"/>
             <Setter Property="Width" Value="194"/>
             <Setter Property="BorderBrush" Value="#FFB95AD6"/>
             <Setter Property="Background" Value="#ADD8E6"/>
@@ -40,10 +40,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Content="מנהל"  Style="{StaticResource MyButtonStyle1}" Click="Manager_Click" Height="65" Width="194" Grid.Row="1" VerticalAlignment="Center" />
-        <Button Content="שף"   Style="{StaticResource MyButtonStyle1}" Click="Chef_Click" Height="65" Width="194" Grid.Row="2" VerticalAlignment="Center"/>
+        <Button Content="מנהל"  Style="{StaticResource MyButtonStyle1}" Click="Manager_Click" Grid.Row="1"/>
+        <Button Content="שף"   Style="{StaticResource MyButtonStyle1}" Click="Chef_Click"  Grid.Row="2" />
 
-        <Button Content="קידום בשעה" Click="plusHour_Click" Margin="93,0,316,0" Background="#ADD8E6" Grid.Row="7" VerticalAlignment="Center" Height="28" />
+        <Button Content="קידום בשעה" Click="plusHour_Click" Margin="100,0,309,0" Background="#ADD8E6" Grid.Row="7" VerticalAlignment="Center" Height="28" />
         <Button Content="קידום בדקה" HorizontalAlignment="Left" Margin="302,0,0,0" Grid.Row="7" VerticalAlignment="Center" Height="28" Width="84" Background="#ADD8E6" Click="plusMinute_Click"/>
         <Label Content="{Binding clock}" Background="#ADD8E6"  VerticalAlignment="Top" Height="25"
         BorderBrush="#FFB95AD6" Grid.Row="5" Margin="178,24,182,0" Grid.RowSpan="2"/>

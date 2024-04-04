@@ -19,11 +19,11 @@ static class Config
 
     static Config()
     {
-        XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml") ??
+        XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml") ?? //טוען את המסמך 
        throw new DalConfigException("dal-config.xml file is not found");
 
         s_dalName =
-           dalConfig.Element("dal")?.Value ?? throw new DalConfigException("<dal> element is missing");
+           dalConfig.Element("dal")?.Value ?? throw new DalConfigException("<dal> element is missing"); //טוען את סוג בסיס הנתונים שלנו ששמור בשדה דל
 
         var packages = dalConfig.Element("dal-packages")?.Elements() ??
         throw new DalConfigException("<dal-packages> element is missing");

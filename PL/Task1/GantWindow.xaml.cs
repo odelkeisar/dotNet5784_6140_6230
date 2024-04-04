@@ -92,7 +92,7 @@ public partial class GantWindow : Window
 
             var task_ = s_bl.Task1.Read(task.Id);
 
-            for (DateTime day = (DateTime)StartDate!; day <= EndDate; day = day.AddMinutes(30))
+            for (DateTime day = (DateTime)StartDate!; day < EndDate; day = day.AddMinutes(30))
             {
                 string strDay = day.ToString(); //"21/2/2024"
 
@@ -108,7 +108,7 @@ public partial class GantWindow : Window
 
             dataTable.Rows.Add(newRow);
         }
-  
+
 
         // הצגת הנתונים בתרשים גאנט
         dataGridSched.ItemsSource = dataTable.DefaultView;

@@ -12,6 +12,8 @@ namespace PL.Chef;
 /// </summary>
 public partial class ChefListWindow : Window
 {
+    BO.Chef? chef_ = null;
+
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     public BO.ChefExperience level
@@ -25,15 +27,6 @@ public partial class ChefListWindow : Window
         DependencyProperty.Register("level", typeof(BO.ChefExperience), typeof(ChefListWindow), new PropertyMetadata(BO.ChefExperience.ללא_סינון));
 
     /// <summary>
-    /// constructor
-    /// </summary>
-    public ChefListWindow()
-    {
-        ChefList = new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAll() ?? Enumerable.Empty<BO.Chef>());
-        InitializeComponent();
-    }
-
-    /// <summary>
     /// The list of chefs, of the dependent type.
     /// </summary>
     public ObservableCollection<BO.Chef> ChefList
@@ -45,6 +38,15 @@ public partial class ChefListWindow : Window
     // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ChefListProparty =
         DependencyProperty.Register("ChefList", typeof(ObservableCollection<BO.Chef>), typeof(ChefListWindow), new PropertyMetadata(null));
+
+    /// <summary>
+    /// constructor
+    /// </summary>
+    public ChefListWindow()
+    {
+        ChefList = new ObservableCollection<BO.Chef>(s_bl?.Chef.ReadAll() ?? Enumerable.Empty<BO.Chef>());
+        InitializeComponent();
+    }
 
     /// <summary>
     /// Filter the list view by level.
@@ -86,6 +88,7 @@ public partial class ChefListWindow : Window
             {
                 ChefList = (level == BO.ChefExperience.ללא_סינון) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
             };
+
             chefWindow.ShowDialog();
         }
     }
@@ -101,7 +104,7 @@ public partial class ChefListWindow : Window
                 if (result == MessageBoxResult.Yes)
                 {
                     s_bl.Chef.Delete(chef_.Id);
-                    ChefList = new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!);
+                    ChefList = (level == BO.ChefExperience.ללא_סינון) ? new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAll()!) : new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllPerLevel(level)!);
                     chef_ = null;
                 }
             }
@@ -113,7 +116,6 @@ public partial class ChefListWindow : Window
         catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
     }
 
-    BO.Chef? chef_ = null;
     private void ListView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         chef_ = (sender as ListView)?.SelectedItem as BO.Chef;

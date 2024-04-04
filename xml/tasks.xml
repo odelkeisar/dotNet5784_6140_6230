@@ -4,10 +4,10 @@
     <Id>1</Id>
     <Alias>T1</Alias>
     <Description>קניית מזון ומוצרים חד פעמיים</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T15:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T03:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T16:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T04:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -18,10 +18,10 @@
     <Id>2</Id>
     <Alias>T2</Alias>
     <Description>הכנת בצק</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T16:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T04:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T17:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T05:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -32,10 +32,10 @@
     <Id>3</Id>
     <Alias>T3</Alias>
     <Description>שטיפה וקילוף ירקות</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T16:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T04:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T17:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T05:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -46,10 +46,10 @@
     <Id>4</Id>
     <Alias>T4</Alias>
     <Description>אפיית הבצק ללחם</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T17:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T05:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T18:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T06:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -60,10 +60,10 @@
     <Id>5</Id>
     <Alias>T5</Alias>
     <Description>חיתוך ירקות</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T17:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T05:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T18:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T06:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -74,10 +74,10 @@
     <Id>6</Id>
     <Alias>T6</Alias>
     <Description>הכנת סלטים</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T18:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T06:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T19:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T07:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -88,10 +88,10 @@
     <Id>7</Id>
     <Alias>T7</Alias>
     <Description>בישול מרק</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T19:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T07:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T20:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T08:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -102,10 +102,10 @@
     <Id>8</Id>
     <Alias>T8</Alias>
     <Description>אפיית דגים</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T19:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T07:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T20:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T08:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -116,10 +116,10 @@
     <Id>9</Id>
     <Alias>T9</Alias>
     <Description>הכנת בשר</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T20:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T08:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T21:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T09:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -130,10 +130,10 @@
     <Id>10</Id>
     <Alias>T10</Alias>
     <Description>הכנת תוספת לבשר</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T20:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T08:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T21:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T09:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -144,10 +144,10 @@
     <Id>11</Id>
     <Alias>T11</Alias>
     <Description>הכנת קינוח</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T21:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T09:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T22:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T10:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -158,10 +158,10 @@
     <Id>12</Id>
     <Alias>T12</Alias>
     <Description>ניקוי מטבח</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T22:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T10:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-03T23:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T11:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -172,10 +172,10 @@
     <Id>13</Id>
     <Alias>T13</Alias>
     <Description>בחירת כלי הגשה</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T23:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T11:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T00:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T12:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -186,10 +186,10 @@
     <Id>14</Id>
     <Alias>T14</Alias>
     <Description>עיצוב קינוח</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-03T23:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T11:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T00:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T12:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -200,10 +200,10 @@
     <Id>15</Id>
     <Alias>T15</Alias>
     <Description>עיצוב שולחן</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-04T00:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T12:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T01:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T13:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -214,10 +214,10 @@
     <Id>16</Id>
     <Alias>T16</Alias>
     <Description>סידור הכסאות</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-04T00:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T12:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T01:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T13:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -228,10 +228,10 @@
     <Id>17</Id>
     <Alias>T17</Alias>
     <Description>הגשת משקאות</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-04T01:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T13:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T02:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T14:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -242,10 +242,10 @@
     <Id>18</Id>
     <Alias>T18</Alias>
     <Description>פינוי השולחן</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-04T01:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T13:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T02:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T14:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -256,10 +256,10 @@
     <Id>19</Id>
     <Alias>T19</Alias>
     <Description>סדר וניקיון המקום</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-04T02:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T14:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T03:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T15:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />
@@ -270,10 +270,10 @@
     <Id>20</Id>
     <Alias>T20</Alias>
     <Description>הגשת חוות דעת על הארוחה</Description>
-    <CreatedAtDate>2024-04-03T15:12:33</CreatedAtDate>
-    <ScheduledDate>2024-04-04T03:12:33</ScheduledDate>
+    <CreatedAtDate>2024-04-04T03:01:02</CreatedAtDate>
+    <ScheduledDate>2024-04-04T15:01:02</ScheduledDate>
     <RequiredEffortTime>PT1H</RequiredEffortTime>
-    <DeadlineDate>2024-04-04T04:12:33</DeadlineDate>
+    <DeadlineDate>2024-04-04T16:01:02</DeadlineDate>
     <ChefId>0</ChefId>
     <StartDate xsi:nil="true" />
     <CompleteDate xsi:nil="true" />

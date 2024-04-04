@@ -1,5 +1,5 @@
 ﻿namespace DO;
-[Serializable]
+[Serializable] 
 
 public class DalDoesNotExistException : Exception //Exception for an entity that does not exist in the list
 {
@@ -7,7 +7,7 @@ public class DalDoesNotExistException : Exception //Exception for an entity that
 }
 [Serializable]
 
-public class DalAlreadyExistsException : Exception //Exception for an ID number that already exists in the list
+public class DalAlreadyExistsException : Exception // קיים מספר זהות זהה 
 {
     public DalAlreadyExistsException(string? message) : base(message) { }
 }

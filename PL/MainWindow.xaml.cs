@@ -69,7 +69,7 @@ public partial class MainWindow : Window
     private void Manager_Click(object sender, RoutedEventArgs e)
     {
         ManagerWinow managerWinow = new ManagerWinow();
-        managerWinow.Closed += (s, args) =>
+        managerWinow.Closed += (s, args) => //הוא מקור הארוע כלומר החלון שנסגר, ו-ארג'ס זה מידע נוסף על האירוע S 
         {
             startDate = s_bl.Task1.ReadStartProject();
             endDate = s_bl.Task1.ReadEndProject();
@@ -95,7 +95,7 @@ public partial class MainWindow : Window
             {
                 chef = s_bl.Chef.Read(int.Parse(idNumber))!;
 
-                if (chef.task == null)
+                if (chef.task == null) //אם אין לשף משימה אז יפתח חלון לבחירת משימה חדשה
                 {
                     SelectTaskOfChefWindow selectTaskOfChefWindownew = new SelectTaskOfChefWindow(chef);
 
@@ -109,7 +109,6 @@ public partial class MainWindow : Window
                                 chef.task = new BO.TaskInChef { Id = selectedTask.Id, Alias = selectedTask.Alias };
                                 s_bl.Chef.Update(chef);
                                 MessageBox.Show($"משימה {selectedTask.Id} הוקצתה בהצלחה");
-                                this.Close();
                             }
                             catch (Exception ex)
                             {

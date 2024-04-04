@@ -21,6 +21,18 @@ namespace PL.Chef;
 /// </summary>
 public partial class ChefWindow : Window
 {
+    /// <summary>
+    /// A dependent type chef.
+    /// </summary>
+    public BO.Chef? Chef
+    {
+        get { return (BO.Chef)GetValue(ChefProparty); }
+        set { SetValue(ChefProparty, value); }
+    }
+
+    public static readonly DependencyProperty ChefProparty =
+   DependencyProperty.Register("Chef", typeof(BO.Chef), typeof(ChefWindow), new PropertyMetadata(null));
+
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     /// <summary>
     /// An empty constructor to create a new chef.
@@ -42,6 +54,7 @@ public partial class ChefWindow : Window
         try
         {
             Chef = s_bl.Chef.Read(Id);
+            
             if(Chef!.task == null) 
             {
                 Chef.task=new BO.TaskInChef();
@@ -55,17 +68,7 @@ public partial class ChefWindow : Window
         }
         InitializeComponent();
     }
-    /// <summary>
-    /// A dependent type chef.
-    /// </summary>
-    public BO.Chef? Chef
-    {
-        get { return (BO.Chef)GetValue(ChefProparty); }
-        set { SetValue(ChefProparty, value); }
-    }
-
-    public static readonly DependencyProperty ChefProparty =
-   DependencyProperty.Register("Chef", typeof(BO.Chef), typeof(ChefWindow), new PropertyMetadata(null));
+   
 
     /// <summary>
     /// Button implementation: add/update.
@@ -99,10 +102,13 @@ public partial class ChefWindow : Window
             {
                 MessageBox.Show($"Error: {ex.Message}");
 
-                Chef = s_bl.Chef.Read(Chef.Id);//רענון החלון לנתונים הקודמים
-                if (Chef!.task == null)
+                if ((string)clickedButton.Content == "עדכן")
                 {
-                    Chef.task = new BO.TaskInChef();
+                    Chef = s_bl.Chef.Read(Chef.Id);//רענון החלון לנתונים הקודמים
+                    if (Chef!.task == null)
+                    {
+                        Chef.task = new BO.TaskInChef();
+                    }
                 }
             }
 

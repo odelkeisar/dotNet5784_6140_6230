@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView FlowDirection="RightToLeft" Grid.Row="0" Margin="5" ItemsSource="{Binding Path=ChefList}" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" >
+        <ListView Grid.Row="0" Margin="5" FlowDirection="RightToLeft" ItemsSource="{Binding Path=ChefList}" MouseLeftButtonUp="Marker_MouseLeftButtonUp" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -24,7 +24,7 @@
         </ListView>
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom" >
-            <Button Height="50" Width="100" Margin="0,0,10,0" Click="Button_Click">
+            <Button Height="50" Width="100" Margin="0,0,10,0" Click="ButtonRecovery_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/image/recovery.jpg" Width="50" Height="30"/>
                     <TextBlock Text="שיחזור"/>

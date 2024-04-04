@@ -8,8 +8,8 @@ using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Threading.Channels;
-
-
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection.Emit;
 
 internal class Program
 {
@@ -31,8 +31,11 @@ internal class Program
             5 To update the project end date
             ");
 
-        string? change = Console.ReadLine();
-        return int.Parse(change!);
+        int change; 
+        bool test = int.TryParse(Console.ReadLine(), out change);
+        if (test == false)
+            throw new BlConvertErrorException("The conversion failed");
+        return change;
     }
 
     private static int TaskMenue()
@@ -54,8 +57,11 @@ internal class Program
             12 to read all no scheduled date
             13 to update scheduled date
             ");
-        string? change = Console.ReadLine();
-        return int.Parse(change!);
+        int change;
+        bool test = int.TryParse(Console.ReadLine(), out change);
+        if (test == false)
+            throw new BlConvertErrorException("The conversion failed");
+        return change;
     }
     private static void actTask()
     {
@@ -74,23 +80,38 @@ internal class Program
                         string? descripation = Console.ReadLine();
                         
                         DateTime? createdAtDate = DateTime.Now;
-                        
+
                         DateTime? ScheduledDate = null;
                         Console.WriteLine("Would you like to update the Scheduled Task Start Date now (Y/N)?");
                         if (Console.ReadLine() == "Y")
                         {
                             Console.WriteLine("Enter ScheduledDate in the format 00.00.0000");
-                            ScheduledDate = DateTime.Parse(Console.ReadLine()!);
+                            DateTime ScheduletDate1;
+                           bool _test = DateTime.TryParse(Console.ReadLine(), out ScheduletDate1);   
+                            if (_test == false)
+                                throw new BlConvertErrorException("The conversion failed");
+                            ScheduledDate = (DateTime?)ScheduletDate1;
                         }
 
-                        Console.WriteLine("RequiredE ffort Time");
+                       
+
+                            Console.WriteLine("RequiredE ffort Time");
                         Console.WriteLine("Enter num of days");
-                        string day = Console.ReadLine()!;
+                        int day;
+                        bool test = int.TryParse(Console.ReadLine(), out day);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Console.WriteLine("Enter num of hours");
-                        string? hours = Console.ReadLine();
+                        int hours;
+                        test = int.TryParse(Console.ReadLine(), out hours);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Console.WriteLine("Enter num of minutes");
-                        string? minutes = Console.ReadLine();
-                        TimeSpan RequiredEffortTime = new TimeSpan(int.Parse(day!), int.Parse(hours!), int.Parse(minutes!), 0);
+                        int minutes;
+                        test = int.TryParse(Console.ReadLine(), out minutes);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        TimeSpan RequiredEffortTime = new TimeSpan(day,hours, minutes, 0);
 
                         Console.WriteLine("Enter Dellverables");
                         string? Dellverables = Console.ReadLine();
@@ -106,7 +127,10 @@ internal class Program
                         Advanced=3
                         Experet=4
                         ");
-                        ChefExperience Copmlexity = (ChefExperience)int.Parse(Console.ReadLine()!);
+                        int Copmlexity;
+                        test = int.TryParse(Console.ReadLine(), out Copmlexity);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
 
                         Console.WriteLine("Does the task depend on other tasks? (Y/N)");
                         List<BO.TaskInList> tasksInList = new List<BO.TaskInList>();
@@ -118,20 +142,29 @@ internal class Program
                             string[] idNumbers = dependeencies!.Split(new char[] { '-', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                             foreach (string id in idNumbers)
                             {
-                                BO.Task1? task_ = s_bl.Task1.Read(int.Parse(id));
+                                int _id;
+                                test = int.TryParse(id, out _id);
+                                if (test == false)
+                                    throw new BlConvertErrorException("The conversion failed");
+
+                                BO.Task1? task_ = s_bl.Task1.Read(_id);
                                 tasksInList.Add(new BO.TaskInList() { Id = task_!.Id, Alias = task_.Alias, Description = task_.Description, status = task_.status });
                             }
                         }
 
                         Task1 newTask = new()
-                        { Id = 0, Alias = alias, Description = descripation, status = ScheduledDate == null ? Status.בלתי_מתוכנן : Status.מתוזמן, dependeencies = tasksInList, CreatedAtDate = createdAtDate, ScheduledDate = ScheduledDate, RequiredEffortTime = RequiredEffortTime, Dellverables = Dellverables, Remarks = Remarks, Copmlexity = Copmlexity };
+                        { Id = 0, Alias = alias, Description = descripation, status = ScheduledDate == null ? Status.בלתי_מתוכנן : Status.מתוזמן, dependeencies = tasksInList, CreatedAtDate = createdAtDate, ScheduledDate = ScheduledDate, RequiredEffortTime = RequiredEffortTime, Dellverables = Dellverables, Remarks = Remarks, Copmlexity = (ChefExperience)Copmlexity };
                         s_bl.Task1.Create(newTask);
                         break;
                     }
                 case 2:
                     {
                         Console.WriteLine("Enter a task ID number");
-                        BO.Task1 task = s_bl.Task1.Read(int.Parse(Console.ReadLine()!))!;
+                        int _id;
+                        bool test = int.TryParse(Console.ReadLine(), out _id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        BO.Task1 task = s_bl.Task1.Read(_id)!;
                         Console.WriteLine($@"
 ID= {task.Id}
 Alias= {task.Alias}
@@ -171,7 +204,10 @@ status= {x.status}
                         string? ans;
 
                         Console.WriteLine("Enter an ID number");
-                        int id = int.Parse(Console.ReadLine()!);
+                        int id;
+                        bool test = int.TryParse(Console.ReadLine(), out id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         BO.Task1 task = s_bl.Task1.Read(id)!;
 
                         Console.WriteLine("Enter an Alias");
@@ -182,27 +218,47 @@ status= {x.status}
 
                         Console.WriteLine("Enter Scheduled Date in the format 00.00.0000");
                         ans = Console.ReadLine();
-                        DateTime?ScheduledDate = ans==" "?null:DateTime.Parse(ans);
-  
+                        DateTime ans1;
+                        test = DateTime.TryParse(ans, out ans1);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        DateTime? ScheduledDate = ans == " " ? null : ans1;
+                       
+
 
                         Console.WriteLine("Enter Start Date in the format 00.00.0000");
                         ans = Console.ReadLine();
-                        DateTime? StartDate = ans == " " ? null : DateTime.Parse(ans);
+                        test = DateTime.TryParse(ans, out ans1);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        DateTime? StartDate = ans == " " ? null : ans1;
                         
 
                         Console.WriteLine("Enter Complete Date in the format 00.00.0000");
                         ans = Console.ReadLine();
-                        DateTime? CompleteDate = ans == " " ? null : DateTime.Parse(ans);
+                        test = DateTime.TryParse(ans, out ans1);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        DateTime? CompleteDate = ans == " " ? null : ans1;
 
 
                         Console.WriteLine("RequiredE ffort Time");
                         Console.WriteLine("Enter num of days");
-                        string day = Console.ReadLine()!;
+                        int day;
+                        test = int.TryParse(Console.ReadLine(), out day);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Console.WriteLine("Enter num of hours");
-                        string? hours = Console.ReadLine();
+                        int hours;
+                        test = int.TryParse(Console.ReadLine(), out hours);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Console.WriteLine("Enter num of minutes");
-                        string? minutes = Console.ReadLine();
-                        TimeSpan RequiredEffortTime = new TimeSpan(int.Parse(day!), int.Parse(hours!), int.Parse(minutes!), 0);
+                        int minutes;
+                        test = int.TryParse(Console.ReadLine(), out minutes);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        TimeSpan RequiredEffortTime = new TimeSpan(day, hours, minutes, 0);
 
                         Console.WriteLine("Enter Dellverables");
                         string? Dellverables = Console.ReadLine();
@@ -217,7 +273,10 @@ status= {x.status}
                         if (Console.ReadLine() == "Y")
                         {
                             Console.WriteLine("Enter id of chef");
-                            int _id = int.Parse(Console.ReadLine());
+                            int _id;
+                            test = int.TryParse(Console.ReadLine(),out _id);
+                            if (test == false)
+                                throw new BlConvertErrorException("The conversion failed");
                             Console.WriteLine("Enter name of chef");
                             string? _name = Console.ReadLine();
                             chef = new() { Id = _id, Name = _name };
@@ -256,7 +315,7 @@ status= {x.status}
 
                         Task1 newTask = new()
                         { Id = id, Alias = alias, Description = descripation, status =_status,
-                          dependeencies= s_bl.Task1.Read(id).dependeencies, CreatedAtDate= s_bl.Task1.Read(id)!.CreatedAtDate,
+                          dependeencies= s_bl.Task1.Read(id)!.dependeencies, CreatedAtDate= s_bl.Task1.Read(id)!.CreatedAtDate,
                           ScheduledDate = ScheduledDate,StartDate=StartDate, CompleteDate=CompleteDate,
                           RequiredEffortTime = RequiredEffortTime, Dellverables = Dellverables, Remarks = Remarks, chef = chef,
                           Copmlexity = Copmlexity };
@@ -267,13 +326,20 @@ status= {x.status}
                 case 5:
                     {
                         Console.WriteLine("Enter an ID number to delete");
-                        s_bl.Task1.Delete(int.Parse(Console.ReadLine()!));
+                        int _id;
+                        bool test = int.TryParse(Console.ReadLine(), out _id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        s_bl.Task1.Delete(_id);
                         break;
                     }
                  case 6:
                     {
                         Console.WriteLine("Enter an ID of chef");
-                        int id=int.Parse(Console.ReadLine()!);
+                        int id;
+                        bool test = int.TryParse(Console.ReadLine(), out id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Chef chef = s_bl.Chef.Read(id)!;
                         IEnumerable<BO.TaskInList> tasks = s_bl.Task1.ReadAllPossibleTasks(chef);
                         print(tasks);
@@ -282,7 +348,10 @@ status= {x.status}
                  case 7:
                     {
                         Console.WriteLine("Enter an ID of chef");
-                        int id = int.Parse(Console.ReadLine()!);
+                        int id;
+                        bool test = int.TryParse(Console.ReadLine(), out id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Chef chef = s_bl.Chef.Read(id)!;
                         IEnumerable<BO.TaskInList> tasks = s_bl.Task1.ReadAllPerLevelOfChef(chef);
                         print(tasks);
@@ -377,11 +446,18 @@ status= {x.status}
                 case 1: 
                     {
                         Console.WriteLine("Enter an Id");
-                        int id = int.Parse(Console.ReadLine()!);
+                        int id;
+                        bool test = int.TryParse(Console.ReadLine(), out id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Console.WriteLine("Enter a mail");
                         string? email= Console.ReadLine();
                         Console.WriteLine("Enter a cost");
-                        double cost= double.Parse(Console.ReadLine()!);
+
+                        double cost;
+                        test = double.TryParse(Console.ReadLine(), out cost);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Console.WriteLine("Enter a name");
                         string? name = Console.ReadLine();
                         Console.WriteLine(@"
@@ -392,16 +468,23 @@ status= {x.status}
                         Advanced=3
                         Experet=4
                         ");
-                        ChefExperience Level = (ChefExperience)int.Parse(Console.ReadLine()!);
-
-                        Chef chef= new() { Id = id, Email=email, Cost = cost, Name = name,Level = Level ,deleted=false};
+                        int Level;
+                        test = int.TryParse(Console.ReadLine(), out Level);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                    
+                       Chef chef= new() { Id = id, Email=email, Cost = cost, Name = name,Level = (BO.ChefExperience)Level, deleted=false};
                         s_bl.Chef.Create(chef);
                         break;
                     }
                     case 2: 
                     {
                         Console.WriteLine("Enter an Id");
-                        int id = int.Parse(Console.ReadLine()!);
+                        int id;
+                        bool test = int.TryParse(Console.ReadLine(), out id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+
                         Chef chef = s_bl.Chef.Read(id)!;
                        
                         if (chef.task == null)
@@ -459,11 +542,18 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                 case 4: 
                     {
                         Console.WriteLine("Enter an Id");
-                        int id=int.Parse(Console.ReadLine()!);
+                        int id;
+                        bool test = int.TryParse(Console.ReadLine(), out id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+                        
                         Console.WriteLine("Enter a mail");
                         string? email = Console.ReadLine();
                         Console.WriteLine("Enter a cost");
-                        double cost = double.Parse(Console.ReadLine()!);
+                        double cost;
+                        test = double.TryParse(Console.ReadLine(), out cost);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         Console.WriteLine("Enter a name");
                         string? name = Console.ReadLine();
                         Console.WriteLine(@"
@@ -474,8 +564,11 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         Advanced=3
                         Experet=4
                         ");
-                        ChefExperience Level = (ChefExperience)int.Parse(Console.ReadLine()!);
-                        
+                        int Level;
+                        test = int.TryParse(Console.ReadLine(), out Level);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
+
                         Console.WriteLine("Do you want to add task? Y/N");
 
                         TaskInChef? _task = null;
@@ -483,23 +576,29 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         if (Console.ReadLine() == "Y")
                         {
                             Console.WriteLine("Enter Id of the task");
-                            int? taskId = int.Parse(Console.ReadLine()!);
+                            int taskId;
+                            test = int.TryParse(Console.ReadLine(), out taskId);
+                            if (test == false)
+                                throw new BlConvertErrorException("The conversion failed");
                             Console.WriteLine("Enter Alias of the task");
                             string? alias = Console.ReadLine();
-                            _task = new() { Id = taskId, Alias = alias };
+                            _task = new() { Id = (int?)taskId, Alias = alias };
                         }
 
                         else
                             _task = s_bl.Chef.Read(id).task;
 
-                        Chef chef = new() { Id=id, Name=name, Email=email, Cost=cost, Level=Level, task=_task};
+                        Chef chef = new() { Id=id, Name=name, Email=email, Cost=cost, Level=(ChefExperience)Level, task=_task};
                         s_bl.Chef.Update(chef);
                         break;
                     }
                     case 5:
                     {
                         Console.WriteLine("Enter an Id");
-                        int id = int.Parse(Console.ReadLine()!);
+                        int id;
+                        bool test = int.TryParse(Console.ReadLine(), out id);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
                         s_bl.Chef.Delete(id);
                         break;
                     }
@@ -513,9 +612,12 @@ Task of the chef: Id- {chef.task.Id} Alias- {chef.task.Alias}
                         Advanced=3
                         Experet=4
                         ");
-                        ChefExperience Level = (ChefExperience)int.Parse(Console.ReadLine()!);
+                        int Level;
+                        bool test = int.TryParse(Console.ReadLine(), out Level);
+                        if (test == false)
+                            throw new BlConvertErrorException("The conversion failed");
 
-                        IEnumerable<BO.Chef> chefs = s_bl.Chef.ReadAllPerLevel(Level);
+                        IEnumerable<BO.Chef> chefs = s_bl.Chef.ReadAllPerLevel((ChefExperience)Level)!;
                         foreach (BO.Chef chef in chefs)
                         {
                             if (chef.task == null)
@@ -635,7 +737,10 @@ status={task.status}
                     case 3:
                         {
                             Console.WriteLine("Enter start date of project date:");
-                            DateTime startProject = DateTime.Parse(Console.ReadLine()!);
+                            DateTime startProject;
+                            bool test = DateTime.TryParse(Console.ReadLine(), out startProject);
+                            if (test == false)
+                                throw new BlConvertErrorException("The conversion failed");
                             s_bl.Task1.CreateStartProject(startProject);
                             break;
                         }
@@ -661,7 +766,10 @@ status={task.status}
                     case 5:
                         {
                             Console.WriteLine("Enter end date of project date:");
-                            DateTime endProject = DateTime.Parse(Console.ReadLine()!);
+                            DateTime endProject;
+                            bool test = DateTime.TryParse(Console.ReadLine(), out endProject);
+                            if (test == false)
+                                throw new BlConvertErrorException("The conversion failed");
                             s_bl.Task1.CreateEndProject(endProject);
                             break;
                         }

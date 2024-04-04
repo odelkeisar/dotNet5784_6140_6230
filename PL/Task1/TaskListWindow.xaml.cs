@@ -44,6 +44,8 @@ namespace PL.Task1
         }
         public static readonly DependencyProperty TaskListProparty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        
+        BO.TaskInList? task_ = null;
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -115,8 +117,8 @@ namespace PL.Task1
                     if (result == MessageBoxResult.Yes)
                     {
                         s_bl.Task1.Delete(task_.Id);
-                        TaskList = new ObservableCollection<BO.TaskInList>(s_bl.Task1.ReadAll()!);
-                       task_ = null;
+                        TaskList = StatusTask_ == BO.Status.ללא_סינון ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
+                        task_ = null;
                     }
                 }
                 else
@@ -127,7 +129,6 @@ namespace PL.Task1
             catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
         }
 
-        BO.TaskInList? task_ = null;
 
         private void DeleteMarker(object sender, MouseButtonEventArgs e)
         {

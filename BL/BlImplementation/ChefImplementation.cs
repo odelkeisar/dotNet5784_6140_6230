@@ -74,7 +74,7 @@ internal class ChefImplementation : IChef
     }
     
     /// <summary>
-    /// הכנסה שלך שף לארכיון
+    ///  שיחזור שף מהארכיון
     /// </summary>
     /// <param name="chef"></param>
     /// <exception cref="BO.BlDoesNotExistException"></exception>
@@ -107,7 +107,7 @@ internal class ChefImplementation : IChef
         if (listTask != null)
         {
             task= listTask.FirstOrDefault();
-            foreach (var task_ in listTask)
+            foreach (var task_ in listTask) //בדיקה גילוי המשימה המוקדמת ביותר שהשף משוייך אליה בטרם הסתיימה
             {
                 if (task_!.ScheduledDate < task!.ScheduledDate)
                     task = task_;
@@ -119,9 +119,6 @@ internal class ChefImplementation : IChef
         if (task == null)
             taskInChef = null;
         else
-            taskInChef = new() { Id = task.Id, Alias = task.Alias };
-
-        if (task != null)
             taskInChef = new TaskInChef() { Id = task.Id, Alias = task.Alias };
 
         BO.Chef? chef2 = new BO.Chef() { Id = chef1.Id, deleted = chef1.deleted, Email = chef1.Email, Cost = chef1.Cost, Name = chef1.Name, Level = (BO.ChefExperience)chef1.Level!, task = taskInChef };
@@ -183,16 +180,16 @@ internal class ChefImplementation : IChef
             throw new BlNoChefsAccordingLevelException($"אין שפים ברמת {level}");
 
         return (from DO.Chef chef in listChef!
-                let task = _dal.Task1.Read(t => t.ChefId == chef.Id)
+                let chef_ = Read(chef.Id)
                 select new BO.Chef
                 {
-                    Id = chef.Id,
-                    deleted = chef.deleted,
-                    Email = chef.Email,
-                    Cost = chef.Cost,
-                    Name = chef.Name,
-                    Level = (BO.ChefExperience)chef.Level!,
-                    task = task != null ? new TaskInChef() { Id = task.Id, Alias = task.Alias } : null
+                    Id = chef_.Id,
+                    deleted = chef_.deleted,
+                    Email = chef_.Email,
+                    Cost = chef_.Cost,
+                    Name = chef_.Name,
+                    Level = (BO.ChefExperience)chef_.Level!,
+                    task = chef_.task != null ? new TaskInChef() { Id = chef_.task.Id, Alias = chef_.task.Alias } : null
                 });
     }
 

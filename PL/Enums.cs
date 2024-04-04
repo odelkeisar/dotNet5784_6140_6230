@@ -11,7 +11,7 @@ namespace PL;
 /// </summary>
 internal class LevelChef : IEnumerable
 {
-    static readonly IEnumerable<BO.ChefExperience> c_enums = //אוסף של כל הערכים האפשריים באינם
+    static readonly IEnumerable<BO.ChefExperience> c_enums = //אוסף של כל הערכים האפשריים בדרגות השף
 (Enum.GetValues(typeof(BO.ChefExperience)) as IEnumerable<BO.ChefExperience>)!;
 
     public IEnumerator GetEnumerator() => c_enums.GetEnumerator();
