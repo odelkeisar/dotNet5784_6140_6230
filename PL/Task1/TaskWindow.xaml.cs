@@ -164,7 +164,7 @@ public partial class TaskWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error: {ex.Message}");
+            MessageBox.Show($"Error: {ex.Message}", "שגיאה", MessageBoxButton.OK,MessageBoxImage.Error,MessageBoxResult.OK, MessageBoxOptions.RightAlign);
 
             if ((string)clickedButton.Content == "עדכן")//איתחול מחדש של המשימה להיות ריקה
             {

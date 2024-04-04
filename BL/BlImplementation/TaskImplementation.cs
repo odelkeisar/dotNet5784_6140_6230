@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Numerics;
 
 
+
 namespace BlImplementation;
 internal class TaskImplementation : ITask1
 {
@@ -244,7 +245,7 @@ internal class TaskImplementation : ITask1
     public void Update(BO.Task1 item)
     {
         BO.Task1? botask = Read(item.Id); //בדיקה שהמשימה קיימת}
-         
+
         if (item.Copmlexity == BO.ChefExperience.ללא_סינון || item.Copmlexity == null)
             throw new BlChefLevelNoEnteredException("יש להזין רמת קושי");
         if (item.Alias == "")
@@ -297,19 +298,18 @@ internal class TaskImplementation : ITask1
             else
                 item.ScheduledDate = botask.ScheduledDate;
 
-            if (item.dependeencies?.Count > 0) 
+            if (item.dependeencies?.Count > 0)
             {
                 foreach (var dependee in item.dependeencies)
                 {
                     if (s_bl.Task1.Read(dependee.Id)!.ForecastDate == null)
                         throw new BlCannotaAddDependenciesException("לא ניתן להוסיף לרשימת תלויות משימה בלי תאריך מתוכנן לסיום");
-
-                    if (s_bl.Task1.Read(dependee.Id)!.ForecastDate > item.ScheduledDate)
+                        if (s_bl.Task1.Read(dependee.Id)!.ForecastDate > item.ScheduledDate)
                         throw new BlEarlyFinishDateFromPreviousTaskException("לא ניתן להכניס משימה שהמשימה הנוכחית תהיה תלויה בה, אם תאריך התחלה המתוכנן של המשימה הנוכחית הוא לפני התאריך סיום המתוכנן של המשימה שרוצים להוסיף");
                 }
             }
 
-            if (botask.dependeencies?.Count > 0 )
+            if (botask.dependeencies?.Count > 0)
             {
                 foreach (var dependee in botask.dependeencies)
                 {
@@ -356,7 +356,7 @@ internal class TaskImplementation : ITask1
 
             if (item.chef != null)
             {
-                if (item.Copmlexity == null || item.Copmlexity==BO.ChefExperience.ללא_סינון) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
+                if (item.Copmlexity == null || item.Copmlexity == BO.ChefExperience.ללא_סינון) //אם רוצים להקצות שף למשימה יש לבדוק  שיש רמה למשימה
                     throw new BllackingInLevelException("על מנת לשייך שף יש להזין מורכבות את המשימה");
 
                 DO.Chef? _chef = _dal.Chef.Read((int)item.chef.Id!);
@@ -435,7 +435,7 @@ internal class TaskImplementation : ITask1
             if (_dal.Task1.Read(depend!.DependentTask)!.ScheduledDate != null && _dal.Task1.Read(depend!.DependentTask)!.ScheduledDate < scheduledDate + _dal.Task1.Read(id)!.RequiredEffortTime)
                 throw new BlProblemAboutRequiredEffortTimeException("לא ניתן לשנות תאריך מתוכנן להתחלה כך שהמשימה תוכל להסתיים אחרי תאריך התחלה של משימה התלויה בה");
         }
- 
+
         return true;
 
     }
@@ -477,8 +477,8 @@ internal class TaskImplementation : ITask1
     /// <returns></returns>
     public IEnumerable<BO.TaskInList> ReadAllNondependenceTask(BO.Task1 task)
     {
-        if (task.dependeencies == null) 
-            return ReadAll(); 
+        if (task.dependeencies == null)
+            return ReadAll();
         IEnumerable<BO.TaskInList> tasksList_ = ReadAll();
 
         foreach (var task_ in task.dependeencies)
@@ -499,7 +499,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.CompleteDate != null);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("לא הושלמו משימות");
-        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus((DO.Task1)doTask) });
     }
 
     /// <summary>
@@ -625,7 +625,7 @@ internal class TaskImplementation : ITask1
         if (listDependeencies != null)
         {
             foreach (var taskinlist in listDependeencies) //בדיקה שכל המשימות הקודומת הסתיימו
-            { 
+            {
                 BO.Task1 task_ = Read(taskinlist.Id)!;
                 if (task_.CompleteDate == null)
                     throw new BlUnableToStartTaskException($"לא ניתן להתחיל משימה לפני שהמשימות הקודמות הושלמו");
