@@ -32,6 +32,7 @@ public partial class TaskWindow : Window
     }
     public static readonly DependencyProperty TaskProparty =
         DependencyProperty.Register("task", typeof(BO.Task1), typeof(TaskWindow), new PropertyMetadata(null));
+    BO.TaskInList? taskMarker = new BO.TaskInList();
     public TaskWindow(int id)
     {
         taskMarker = new BO.TaskInList();
@@ -89,7 +90,7 @@ public partial class TaskWindow : Window
         }
     }
 
-    BO.TaskInList? taskMarker = new BO.TaskInList();
+    
     private void ListView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         taskMarker = (sender as ListView)!.SelectedItem as BO.TaskInList;
@@ -128,6 +129,8 @@ public partial class TaskWindow : Window
         listTaskForDependenceWindow.Closed += (s, args) =>
         {
             BO.TaskInList? task_ = listTaskForDependenceWindow.selectesTask;
+            listTaskForDependenceWindow.selectesTask = null;
+
             if (task_ != null)
             {
                 task.dependeencies!.Add(task_);
@@ -163,20 +166,12 @@ public partial class TaskWindow : Window
         {
             MessageBox.Show($"Error: {ex.Message}");
 
-            if ((string)clickedButton.Content == "הוסף")//איתחול מחדש של המשימה להיות ריקה
-            {
-                task = new BO.Task1() { CreatedAtDate = s_bl.Task1.ReadClockProject() };
-                task.chef = new BO.ChefInTask();
-                task.Copmlexity = BO.ChefExperience.מתחיל;
-                task.dependeencies = new List<BO.TaskInList>();
-            }
-            else
+            if ((string)clickedButton.Content == "עדכן")//איתחול מחדש של המשימה להיות ריקה
             {
                 task = s_bl.Task1.Read(task.Id)!;        //איתחול מחדש של המשימה להיות עם הערכים המקוריים לפני השינוים השגויים
                 if (task.chef == null) { task.chef = new BO.ChefInTask(); }
                 if (task.dependeencies == null) { task.dependeencies = new List<BO.TaskInList>(); }
             }
-
         }
     }
 }

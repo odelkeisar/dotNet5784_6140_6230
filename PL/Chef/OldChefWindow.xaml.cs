@@ -53,7 +53,7 @@ public partial class OldChefWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void Button_Click(object sender, RoutedEventArgs e)
+    private void ButtonRecovery_Click(object sender, RoutedEventArgs e)
     {
         if (selectedchef != null)
         {
@@ -78,7 +78,7 @@ public partial class OldChefWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    private void Marker_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
     {
         selectedchef = (sender as ListView)?.SelectedItem as BO.Chef;
     }

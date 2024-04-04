@@ -14,4 +14,3 @@ public interface IDal
     IChef Chef { get; }
     IDependeency Dependeency { get; }
 }
-

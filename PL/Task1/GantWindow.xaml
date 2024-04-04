@@ -53,7 +53,14 @@
 
             </DataGrid>
 
-            <Label Content="                      :מקרא&#xD;&#xA;תכלת= בלתי מתוכנן&#xA;          צהוב= מתוזמן&#xA;          ירוק= בתהליך&#xA;              אדום= בוצע   " HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Row="1"  Height="100" Foreground="#FFDF9FE5"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1" Margin="10,5,0,0">
+                <TextBlock Text="בלתי_מתוכנן " Foreground="DeepSkyBlue" FontWeight="Bold" Margin="5,0"/>
+                <TextBlock Text="מתוזמן" Foreground="Yellow" FontWeight="Bold" Margin="5,0"/>
+                <TextBlock Text="בתהליך" Foreground="LawnGreen" FontWeight="Bold" Margin="5,0"/>
+                <TextBlock Text="בוצע" Foreground="Red" FontWeight="Bold" Margin="5,0"/>
+            </StackPanel>
+
+
 
         </Grid>
 

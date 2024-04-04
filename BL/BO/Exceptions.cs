@@ -173,3 +173,9 @@ public class BlCannotaAddDependenciesException : Exception //לא ניתן לה�
 {
     public BlCannotaAddDependenciesException(string? message) : base(message) { }
 }
+
+[Serializable]
+public class BlConvertErrorException : Exception //המרה לא תיקנית
+{
+    public BlConvertErrorException(string? message) : base(message) { }
+}

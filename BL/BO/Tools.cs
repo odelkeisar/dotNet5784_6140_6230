@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BlImplementation;
+using DalApi;
 using System.Reflection;
 
 namespace BO;
@@ -13,7 +14,7 @@ static public class Tools
     /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>
-    static internal Status GetStatus(DO.Task1 task)
+    static internal Status GetStatus(this TaskImplementation task1, DO.Task1 task)
     {
         if (task.CompleteDate != null)
             return Status.בוצע;
@@ -26,16 +27,11 @@ static public class Tools
 
         return Status.בלתי_מתוכנן;
     }
-    public static string ToStringProperty<T>(T t)
+    public static string ToStringProperty<T>(this T t)
     {
         string str = "";
-        foreach (PropertyInfo item in t.GetType().GetProperties())
-            str += "\n" + item.Name
-    + ": " + item.GetValue(t, null);
+        foreach (PropertyInfo item in t.GetType().GetProperties()) //ריצה על כל התכונות של הישות 
+            str += "\n" + item.Name  + ": " + item.GetValue(t, null);
         return str;
     }
-
-
 }
-
-

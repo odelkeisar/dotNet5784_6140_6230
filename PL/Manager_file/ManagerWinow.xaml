@@ -39,17 +39,17 @@
         </Grid.RowDefinitions>
 
 
-        <Button Content="ניקוי נתונים"  Style="{StaticResource MyButtonStyle1}"  Margin="0,30,0,0"   Width="160" HorizontalAlignment="Center" Click="reset_Click" Grid.Row="2" />
-        <Button Content="אתחול נתונים"   Style="{StaticResource MyButtonStyle1}"  Margin="0,70,0,0"   Width="160" HorizontalAlignment="Center" Click="DataInitialization_Click" Grid.Row="2" >
+        <Button Content="ניקוי נתונים"  Style="{StaticResource MyButtonStyle1}"  Margin="0,30,0,0"   Width="160" Click="reset_Click" Grid.Row="2" />
+        <Button Content="אתחול נתונים"   Style="{StaticResource MyButtonStyle1}"  Margin="0,70,0,0"   Width="160"  Click="DataInitialization_Click" Grid.Row="2" >
 
         </Button>
-        <Button Content="טיפול בשפים"  Style="{StaticResource MyButtonStyle1}"   Height="92" Width="242" Click="BottonChef_Click" Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <Button Content="טיפול במשימות" Style="{StaticResource MyButtonStyle1}"    Height="92" Width="242" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click"/>
-        <Button Content="תרשים גאנט" Style="{StaticResource MyButtonStyle1}" Height="92" Width="242" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Click="ButtonGant_Click_1" />
+        <Button Content="טיפול בשפים"  Style="{StaticResource MyButtonStyle1}"   Height="92" Width="242" Click="BottonChef_Click" Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center"/>
+        <Button Content="טיפול במשימות" Style="{StaticResource MyButtonStyle1}"    Height="92" Width="242" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" Click="ButtonTasks_Click"/>
+        <Button Content="תרשים גאנט" Style="{StaticResource MyButtonStyle1}" Height="92" Width="242"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Click="ButtonGant_Click_1" />
         <Label Content="תאריך תחילת פרויקט" HorizontalAlignment="Center" Margin="0,25,0,73" Grid.Row="0"  Height="35" FontSize="15" />
         <Label Content="תאריך סיום פרויקט" HorizontalAlignment="Center" Margin="0,25,0,64" Grid.Row="1" FontSize="15"/>
-        <TextBox TextAlignment="Center" TextWrapping="Wrap" Text="{Binding startDateProject, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="160" Grid.Column="0" Grid.Row="0"/>
-        <TextBox TextAlignment="Center" TextWrapping="Wrap" Text="{Binding endDateProject, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="160" Grid.Column="0" Grid.Row="1" />
+        <TextBox TextAlignment="Center" TextWrapping="Wrap" Text="{Binding startDateProject, Mode=TwoWay, TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="160" Grid.Column="0" Grid.Row="0"/>
+        <TextBox TextAlignment="Center" TextWrapping="Wrap" Text="{Binding endDateProject, Mode=TwoWay,  TargetNullValue=''}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="160" Grid.Column="0" Grid.Row="1" />
 
         <Button Grid.Column="0" Grid.Row="0" Margin="0,65,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" MouseDoubleClick="ButtonUpdateStartProject_Click" >
             <Image Source="/image/update.jpg" Height="30" Width="50"/>

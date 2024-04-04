@@ -15,19 +15,26 @@
         </Grid.RowDefinitions>
 
         <!--Internal, Upper Grid-->
-        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto" >
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE9F0F1"/>
+                    <GradientStop Color="#FF00D1FF" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+           
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="בחר משימה לעדכון" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
-            <ComboBox HorizontalAlignment="Stretch" 
+            <ComboBox   FlowDirection="RightToLeft"  HorizontalAlignment="Stretch" 
                       SelectedValue="{Binding Path=StatusTask_, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
-                      SelectionChanged="ChangeSelect" ItemsSource="{Binding Source= {StaticResource StatusTaskkey}}"  BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
+                      SelectionChanged="ChangeSelect" ItemsSource="{Binding Source= {StaticResource StatusTaskkey}}" >
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
-                        <GradientStop Color="#FF35A7AF" Offset="1"/>
+                        <GradientStop Color="#FFC1E1E3" Offset="1"/>
                     </LinearGradientBrush>
                 </ComboBox.Background>
             </ComboBox>
@@ -41,14 +48,13 @@
                 </GridView>
             </ListView.View>
         </ListView>
-       
 
-        
+
+
         <CheckBox Content="הצג משימות לא מוקצות" HorizontalAlignment="Left" Margin="21,0,0,0" Grid.Row="2" VerticalAlignment="Center" Checked="Unassigned_Checked"
                   Unchecked="Unassigned_Unchecked"  IsEnabled="{Binding StatusTask_, Mode=TwoWay, Converter={StaticResource ConverTaskListCheckBoxToBoolKey}}"/>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <!--<Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="ButtonAdd_Click"/>-->
             <Button Height="50" Width="100" Click="ButtonDelete_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/image/delete.jpg" Width="50" Height="30"/>
@@ -62,7 +68,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="-397,508,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        
 
     </Grid>
 </Window>

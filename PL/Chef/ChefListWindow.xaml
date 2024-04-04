@@ -18,16 +18,16 @@
         </Grid.RowDefinitions>
 
         <!--Internal, Upper Grid-->
-        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="רשימת השפים לפי רמה מקצועית" HorizontalAlignment="Left" Margin="97,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <!--בתיבת בחירה יש את כל הרמות של השף ה מקושר לאינם של הדרגות ויש גישה משני הכיוונים המקור של הרשימה הזאת הוא מה שכתוב בשורה השנייה-->
-            <ComboBox HorizontalAlignment="Stretch"        
+            <ComboBox FlowDirection="RightToLeft" HorizontalAlignment="Stretch"        
                   SelectedValue="{Binding Path=level, Mode=TwoWay}" VerticalAlignment="Stretch"  Grid.Column="1" 
-                  SelectionChanged="ChangeSelect" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FF2B8193">
+                  SelectionChanged="ChangeSelect" ItemsSource="{Binding Source={StaticResource LevelChefKey}}" Foreground="#FF2B8193">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>

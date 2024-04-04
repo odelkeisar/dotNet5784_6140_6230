@@ -27,7 +27,7 @@ class ConvertIdToContent : IValueConverter
 }
 
 /// <summary>
-/// אם אפס מחזיר שקר כנראה בשלב שאי אפשר להוסיף נתונים
+/// אם לא אפס מחזיר שקר כנראה בשלב שאי אפשר להוסיף נתונים
 /// </summary>
 class ConvertIdToBool : IValueConverter
 {
@@ -87,7 +87,7 @@ class ConvertFinalDateKey : IValueConverter
     }
 }
 /// <summary>
-/// אם הערך אפס הפונקציה מחזירה אמת
+/// אם הערך לא אפס הפונקציה מחזירה אמת
 /// </summary>
 class ConverTtaskAssignmentToBool : IValueConverter
 {
@@ -103,7 +103,7 @@ class ConverTtaskAssignmentToBool : IValueConverter
 }
 
 /// <summary>
-/// checkBox for show thsk without chef
+/// הצגת המשימות שטרם הוקצו רק כאשר הערכים המתוזמנים בלבד מוצגים
 /// </summary>
 class ConverTaskListCheckBoxToBool : IValueConverter
 {
@@ -117,10 +117,3 @@ class ConverTaskListCheckBoxToBool : IValueConverter
         throw new NotImplementedException();
     }
 }
-
-
-
-    
-
-
-

@@ -135,29 +135,11 @@ namespace PL.Manager_file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonTasks_Click(object sender, RoutedEventArgs e)
         {
             new TaskListWindow().ShowDialog();
         }
-        /// <summary>
-        /// פונקציה הנפעלת כאשר המשתמש לוחץ על כפתור של סיום הפרויקט
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                s_bl.Task1.CreateEndProject((DateTime)endDateProject!);
-                endDateProject = s_bl.Task1.ReadEndProject();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-                endDateProject = s_bl.Task1.ReadEndProject();
-            }
-        }
+       
         /// <summary>
         ///  פונקציה הנפעלת כאשר המשתמש לוחץ על כפתור של תרשים גאמט
         /// </summary>

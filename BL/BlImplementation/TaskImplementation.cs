@@ -197,7 +197,7 @@ internal class TaskImplementation : ITask1
     public IEnumerable<BO.TaskInList> ReadAll()
     {
         return (from DO.Task1 doTask in _dal.Task1.ReadAll()!
-                select new BO.TaskInList() { Id = doTask.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+                select new BO.TaskInList() { Id = doTask.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) });
     }
 
 
@@ -243,10 +243,8 @@ internal class TaskImplementation : ITask1
     /// <exception cref="BlChefLevelTooLowException"></exception>
     public void Update(BO.Task1 item)
     {
-        BO.Task1? botask = Read(item.Id); //בדיקה שהמשימה קיימת
-
-        if (botask == null)
-            throw new BlDoesNotExistException($"המסימה עם המספר זהות{item.Id} לא קיימת");
+        BO.Task1? botask = Read(item.Id); //בדיקה שהמשימה קיימת}
+         
         if (item.Copmlexity == BO.ChefExperience.ללא_סינון || item.Copmlexity == null)
             throw new BlChefLevelNoEnteredException("יש להזין רמת קושי");
         if (item.Alias == "")
@@ -299,7 +297,7 @@ internal class TaskImplementation : ITask1
             else
                 item.ScheduledDate = botask.ScheduledDate;
 
-            if (item.dependeencies.Count > 0) 
+            if (item.dependeencies?.Count > 0) 
             {
                 foreach (var dependee in item.dependeencies)
                 {
@@ -311,7 +309,7 @@ internal class TaskImplementation : ITask1
                 }
             }
 
-            if (botask.dependeencies.Count > 0 )
+            if (botask.dependeencies?.Count > 0 )
             {
                 foreach (var dependee in botask.dependeencies)
                 {
@@ -329,7 +327,7 @@ internal class TaskImplementation : ITask1
                 }
             }
 
-            if (item.dependeencies.Count > 0)
+            if (item.dependeencies?.Count > 0)
             {
                 foreach (var dependee in item.dependeencies)
                 {
@@ -411,7 +409,7 @@ internal class TaskImplementation : ITask1
     public bool UpdateScheduledDate(int id, DateTime scheduledDate)
     {
         if (_dal.Task1.ReadEndProject() != null)
-            throw new BlInappropriateStepException("לא ניתן לשנות תאריך התחלה מתוכנן למשימה אם יש תריך סיום לפרויקט");
+            throw new BlInappropriateStepException("לא ניתן לשנות תאריך התחלה מתוכנן למשימה אם יש תאריך סיום לפרויקט");
 
         DO.Task1? task = _dal.Task1.Read(id);
         if (task == null)
@@ -451,7 +449,7 @@ internal class TaskImplementation : ITask1
     {
         IEnumerable<BO.TaskInList> listTasks = _dal.Task1.ReadAll()!
       .Where(doTask => doTask!.Copmlexity == (DO.ChefExperience)chef.Level!)
-      .Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+      .Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) });
         if (listTasks.Count() == 0)
             throw new BlNoTasksbyCriterionException("אין משימות שמתאימות לרמת השף");
         return listTasks;
@@ -469,13 +467,18 @@ internal class TaskImplementation : ITask1
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("אין משימות לרמה זאת");
 
-        return (tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) }));
+        return (tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) }));
     }
 
+    /// <summary>
+    /// חיפוש משימות שהמשימה הנוכחית לא תלויה בהם כדי להציג על המסך את התלויות שאפשר להוסיף למשימה
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public IEnumerable<BO.TaskInList> ReadAllNondependenceTask(BO.Task1 task)
     {
-        if (task.dependeencies == null)
-            return ReadAll();
+        if (task.dependeencies == null) 
+            return ReadAll(); 
         IEnumerable<BO.TaskInList> tasksList_ = ReadAll();
 
         foreach (var task_ in task.dependeencies)
@@ -496,7 +499,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.CompleteDate != null);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("לא הושלמו משימות");
-        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) });
     }
 
     /// <summary>
@@ -510,7 +513,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.StartDate != null && task.CompleteDate == null);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("אין משימות המטופלות כעת על ידי שף");
-        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) });
     }
 
     /// <summary>
@@ -524,7 +527,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ChefId == 0);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("כל המשימות מוקצות לשפים");
-        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) });
     }
 
     /// <summary>
@@ -537,7 +540,7 @@ internal class TaskImplementation : ITask1
         IEnumerable<DO.Task1?>? tasks = _dal.Task1.ReadAll(task => task.ScheduledDate == null);
         if (tasks!.Count() == 0)
             throw new BlDoesNotExistException("לכל המשימות יש תאריך התחלה מתוזמן");
-        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = Tools.GetStatus(doTask) });
+        return tasks!.Select(doTask => new BO.TaskInList() { Id = doTask!.Id, Description = doTask.Description, Alias = doTask.Alias, status = this.GetStatus(doTask) });
     }
 
 
@@ -565,7 +568,7 @@ internal class TaskImplementation : ITask1
 
         foreach (var task in v)
         {
-            results.Add(new BO.TaskInList() { Id = task.Id, Alias = task.Alias, Description = task.Description, status = Tools.GetStatus(task) });
+            results.Add(new BO.TaskInList() { Id = task.Id, Alias = task.Alias, Description = task.Description, status = this.GetStatus(task) });
         }
         return results;
     }
@@ -583,7 +586,7 @@ internal class TaskImplementation : ITask1
             Id = doTask!.Id,
             Alias = doTask.Alias,
             Description = doTask.Description,
-            status = Tools.GetStatus(doTask),
+            status = this.GetStatus(doTask),
             dependeencies = GetTaskInList(doTask.Id),
             CreatedAtDate = doTask.CreatedAtDate,
             ScheduledDate = doTask.ScheduledDate,
@@ -621,8 +624,8 @@ internal class TaskImplementation : ITask1
         IEnumerable<BO.TaskInList>? listDependeencies = Read(item.Id)!.dependeencies;  //יצירת רשימת תלויות של כל המשימות שהמשימה תלויה בהם  
         if (listDependeencies != null)
         {
-            foreach (var taskinlist in listDependeencies)     //מעבר על כל משימה קודמת ובדיקה שתאריך ההתחלה המתוכנן קיים וגם שהתאריך שהתקבל כפרמטר אינו מוקדם מתאריך הסיום המשוער של כל משימה שקודמת לה 
-            {
+            foreach (var taskinlist in listDependeencies) //בדיקה שכל המשימות הקודומת הסתיימו
+            { 
                 BO.Task1 task_ = Read(taskinlist.Id)!;
                 if (task_.CompleteDate == null)
                     throw new BlUnableToStartTaskException($"לא ניתן להתחיל משימה לפני שהמשימות הקודמות הושלמו");
@@ -663,7 +666,3 @@ internal class TaskImplementation : ITask1
 
     }
 }
-
-
-
-

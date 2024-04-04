@@ -20,7 +20,6 @@ internal class ChefImplementation : IChef
     /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Chef item)
     {
-
         var listChef = XMLTools.LoadListFromXMLSerializer<Chef>(s_chefs_xml);
         if (listChef.Exists(chef => chef?.Id == item.Id))
             throw new DalAlreadyExistsException($"An object of type Chef with {item.Id} already exists ");
@@ -120,7 +119,7 @@ internal class ChefImplementation : IChef
         Chef ? chef = listChef.Where(chef=>chef.Id==item.Id).FirstOrDefault();
 
         if (chef == null)
-            throw new DalDoesNotExistException($"לא קיימת תלות עם המספר המזהה{item.Id}");
+            throw new DalDoesNotExistException($"לא קיים שף עם המספר המזהה{item.Id}");
 
         listChef!.Remove(chef); //remove item1 from the list
         listChef!.Add(item); //add item to the list
