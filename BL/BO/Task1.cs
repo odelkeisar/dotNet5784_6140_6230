@@ -41,23 +41,6 @@ public class Task1
     public string? Remarks { get; set; }//הערות
     public ChefInTask? chef { get; set; } 
     public  ChefExperience? Copmlexity { get; set; } //רמת קושי
-    //public override string ToString() =>Tools.ToStringProperty(this) ;
+    public override string ToString() => Tools.ToStringProperty(this);
 
-
-    //public override string ToString() => ToString_();
-    //    public string ToString_() => $@"
-    //Id= {Id}, Alias= {Alias}
-    //Description= {Description}
-    //status= {status}
-    //Created at date= {CreatedAtDate}
-    //Scheduled date= {ScheduledDate}
-    //Start date= {StartDate}
-    //Forecast date= {ForecastDate}
-    //Complete date= {CompleteDate}
-    //Required effort time= {RequiredEffortTime}
-    //Dellverables= {Dellverables}
-    //Remarks= {Remarks}
-    //Copmlexity= {Copmlexity}
-    //chef: {chef}
-    //dependeencies: {dependeencies}";
 }

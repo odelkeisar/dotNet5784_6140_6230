@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0" Margin="5" ItemsSource="{Binding Path=ChefList}" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" >
+        <ListView FlowDirection="RightToLeft" Grid.Row="0" Margin="5" ItemsSource="{Binding Path=ChefList}" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -31,5 +31,8 @@
                 </StackPanel>
             </Button>
         </StackPanel>
+  
+
+
     </Grid>
 </Window>

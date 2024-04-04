@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfChef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Chef>
-    <Id>593117763</Id>
+    <Id>712272671</Id>
     <deleted>false</deleted>
     <Email>Eli@gmail.com</Email>
-    <Cost>271</Cost>
+    <Cost>251</Cost>
     <Name>אלי עמר</Name>
-    <Level>מומחה</Level>
+    <Level>מתקדם</Level>
   </Chef>
   <Chef>
-    <Id>681388327</Id>
+    <Id>528967764</Id>
     <deleted>false</deleted>
     <Email>Ariel@gmail.com</Email>
-    <Cost>211</Cost>
+    <Cost>135</Cost>
     <Name>אריאל לוין</Name>
-    <Level>מומחה</Level>
+    <Level>מתקדם</Level>
   </Chef>
   <Chef>
-    <Id>375635820</Id>
+    <Id>454641453</Id>
     <deleted>false</deleted>
     <Email>David@gmail.com</Email>
-    <Cost>52</Cost>
+    <Cost>118</Cost>
     <Name>דוד קליין</Name>
-    <Level>בינוני</Level>
+    <Level>מתחיל</Level>
   </Chef>
   <Chef>
-    <Id>556623797</Id>
+    <Id>479140273</Id>
     <deleted>false</deleted>
     <Email>Dani@gmail.com</Email>
-    <Cost>242</Cost>
+    <Cost>254</Cost>
     <Name>דני לוי</Name>
-    <Level>בינוני</Level>
+    <Level>מתחיל</Level>
   </Chef>
   <Chef>
-    <Id>418872553</Id>
+    <Id>332768022</Id>
     <deleted>false</deleted>
     <Email>Meir@gmail.com</Email>
-    <Cost>256</Cost>
+    <Cost>229</Cost>
     <Name>מאיר כהן</Name>
-    <Level>בינוני</Level>
+    <Level>מומחה</Level>
   </Chef>
 </ArrayOfChef>
