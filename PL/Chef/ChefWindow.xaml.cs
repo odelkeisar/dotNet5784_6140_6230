@@ -64,7 +64,7 @@ public partial class ChefWindow : Window
 
         catch (Exception ex)
         {
-            MessageBox.Show($"Error: {ex.Message}");
+            MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         }
         InitializeComponent();
     }
@@ -95,12 +95,12 @@ public partial class ChefWindow : Window
                 {
                     s_bl.Chef.Create(Chef!);
                 }
-                MessageBox.Show("הפעולה בוצעה בהצלחה!");
+                MessageBox.Show("הפעולה בוצעה בהצלחה!", "הודעה", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
 
                 if ((string)clickedButton.Content == "עדכן")
                 {
@@ -123,7 +123,7 @@ public partial class ChefWindow : Window
     private void ButtonSelectTask_Click(object sender, RoutedEventArgs e)
     {
         if (id_ == 0)  //אם המספר זהות אפס זה אומר שאנחנו בהוספת שף ובשלב זה עדיין לא ניתן להוסיף משימה
-            MessageBox.Show($" לא ניתן להקצות משימה בשלב הוספת שף חדש");
+            MessageBox.Show($" לא ניתן להקצות משימה בשלב הוספת שף חדש", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         else
         {
             try
@@ -148,7 +148,7 @@ public partial class ChefWindow : Window
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             }
         }
 

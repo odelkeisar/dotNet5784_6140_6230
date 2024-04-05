@@ -60,17 +60,17 @@ public partial class OldChefWindow : Window
             try
             {
                 s_bl.Chef.RecoveryChef(selectedchef);
-                MessageBox.Show($"השיחזור בוצע בהצלחה");
+                MessageBox.Show($"השיחזור בוצע בהצלחה", "הודעה", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                 ChefList = new ObservableCollection<BO.Chef>(s_bl.Chef.ReadAllDeleted()); //רענון רשימה
                 selectedchef = null;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                 this.Close();
             }
         }
-        else { MessageBox.Show("יש לבחור שף לשיחזור"); }
+        else { MessageBox.Show("יש לבחור שף לשיחזור", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign); }
     }
 
     /// <summary>

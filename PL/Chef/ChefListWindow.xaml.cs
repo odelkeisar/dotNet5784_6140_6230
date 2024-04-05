@@ -99,7 +99,7 @@ public partial class ChefListWindow : Window
         {
             if (chef_ != null)
             {
-                MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק שף?", "אישור מחיקת נתוני שף", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק שף?", "אישור מחיקת נתוני שף", MessageBoxButton.YesNo,  MessageBoxImage.Question, MessageBoxResult.None, MessageBoxOptions.RightAlign);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -110,10 +110,10 @@ public partial class ChefListWindow : Window
             }
             else
             {
-                MessageBox.Show($"יש לבחור שף למחיקה");
+                MessageBox.Show($"יש לבחור שף למחיקה", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             }
         }
-        catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
+        catch (Exception ex) { MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign); }
     }
 
     private void ListView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -135,7 +135,7 @@ public partial class ChefListWindow : Window
         }
         catch(Exception ex)
         {
-            MessageBox.Show($"Error: {ex.Message}");
+            MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         }
     }
 }

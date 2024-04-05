@@ -59,13 +59,13 @@ public partial class ActChefWindow : Window
         try
         {
             s_bl.Task1.UpdateStartDate(task);
-            MessageBox.Show("הפעולה בוצעה בהצלחה!");
+            MessageBox.Show("הפעולה בוצעה בהצלחה!", "הודעה", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             this.Close();
         }
 
         catch (Exception ex) 
         {
-            MessageBox.Show($"Error: {ex.Message}");
+            MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             this.Close();
         }
     }
@@ -81,13 +81,13 @@ public partial class ActChefWindow : Window
         try
         {
             s_bl.Task1.UpdateFinalDate(task);
-            MessageBox.Show("הפעולה בוצעה בהצלחה!");
+            MessageBox.Show("הפעולה בוצעה בהצלחה!", "הודעה", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             this.Close();
         }
 
         catch (Exception ex)
         {
-            MessageBox.Show($"Error: {ex.Message}");
+            MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             this.Close();
         }
     }

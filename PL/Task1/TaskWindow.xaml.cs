@@ -56,7 +56,7 @@ public partial class TaskWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error: {ex.Message}");
+            MessageBox.Show($" {ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         }
 
         InitializeComponent();
@@ -65,7 +65,7 @@ public partial class TaskWindow : Window
     private void ButtonAssignmentChef_Click(object sender, RoutedEventArgs e)
     {
         if (task.Id == 0)
-            MessageBox.Show($"לא ניתן להקצות שף בשלב יצירת המשימה");
+            MessageBox.Show($"לא ניתן להקצות שף בשלב יצירת המשימה", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         else
         {
             try
@@ -86,7 +86,8 @@ public partial class TaskWindow : Window
                 };
                 listChefToAssignment_Window.ShowDialog();
             }
-            catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
+            catch (Exception ex) { MessageBox.Show($" {ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign); }
+
         }
     }
 
@@ -100,14 +101,14 @@ public partial class TaskWindow : Window
     {
         if (s_bl.Task1.ReadEndProject() != null)
         {
-            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט");
+            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             return;
         }
         if (taskMarker == null)
-            MessageBox.Show($"יש לבחור משימה תלות למחיקה");
+            MessageBox.Show($"יש לבחור משימת תלות למחיקה", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         else
         {
-            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק משימת תלות?", "אישור מחיקת נתוני משימה", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק משימת תלות?", "אישור מחיקת נתוני משימה", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             if (result == MessageBoxResult.Yes)
             {
                 task.dependeencies = task.dependeencies!.Where(x => x.Id != taskMarker.Id).ToList();
@@ -122,7 +123,7 @@ public partial class TaskWindow : Window
     {
         if (s_bl.Task1.ReadEndProject() != null)
         {
-            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט");
+            MessageBox.Show("לא ניתן לעדכן תלויות לאחר שנקבע לוח זמנים לפרויקט", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             return;
         }
         ListTaskForDependenceWindow listTaskForDependenceWindow = new ListTaskForDependenceWindow(task);
@@ -159,12 +160,12 @@ public partial class TaskWindow : Window
             {
                 s_bl.Task1.Create(task);
             }
-            MessageBox.Show("הפעולה בוצעה בהצלחה!");
+            MessageBox.Show("הפעולה בוצעה בהצלחה!", "הודעה", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             this.Close();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error: {ex.Message}", "שגיאה", MessageBoxButton.OK,MessageBoxImage.Error,MessageBoxResult.OK, MessageBoxOptions.RightAlign);
+            MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK,MessageBoxImage.Error,MessageBoxResult.OK, MessageBoxOptions.RightAlign);
 
             if ((string)clickedButton.Content == "עדכן")//איתחול מחדש של המשימה להיות ריקה
             {

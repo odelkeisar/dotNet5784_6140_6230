@@ -54,7 +54,7 @@ namespace PL.Manager_file
         /// <param name="e"></param>
         private void reset_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק את הנתונים?", "אישור ניקוי נתונים", MessageBoxButton.YesNo,  MessageBoxImage.Question, MessageBoxResult.None, MessageBoxOptions.RightAlign);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -72,7 +72,7 @@ namespace PL.Manager_file
         /// <param name="e"></param>
         private void DataInitialization_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך לאתחל את הנתונים?", "אישור איתחול", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.None, MessageBoxOptions.RightAlign);
 
             if (result == MessageBoxResult.Yes)
                 s_bl.InitializeDB();
@@ -106,7 +106,7 @@ namespace PL.Manager_file
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                 startDateProject = s_bl.Task1.ReadStartProject();
             }
         }
@@ -125,7 +125,7 @@ namespace PL.Manager_file
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                 endDateProject = s_bl.Task1.ReadEndProject();
             }
         }
@@ -150,7 +150,7 @@ namespace PL.Manager_file
             if (s_bl.Task1.ReadEndProject() != null)
                 new GantWindow().ShowDialog();
             else
-                MessageBox.Show("התרשים זמין לאחר שיקבע לוח הזמנים לפרויקט");
+                MessageBox.Show("התרשים זמין לאחר שיקבע לוח הזמנים לפרויקט", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         }
 
     }

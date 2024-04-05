@@ -86,7 +86,7 @@ public partial class MainWindow : Window
     private void Chef_Click(object sender, RoutedEventArgs e)
     {
         BO.Chef chef = new BO.Chef();
-        string idNumber = Microsoft.VisualBasic.Interaction.InputBox("אנא הזן מספר זהות:", "הזנת מספר זהות", "");
+        string idNumber = Microsoft.VisualBasic.Interaction.InputBox("אנא הזן מספר זהות:", "הזנת מספר זהות", "" );
 
         // בדיקה אם המספר זהות שהוזן אינו ריק
         if (!string.IsNullOrWhiteSpace(idNumber))
@@ -108,11 +108,11 @@ public partial class MainWindow : Window
                             {
                                 chef.task = new BO.TaskInChef { Id = selectedTask.Id, Alias = selectedTask.Alias };
                                 s_bl.Chef.Update(chef);
-                                MessageBox.Show($"משימה {selectedTask.Id} הוקצתה בהצלחה");
+                                MessageBox.Show($"משימה {selectedTask.Id} הוקצתה בהצלחה", "הודעה", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show($"Error: {ex.Message}");
+                                MessageBox.Show($"{ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                             }
                         }
                     };
@@ -125,13 +125,13 @@ public partial class MainWindow : Window
 
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($" {ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             }
 
         }
         else
         {
-            MessageBox.Show("לא הוזן מספר זהות.");
+            MessageBox.Show("לא הוזן מספר זהות.", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
         }
     }
    /// <summary>

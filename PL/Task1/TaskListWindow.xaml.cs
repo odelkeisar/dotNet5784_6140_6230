@@ -112,21 +112,21 @@ namespace PL.Task1
             {
                 if (task_ != null)
                 {
-                    MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק משימה?", "אישור מחיקת נתוני משימה", MessageBoxButton.YesNo);
+                    MessageBoxResult result = MessageBox.Show("האם אתה בטוח שברצונך למחוק משימה?", "אישור מחיקת נתוני משימה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.None, MessageBoxOptions.RightAlign);
 
                     if (result == MessageBoxResult.Yes)
                     {
                         s_bl.Task1.Delete(task_.Id);
                         TaskList = StatusTask_ == BO.Status.ללא_סינון ? new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAll()!) : new ObservableCollection<BO.TaskInList>(s_bl?.Task1.ReadAllPerStatus(StatusTask_)!);
-                        task_ = null;
                     }
+                    task_ = null;
                 }
                 else
                 {
-                    MessageBox.Show($"יש לבחור משימה למחיקה");
+                    MessageBox.Show($"יש לבחור משימה למחיקה", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
                 }
             }
-            catch (Exception ex) { MessageBox.Show($"Error: {ex.Message}"); }
+            catch (Exception ex) { MessageBox.Show($" {ex.Message}", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign); }
         }
 
 
@@ -139,7 +139,7 @@ namespace PL.Task1
         {
             int id = 0;
             if (s_bl.Task1.ReadEndProject() != null)
-                MessageBox.Show($"לא ניתן ליצור משימה חדשה לאחר שנקבע לוח הזמנים לפרויקט");
+                MessageBox.Show($"לא ניתן ליצור משימה חדשה לאחר שנקבע לוח הזמנים לפרויקט", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.None, MessageBoxOptions.RightAlign);
             else
             {
                 TaskWindow taskWindow = new TaskWindow(id);
